@@ -1,0 +1,5 @@
+import:
+  - ~/.config/alacritty/themes/themes/one_dark.yaml
+
+font:
+  size: 8.0
