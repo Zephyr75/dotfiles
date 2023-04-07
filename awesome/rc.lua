@@ -146,7 +146,7 @@ local padded_container = wibox.container.margin(mytextclock, 15, 15)
 local clock_container = wibox.container.background(padded_container)
 
 -- Set the background color and shape
-clock_container.bg = "#164650"
+clock_container.bg = "#282C34"
 clock_container.shape = function(cr, width, height)
   local radius = 20
   gears.shape.rounded_rect(cr, width, height, radius)
@@ -194,8 +194,8 @@ screen.connect_signal("request::desktop_decoration", function(s)
                                         end),
             awful.button({ }, 4, function(t) awful.tag.viewprev(t.screen) end),
             awful.button({ }, 5, function(t) awful.tag.viewnext(t.screen) end),
-        }, style = { bg_focus = "#164650", bg_occupied = "#164650a0",
-            bg_empty = "#16465020",
+        }, style = { bg_focus = "#282C34", bg_occupied = "#282C34a0",
+            bg_empty = "#282C3420",
             shape = gears.shape.circle,
             font = "sans 12",
         },
