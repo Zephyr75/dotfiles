@@ -258,7 +258,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
                 -- mykeyboardlayout,
                 wibox.widget.systray(),
                 clock_container,
-                -- s.mylayoutbox,
+                s.mylayoutbox,
             },
           }, 10, 15, 10, 0),
     }
@@ -447,6 +447,85 @@ awful.keyboard.append_global_keybindings({
             end
         end,
     }
+})
+
+
+
+-- Define a function to update the notification widget
+local function update_notification_widget(widget, message)
+    widget:set_markup_silently("<b>Volume Control: </b>" .. message)
+end
+
+-- Create the notification widget
+local notification_widget = wibox.widget.textbox()
+update_notification_widget(notification_widget, "Ready")
+
+-- Define a function to show a notification with a given message
+local function show_notification(message)
+    naughty.notify({
+        preset = naughty.config.presets.normal,
+        title = "Volume Control",
+        text = message,
+        timeout = 2,
+        position = "top",
+        bg = "#282C34",
+        fg = "#FFFFFF",
+        align = "center",
+        border_width = 0,
+        shape = function(cr, width, height)
+          local radius = 20
+          gears.shape.rounded_rect(cr, width, height, radius)
+        end,
+    })
+end
+
+-- local vol_notif_id
+-- Restore key bindings
+awful.keyboard.append_global_keybindings({
+    awful.key({ }, "XF86AudioRaiseVolume", function ()
+        awful.spawn("amixer set Master 5%+")
+        awful.spawn.easy_async("amixer get Master", function(stdout)
+            local volume = string.match(stdout, "(%d?%d?%d)%%")
+            volume = tonumber(string.format("% 3d", volume))
+            naughty.notify({
+                title = "Volume",
+                text = volume .. "%",
+                timeout = 1,
+                position = "top_middle",
+                bg = "#282C34",
+                fg = "#FFFFFF",
+                border_width = 0,
+                width = 100,
+            })
+        end)
+    end),
+    awful.key({ }, "XF86AudioLowerVolume", function ()
+        awful.spawn("amixer set Master 5%-")
+        awful.spawn.easy_async("amixer get Master", function(stdout)
+            local volume = string.match(stdout, "(%d?%d?%d)%%")
+            volume = tonumber(string.format("% 3d", volume))
+            naughty.notify({
+                title = "Volume",
+                text = volume .. "%",
+                timeout = 1,
+                position = "top_middle",
+                bg = "#282C34",
+                fg = "#FFFFFF",
+                align = "center",
+                border_width = 0,
+                width = 100,
+            })
+        end)
+    end),
+    awful.key({ }, "XF86AudioMute", function ()
+        awful.spawn("amixer set Master toggle")
+    end),
+    awful.key({ }, "XF86MonBrightnessUp", function ()
+        awful.spawn("brightnessctl set +10%")
+    end),
+    awful.key({ }, "XF86MonBrightnessDown", function ()
+        awful.spawn("brightnessctl set 10%-")
+    end)
 })
 
 client.connect_signal("request::default_mousebindings", function()
