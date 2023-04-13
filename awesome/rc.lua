@@ -162,7 +162,7 @@ end
 mytextclock.font = "sans 12"
 
 -- Create a new container with 20 pixels of padding on the left and right
-local padded_ram = wibox.container.margin(ram_widget(), 15, 15)
+local padded_ram = wibox.container.margin(ram_widget(), 5, 5)
 
 -- Create a background container for the ram_widget
 local ram_container = wibox.container.background(padded_ram)
@@ -188,7 +188,7 @@ cpu_container.shape = function(cr, width, height)
 end
 
 -- Create a new container with 20 pixels of padding on the left and right
-local padded_battery = wibox.container.margin(battery_widget(), 15, 15)
+local padded_battery = wibox.container.margin(battery_widget(), 10, 10)
 
 -- Create a background container for the battery_widget
 local battery_container = wibox.container.background(padded_battery)
@@ -196,6 +196,19 @@ local battery_container = wibox.container.background(padded_battery)
 -- Set the background color and shape
 battery_container.bg = "#282C34"
 battery_container.shape = function(cr, width, height)
+  local radius = 20
+  gears.shape.rounded_rect(cr, width, height, radius)
+end
+
+
+local padded_systray = wibox.container.margin(wibox.widget.systray(), 15, 15)
+
+-- Create a background container for the systray
+local systray_container = wibox.container.background(padded_systray)
+
+-- Set the background color and shape
+systray_container.bg = "#282C34"
+systray_container.shape = function(cr, width, height)
   local radius = 20
   gears.shape.rounded_rect(cr, width, height, radius)
 end
@@ -300,7 +313,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
             { -- Right widgets
                 layout = wibox.layout.fixed.horizontal,
                 -- mykeyboardlayout,
-                wibox.widget.systray(),
+                systray_container,
                 wibox.container.margin(cpu_container, 10, 0, 0, 0),
                 wibox.container.margin(ram_container, 10, 0, 0, 0),
                 wibox.container.margin(battery_container, 10, 0, 0, 0),
