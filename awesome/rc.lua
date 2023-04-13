@@ -22,7 +22,13 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 require("awful.hotkeys_popup.keys")
 
 -- Custom widgets
-local volume_widget = require('awesome-wm-widgets.volume-widget.volume')
+-- local volume_widget = require('awesome-wm-widgets.volume-widget.volume')
+local battery_widget = require("awesome-wm-widgets.battery-widget.battery")
+local cpu_widget = require("awesome-wm-widgets.cpu-widget.cpu-widget")
+local ram_widget = require("awesome-wm-widgets.ram-widget.ram-widget")
+
+
+
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -42,7 +48,8 @@ end)
 beautiful.init("/home/zeph/.config/awesome/default/theme.lua")
 
 -- make it transparent
-beautiful.bg_normal = "#00000000"
+beautiful.bg_normal = "#282C34"
+beautiful.bg_urgent = "#EB4034"
 
 -- make top bar twice as tall
 beautiful.wibar_height = 40
@@ -135,15 +142,14 @@ end)
 mykeyboardlayout = awful.widget.keyboardlayout()
 
 -- Create a textclock widget
-mytextclock = wibox.widget.textclock("%d %B %Y %H:%M")
+mytextclock = wibox.widget.textclock("%d %B %H:%M")
 
 
 -- Create a new container with 20 pixels of padding on the left and right
-local padded_container = wibox.container.margin(mytextclock, 15, 15)
-
+local padded_clock = wibox.container.margin(mytextclock, 15, 15)
 
 -- Create a background container for the text clock
-local clock_container = wibox.container.background(padded_container)
+local clock_container = wibox.container.background(padded_clock)
 
 -- Set the background color and shape
 clock_container.bg = "#282C34"
@@ -152,9 +158,48 @@ clock_container.shape = function(cr, width, height)
   gears.shape.rounded_rect(cr, width, height, radius)
 end
 
-
 -- Style the textclock
 mytextclock.font = "sans 12"
+
+-- Create a new container with 20 pixels of padding on the left and right
+local padded_ram = wibox.container.margin(ram_widget(), 15, 15)
+
+-- Create a background container for the ram_widget
+local ram_container = wibox.container.background(padded_ram)
+
+-- Set the background color and shape
+ram_container.bg = "#282C34"
+ram_container.shape = function(cr, width, height)
+  local radius = 20
+  gears.shape.rounded_rect(cr, width, height, radius)
+end
+
+-- Create a new container with 20 pixels of padding on the left and right
+local padded_cpu = wibox.container.margin(cpu_widget(), 15, 15)
+
+-- Create a background container for the cpu_widget
+local cpu_container = wibox.container.background(padded_cpu)
+
+-- Set the background color and shape
+cpu_container.bg = "#282C34"
+cpu_container.shape = function(cr, width, height)
+  local radius = 20
+  gears.shape.rounded_rect(cr, width, height, radius)
+end
+
+-- Create a new container with 20 pixels of padding on the left and right
+local padded_battery = wibox.container.margin(battery_widget(), 15, 15)
+
+-- Create a background container for the battery_widget
+local battery_container = wibox.container.background(padded_battery)
+
+-- Set the background color and shape
+battery_container.bg = "#282C34"
+battery_container.shape = function(cr, width, height)
+  local radius = 20
+  gears.shape.rounded_rect(cr, width, height, radius)
+end
+
 
 screen.connect_signal("request::desktop_decoration", function(s)
     -- Each screen has its own tag table.
@@ -232,7 +277,6 @@ screen.connect_signal("request::desktop_decoration", function(s)
         },
 	layout = {
 	    layout = wibox.layout.fixed.horizontal,
-	    volume_widget(),
 	},
     }
 
@@ -257,8 +301,12 @@ screen.connect_signal("request::desktop_decoration", function(s)
                 layout = wibox.layout.fixed.horizontal,
                 -- mykeyboardlayout,
                 wibox.widget.systray(),
-                clock_container,
-                s.mylayoutbox,
+                wibox.container.margin(cpu_container, 10, 0, 0, 0),
+                wibox.container.margin(ram_container, 10, 0, 0, 0),
+                wibox.container.margin(battery_container, 10, 0, 0, 0),
+                wibox.container.margin(clock_container, 10, 0, 0, 0),
+                -- insert 5 pixels of padding to the left
+                wibox.container.margin(s.mylayoutbox, 10, 0, 0, 0),
             },
           }, 10, 15, 10, 0),
     }
