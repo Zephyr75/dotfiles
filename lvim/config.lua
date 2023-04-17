@@ -29,14 +29,15 @@ lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
 -- Custom shortcuts
 -- Remap the open terminal shortcut and set it to open horizontally
 
-lvim.builtin.which_key.mappings["t"] = {
-  name = "+Terminal",
-  f = { "<cmd>ToggleTerm<cr>", "Floating terminal" },
-  v = { "<cmd>2ToggleTerm size=30 direction=vertical<cr>", "Split vertical" },
-  h = { "<cmd>2ToggleTerm size=30 direction=horizontal<cr>", "Split horizontal" },
-}
+-- lvim.builtin.which_key.mappings["t"] = {
+--   name = "+Terminal",
+--   f = { "<cmd>ToggleTerm<cr>", "Floating terminal" },
+--   v = { "<cmd>2ToggleTerm size=30 direction=vertical<cr>", "Split vertical" },
+--   h = { "<cmd>2ToggleTerm size=30 direction=horizontal<cr>", "Split horizontal" },
+-- }
 
 vim.api.nvim_set_keymap('n', 'd', '"_d', { noremap = true })
+vim.api.nvim_set_keymap('n', 'x', '"_x', { noremap = true })
 
 -- Change Telescope navigation to use j and k for navigation and n and p for history in both input and normal mode.
 -- we use protected-mode (pcall) just in case the plugin wasn't loaded yet.

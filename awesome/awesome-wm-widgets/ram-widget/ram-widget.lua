@@ -13,9 +13,9 @@ local function worker(user_args)
     local timeout = args.timeout or 1
     local color_used = "#ffffffbb"
     --args.color_used or beautiful.bg_urgent
-    local color_free = "#00000000"
+    local color_free = "#ffffff33"
     --args.color_free or beautiful.fg_normal
-    local color_buf  = "#ffffff66"
+    local color_buf  = "#ffffff77"
     --args.color_buf  or beautiful.border_color_active
     local widget_show_buf = args.widget_show_buf or false
     local widget_height = args.widget_height or 25

@@ -26,8 +26,7 @@ require("awful.hotkeys_popup.keys")
 local battery_widget = require("awesome-wm-widgets.battery-widget.battery")
 local cpu_widget = require("awesome-wm-widgets.cpu-widget.cpu-widget")
 local ram_widget = require("awesome-wm-widgets.ram-widget.ram-widget")
-
-
+local volume_widget = require("awesome-wm-widgets.volume-widget.volume")
 
 
 -- {{{ Error handling
@@ -70,7 +69,7 @@ editor_cmd = terminal .. " -e " .. editor
 -- If you do not like this or do not have such a key,
 -- I suggest you to remap Mod4 to another key using xmodmap or other tools.
 -- However, you can use another modifier like Mod1, but it may interact with others.
-modkey = "Mod1"
+modkey = "Mod4"
 -- }}}
 
 -- {{{ Menu
@@ -200,6 +199,18 @@ battery_container.shape = function(cr, width, height)
   gears.shape.rounded_rect(cr, width, height, radius)
 end
 
+-- Create a new container with 20 pixels of padding on the left and right
+local padded_volume = wibox.container.margin(volume_widget(), 10, 10)
+
+-- Create a background container for the volume_widget
+local volume_container = wibox.container.background(padded_volume)
+
+-- Set the background color and shape
+volume_container.bg = "#282C34"
+volume_container.shape = function(cr, width, height)
+  local radius = 20
+  gears.shape.rounded_rect(cr, width, height, radius)
+end
 
 local padded_systray = wibox.container.margin(wibox.widget.systray(), 15, 15)
 
@@ -313,11 +324,13 @@ screen.connect_signal("request::desktop_decoration", function(s)
             { -- Right widgets
                 layout = wibox.layout.fixed.horizontal,
                 -- mykeyboardlayout,
-                systray_container,
+                --systray_container,
+                wibox.widget.systray(),
+                wibox.container.margin(volume_container, 10, 0, 0, 0),
                 wibox.container.margin(cpu_container, 10, 0, 0, 0),
                 wibox.container.margin(ram_container, 10, 0, 0, 0),
-                wibox.container.margin(battery_container, 10, 0, 0, 0),
                 wibox.container.margin(clock_container, 10, 0, 0, 0),
+                wibox.container.margin(battery_container, 10, 0, 0, 0),
                 -- insert 5 pixels of padding to the left
                 wibox.container.margin(s.mylayoutbox, 10, 0, 0, 0),
             },
