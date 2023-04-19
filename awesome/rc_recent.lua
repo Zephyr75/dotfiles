@@ -47,7 +47,7 @@ end)
 beautiful.init("/home/zeph/.config/awesome/default/theme.lua")
 
 -- make it transparent
-beautiful.bg_normal = "#0f1e24"
+beautiful.bg_normal = "#282C34"
 beautiful.bg_urgent = "#EB4034"
 
 -- make top bar twice as tall
@@ -151,7 +151,7 @@ local padded_clock = wibox.container.margin(mytextclock, 15, 15)
 local clock_container = wibox.container.background(padded_clock)
 
 -- Set the background color and shape
-clock_container.bg = "#0f1e24"
+clock_container.bg = "#282C34"
 clock_container.shape = function(cr, width, height)
   local radius = 20
   gears.shape.rounded_rect(cr, width, height, radius)
@@ -167,7 +167,7 @@ local padded_ram = wibox.container.margin(ram_widget(), 5, 5)
 local ram_container = wibox.container.background(padded_ram)
 
 -- Set the background color and shape
-ram_container.bg = "#0f1e24"
+ram_container.bg = "#282C34"
 ram_container.shape = function(cr, width, height)
   local radius = 20
   gears.shape.rounded_rect(cr, width, height, radius)
@@ -180,7 +180,7 @@ local padded_cpu = wibox.container.margin(cpu_widget(), 15, 15)
 local cpu_container = wibox.container.background(padded_cpu)
 
 -- Set the background color and shape
-cpu_container.bg = "#0f1e24"
+cpu_container.bg = "#282C34"
 cpu_container.shape = function(cr, width, height)
   local radius = 20
   gears.shape.rounded_rect(cr, width, height, radius)
@@ -193,7 +193,7 @@ local padded_battery = wibox.container.margin(battery_widget(), 10, 10)
 local battery_container = wibox.container.background(padded_battery)
 
 -- Set the background color and shape
-battery_container.bg = "#0f1e24"
+battery_container.bg = "#282C34"
 battery_container.shape = function(cr, width, height)
   local radius = 20
   gears.shape.rounded_rect(cr, width, height, radius)
@@ -206,7 +206,7 @@ local padded_volume = wibox.container.margin(volume_widget(), 10, 10)
 local volume_container = wibox.container.background(padded_volume)
 
 -- Set the background color and shape
-volume_container.bg = "#0f1e24"
+volume_container.bg = "#282C34"
 volume_container.shape = function(cr, width, height)
   local radius = 20
   gears.shape.rounded_rect(cr, width, height, radius)
@@ -218,7 +218,7 @@ local padded_systray = wibox.container.margin(wibox.widget.systray(), 15, 15)
 local systray_container = wibox.container.background(padded_systray)
 
 -- Set the background color and shape
-systray_container.bg = "#0f1e24"
+systray_container.bg = "#282C34"
 systray_container.shape = function(cr, width, height)
   local radius = 20
   gears.shape.rounded_rect(cr, width, height, radius)
@@ -263,8 +263,8 @@ screen.connect_signal("request::desktop_decoration", function(s)
                                         end),
             awful.button({ }, 4, function(t) awful.tag.viewprev(t.screen) end),
             awful.button({ }, 5, function(t) awful.tag.viewnext(t.screen) end),
-        }, style = { bg_focus = "#0f1e24", bg_occupied = "#0f1e24a0",
-            bg_empty = "#0f1e2420",
+        }, style = { bg_focus = "#282C34", bg_occupied = "#282C34a0",
+            bg_empty = "#282C3420",
             shape = gears.shape.circle,
             font = "sans 12",
         },
@@ -308,7 +308,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
     s.mywibox = awful.wibar {
         position = "top",
         screen   = s,
-	fg = "#ffffff",
+	fg = "#282C34",
 	bg = "#00000000",
         widget   = wibox.container.margin( 
           {
@@ -542,7 +542,7 @@ local function show_notification(message)
         text = message,
         timeout = 2,
         position = "top",
-        bg = "#0f1e24",
+        bg = "#282C34",
         fg = "#FFFFFF",
         align = "center",
         border_width = 0,
@@ -553,50 +553,46 @@ local function show_notification(message)
     })
 end
 
-local last_notification_id = nil
-
 -- local vol_notif_id
 -- Restore key bindings
 awful.keyboard.append_global_keybindings({
     awful.key({ }, "XF86AudioRaiseVolume", function ()
-        awful.spawn("pamixer -i 5")
-        awful.spawn.easy_async("pamixer --get-volume", function(stdout)
-            local volume = tonumber(stdout)
-            local notification = naughty.notify({
+        awful.spawn("amixer set Master 5%+")
+        awful.spawn.easy_async("amixer get Master", function(stdout)
+            local volume = string.match(stdout, "(%d?%d?%d)%%")
+            volume = tonumber(string.format("% 3d", volume))
+            naughty.notify({
                 title = "Volume",
                 text = volume .. "%",
                 timeout = 1,
                 position = "top_middle",
-                bg = "#0f1e24",
+                bg = "#282C34",
                 fg = "#FFFFFF",
                 border_width = 0,
                 width = 100,
-                replaces_id = last_notification_id,
             })
-            last_notification_id = notification.id
         end)
     end),
     awful.key({ }, "XF86AudioLowerVolume", function ()
-        awful.spawn("pamixer -d 5")
-        awful.spawn.easy_async("pamixer --get-volume", function(stdout)
-            local volume = tonumber(stdout)
-            local notification = naughty.notify({
+        awful.spawn("amixer set Master 5%-")
+        awful.spawn.easy_async("amixer get Master", function(stdout)
+            local volume = string.match(stdout, "(%d?%d?%d)%%")
+            volume = tonumber(string.format("% 3d", volume))
+            naughty.notify({
                 title = "Volume",
                 text = volume .. "%",
                 timeout = 1,
                 position = "top_middle",
-                bg = "#0f1e24",
+                bg = "#282C34",
                 fg = "#FFFFFF",
                 align = "center",
                 border_width = 0,
                 width = 100,
-                replaces_id = last_notification_id,
             })
-            last_notification_id = notification.id
         end)
     end),
     awful.key({ }, "XF86AudioMute", function ()
-        awful.spawn("pamixer -t")
+        awful.spawn("amixer set Master toggle")
     end),
     awful.key({ }, "XF86MonBrightnessUp", function ()
         awful.spawn("brightnessctl set +10%")
@@ -825,5 +821,4 @@ end)
 --Autostart applications
 awful.spawn.with_shell("picom")
 --awful.spawn.with_shell("nitrogen --restore")
--- awful.spawn.with_shell("$HOME/.config/awesome/scripts/wallpaper.sh")
-awful.spawn.with_shell("feh --bg-fill '/home/zeph/.config/awesome/wallpapers/firewatch.png'")
+awful.spawn.with_shell("$HOME/.config/awesome/scripts/wallpaper.sh")
