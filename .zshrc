@@ -112,3 +112,8 @@ export CHROME_EXECUTABLE
 
 alias nvidia="prime-offload; optimus-manager --switch nvidia --no-confirm"
 alias dual="xrandr --output eDP-1-1 --primary --mode 1920x1080 --rate 165.00 --output HDMI-0 --mode 1920x1080 --rate 60.00 --right-of eDP-1-1"
+alias night="redshift -O 4000"
+alias day="redshift -x"
+alias fr="setxkbmap fr"
+alias us="setxkbmap us"
+alias intl="setxkbmap -layout us -variant intl"

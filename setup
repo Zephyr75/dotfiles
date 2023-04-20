@@ -1,0 +1,22 @@
+tailscale
+moonlight
+arandr
+acpi
+alsa-utils
+zsh-syntax-highlighting
+kotlin
+github desktop
+qt5ct
+steam = https://www.makeuseof.com/turn-arch-linux-into-a-gaming-system-with-steam/
+breeze = https://unix.stackexchange.com/questions/680483/how-to-add-qt-qpa-platformtheme-qt5ct-environment-variable-in-arch-linux
+gThumb
+vlc
+optimus manager
+lightdm
+lightdm-gtk-greeter = https://www.addictivetips.com/ubuntu-linux-tips/set-up-lightdm-on-arch-linux/
+gradle
+nodejs
+npm
+nvtop
+bluez + bluez-utils
+xbindkeys
