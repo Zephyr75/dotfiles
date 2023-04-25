@@ -1,3 +1,32 @@
+xorg
+pulseaudio
+awesome
+
+dhcpcd
+git
+firefox
+alacritty + theme
+awesome-git
+thunar
+lxappearance
+picom
+rofi
+papirus maia
+orchis
+jetbrains mono nerd font
+oh my zsh
+arc icon theme
+neovim + lunar vim
+pamixer
+brightnessctl
+redshift
+heroic games launcher
+gnome disk utility
+network manager + nmcli
+mangohud
+blender
+discord
+flameshot
 tailscale
 moonlight
 arandr
@@ -19,4 +48,13 @@ nodejs
 npm
 nvtop
 bluez + bluez-utils
-xbindkeys
+virt-manager
+polybar
+gnu-netcat
+wireshark-qt
+ghidra
+pandoc
+cmake
+moonlight
+zerotier
+tailscale
