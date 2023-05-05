@@ -35,17 +35,11 @@ end)
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
---beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
-beautiful.init("/home/zeph/.config/awesome/default/theme.lua")
-
-beautiful.useless_gap = 5
-beautiful.border_width = 0
+beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
--- terminal = "xterm"
--- editor = os.getenv("EDITOR") or "nano"
-terminal = "alacritty"
-editor = "vscode"
+terminal = "xterm"
+editor = os.getenv("EDITOR") or "nano"
 editor_cmd = terminal .. " -e " .. editor
 
 -- Default modkey.
@@ -82,19 +76,19 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 -- Table of layouts to cover with awful.layout.inc, order matters.
 tag.connect_signal("request::default_layouts", function()
     awful.layout.append_default_layouts({
-        -- awful.layout.suit.floating,
+        awful.layout.suit.floating,
         awful.layout.suit.tile,
-        -- awful.layout.suit.tile.left,
-        -- awful.layout.suit.tile.bottom,
-        -- awful.layout.suit.tile.top,
+        awful.layout.suit.tile.left,
+        awful.layout.suit.tile.bottom,
+        awful.layout.suit.tile.top,
         awful.layout.suit.fair,
-        -- awful.layout.suit.fair.horizontal,
-        -- awful.layout.suit.spiral,
-        -- awful.layout.suit.spiral.dwindle,
-        -- awful.layout.suit.max,
-        -- awful.layout.suit.max.fullscreen,
-        -- awful.layout.suit.magnifier,
-        -- awful.layout.suit.corner.nw,
+        awful.layout.suit.fair.horizontal,
+        awful.layout.suit.spiral,
+        awful.layout.suit.spiral.dwindle,
+        awful.layout.suit.max,
+        awful.layout.suit.max.fullscreen,
+        awful.layout.suit.magnifier,
+        awful.layout.suit.corner.nw,
     })
 end)
 -- }}}
@@ -187,21 +181,21 @@ screen.connect_signal("request::desktop_decoration", function(s)
         position = "top",
         screen   = s,
         widget   = {
-            -- layout = wibox.layout.align.horizontal,
-            -- { -- Left widgets
-            --     layout = wibox.layout.fixed.horizontal,
-            --     mylauncher,
-            --     s.mytaglist,
-            --     s.mypromptbox,
-            -- },
-            -- s.mytasklist, -- Middle widget
-            -- { -- Right widgets
-            --     layout = wibox.layout.fixed.horizontal,
-            --     mykeyboardlayout,
-            --     wibox.widget.systray(),
-            --     mytextclock,
-            --     s.mylayoutbox,
-            -- },
+            layout = wibox.layout.align.horizontal,
+            { -- Left widgets
+                layout = wibox.layout.fixed.horizontal,
+                mylauncher,
+                s.mytaglist,
+                s.mypromptbox,
+            },
+            s.mytasklist, -- Middle widget
+            { -- Right widgets
+                layout = wibox.layout.fixed.horizontal,
+                mykeyboardlayout,
+                wibox.widget.systray(),
+                mytextclock,
+                s.mylayoutbox,
+            },
         }
     }
 end)
@@ -240,10 +234,8 @@ awful.keyboard.append_global_keybindings({
               {description = "lua execute prompt", group = "awesome"}),
     awful.key({ modkey,           }, "Return", function () awful.spawn(terminal) end,
               {description = "open a terminal", group = "launcher"}),
-    -- awful.key({ modkey },            "r",     function () awful.screen.focused().mypromptbox:run() end,
-    --           {description = "run prompt", group = "launcher"}),
-    awful.key({ modkey },            "r",     function () awful.util.spawn("rofi -show drun") end,
-              {description = "run program", group = "launcher"}),
+    awful.key({ modkey },            "r",     function () awful.screen.focused().mypromptbox:run() end,
+              {description = "run prompt", group = "launcher"}),
     awful.key({ modkey }, "p", function() menubar.show() end,
               {description = "show the menubar", group = "launcher"}),
 })
@@ -262,13 +254,13 @@ awful.keyboard.append_global_keybindings({
 awful.keyboard.append_global_keybindings({
     awful.key({ modkey,           }, "j",
         function ()
-            awful.client.focus.byidx(-1)
+            awful.client.focus.byidx( 1)
         end,
         {description = "focus next by index", group = "client"}
     ),
     awful.key({ modkey,           }, "k",
         function ()
-            awful.client.focus.byidx( 1)
+            awful.client.focus.byidx(-1)
         end,
         {description = "focus previous by index", group = "client"}
     ),
@@ -297,9 +289,9 @@ awful.keyboard.append_global_keybindings({
 
 -- Layout related keybindings
 awful.keyboard.append_global_keybindings({
-    awful.key({ modkey, "Shift"   }, "j", function () awful.client.swap.byidx( -1)    end,
+    awful.key({ modkey, "Shift"   }, "j", function () awful.client.swap.byidx(  1)    end,
               {description = "swap with next client by index", group = "client"}),
-    awful.key({ modkey, "Shift"   }, "k", function () awful.client.swap.byidx(  1)    end,
+    awful.key({ modkey, "Shift"   }, "k", function () awful.client.swap.byidx( -1)    end,
               {description = "swap with previous client by index", group = "client"}),
     awful.key({ modkey,           }, "u", awful.client.urgent.jumpto,
               {description = "jump to urgent client", group = "client"}),
@@ -390,26 +382,6 @@ awful.keyboard.append_global_keybindings({
         end,
     }
 })
-
--- Volume and brightness keybindings
-awful.keyboard.append_global_keybindings({
-    awful.key({ }, "XF86AudioRaiseVolume", function ()
-        awful.spawn("pamixer -i 5")
-    end),
-    awful.key({ }, "XF86AudioLowerVolume", function ()
-        awful.spawn("pamixer -d 5")
-    end),
-    awful.key({ }, "XF86AudioMute", function ()
-        awful.spawn("pamixer -t")
-    end),
-    awful.key({ }, "XF86MonBrightnessUp", function ()
-        awful.spawn("brightnessctl set +10%")
-    end),
-    awful.key({ }, "XF86MonBrightnessDown", function ()
-        awful.spawn("brightnessctl set 10%-")
-    end)
-})
-
 
 client.connect_signal("request::default_mousebindings", function()
     awful.mouse.append_client_mousebindings({
@@ -515,7 +487,7 @@ ruled.client.connect_signal("request::rules", function()
     ruled.client.append_rule {
         id         = "titlebars",
         rule_any   = { type = { "normal", "dialog" } },
-        properties = { titlebars_enabled = false     }
+        properties = { titlebars_enabled = true      }
     }
 
     -- Set Firefox to always map on the tag named "2" on screen 1.
@@ -589,8 +561,3 @@ end)
 client.connect_signal("mouse::enter", function(c)
     c:activate { context = "mouse_enter", raise = false }
 end)
-
-
---Autostart applications
-awful.spawn.with_shell("picom --experimental-backend")
-awful.spawn.with_shell("polybar")
