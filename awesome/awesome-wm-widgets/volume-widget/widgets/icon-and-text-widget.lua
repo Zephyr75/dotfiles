@@ -8,7 +8,7 @@ local ICON_DIR = os.getenv("HOME") .. '/.config/awesome/awesome-wm-widgets/volum
 function widget.get_widget(widgets_args)
     local args = widgets_args or {}
 
-    local font = args.font or beautiful.font
+    local font = args.font or 'Play 10' --beautiful.font
     local icon_dir = args.icon_dir or ICON_DIR
 
     return wibox.widget {
