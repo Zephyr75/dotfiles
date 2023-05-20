@@ -593,4 +593,4 @@ end)
 
 --Autostart applications
 awful.spawn.with_shell("picom --experimental-backend")
-awful.spawn.with_shell("polybar")
+awful.spawn.with_shell("bash ~/.config/polybar/launch_polybar.sh")

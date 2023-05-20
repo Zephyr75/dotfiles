@@ -21,6 +21,16 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
 
+-- Custom widgets
+
+-- local volume_widget = require('awesome-wm-widgets.volume-widget.volume')
+local battery_widget = require("awesome-wm-widgets.battery-widget.battery")
+local cpu_widget = require("awesome-wm-widgets.cpu-widget.cpu-widget")
+local ram_widget = require("awesome-wm-widgets.ram-widget.ram-widget")
+local volume_widget = require("awesome-wm-widgets.volume-widget.volume")
+
+
+
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
@@ -38,14 +48,22 @@ end)
 --beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
 beautiful.init("/home/zeph/.config/awesome/default/theme.lua")
 
+-- make it transparent
+beautiful.bg_normal = "#222222"
+beautiful.bg_urgent = "#EB4034"
+
+-- make top bar twice as tall
+beautiful.wibar_height = 40
+
+
 beautiful.useless_gap = 5
 beautiful.border_width = 0
 
+
+
 -- This is used later as the default terminal and editor to run.
--- terminal = "xterm"
--- editor = os.getenv("EDITOR") or "nano"
 terminal = "alacritty"
-editor = "vscode"
+editor = "nvim"
 editor_cmd = terminal .. " -e " .. editor
 
 -- Default modkey.
@@ -82,19 +100,19 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 -- Table of layouts to cover with awful.layout.inc, order matters.
 tag.connect_signal("request::default_layouts", function()
     awful.layout.append_default_layouts({
-        -- awful.layout.suit.floating,
+        --awful.layout.suit.floating,
         awful.layout.suit.tile,
-        -- awful.layout.suit.tile.left,
-        -- awful.layout.suit.tile.bottom,
-        -- awful.layout.suit.tile.top,
+        --awful.layout.suit.tile.left,
+        --awful.layout.suit.tile.bottom,
+        --awful.layout.suit.tile.top,
         awful.layout.suit.fair,
-        -- awful.layout.suit.fair.horizontal,
-        -- awful.layout.suit.spiral,
-        -- awful.layout.suit.spiral.dwindle,
-        -- awful.layout.suit.max,
-        -- awful.layout.suit.max.fullscreen,
-        -- awful.layout.suit.magnifier,
-        -- awful.layout.suit.corner.nw,
+        --awful.layout.suit.fair.horizontal,
+        --awful.layout.suit.spiral,
+        --awful.layout.suit.spiral.dwindle,
+        --awful.layout.suit.max,
+        --awful.layout.suit.max.fullscreen,
+        --awful.layout.suit.magnifier,
+        --awful.layout.suit.corner.nw,
     })
 end)
 -- }}}
@@ -125,7 +143,89 @@ end)
 mykeyboardlayout = awful.widget.keyboardlayout()
 
 -- Create a textclock widget
-mytextclock = wibox.widget.textclock()
+mytextclock = wibox.widget.textclock("%d %B %H:%M")
+
+
+-- Create a new container with 20 pixels of padding on the left and right
+local padded_clock = wibox.container.margin(mytextclock, 15, 15)
+
+-- Create a background container for the text clock
+local clock_container = wibox.container.background(padded_clock)
+
+-- Set the background color and shape
+clock_container.bg = "#222222"
+clock_container.shape = function(cr, width, height)
+  local radius = 20
+  gears.shape.rounded_rect(cr, width, height, radius)
+end
+
+-- Style the textclock
+mytextclock.font = "sans 12"
+
+-- Create a new container with 20 pixels of padding on the left and right
+local padded_ram = wibox.container.margin(ram_widget(), 5, 5)
+
+-- Create a background container for the ram_widget
+local ram_container = wibox.container.background(padded_ram)
+
+-- Set the background color and shape
+ram_container.bg = "#222222"
+ram_container.shape = function(cr, width, height)
+  local radius = 20
+  gears.shape.rounded_rect(cr, width, height, radius)
+end
+
+-- Create a new container with 20 pixels of padding on the left and right
+local padded_cpu = wibox.container.margin(cpu_widget(), 15, 15)
+
+-- Create a background container for the cpu_widget
+local cpu_container = wibox.container.background(padded_cpu)
+
+-- Set the background color and shape
+cpu_container.bg = "#222222"
+cpu_container.shape = function(cr, width, height)
+  local radius = 20
+  gears.shape.rounded_rect(cr, width, height, radius)
+end
+
+-- Create a new container with 20 pixels of padding on the left and right
+local padded_battery = wibox.container.margin(battery_widget(), 10, 10)
+
+-- Create a background container for the battery_widget
+local battery_container = wibox.container.background(padded_battery)
+
+-- Set the background color and shape
+battery_container.bg = "#222222"
+battery_container.shape = function(cr, width, height)
+  local radius = 20
+  gears.shape.rounded_rect(cr, width, height, radius)
+end
+
+-- Create a new container with 20 pixels of padding on the left and right
+local padded_volume = wibox.container.margin(volume_widget(), 10, 10)
+
+-- Create a background container for the volume_widget
+local volume_container = wibox.container.background(padded_volume)
+
+-- Set the background color and shape
+volume_container.bg = "#222222"
+volume_container.shape = function(cr, width, height)
+  local radius = 20
+  gears.shape.rounded_rect(cr, width, height, radius)
+end
+
+local padded_systray = wibox.container.margin(wibox.widget.systray(), 15, 15, 5, 5)
+
+-- Create a background container for the systray
+local systray_container = wibox.container.background(padded_systray)
+
+-- Set the background color and shape
+systray_container.bg = "#222222"
+systray_container.shape = function(cr, width, height)
+  local radius = 20
+  gears.shape.rounded_rect(cr, width, height, radius)
+end
+
 
 screen.connect_signal("request::desktop_decoration", function(s)
     -- Each screen has its own tag table.
@@ -165,7 +265,28 @@ screen.connect_signal("request::desktop_decoration", function(s)
                                         end),
             awful.button({ }, 4, function(t) awful.tag.viewprev(t.screen) end),
             awful.button({ }, 5, function(t) awful.tag.viewnext(t.screen) end),
-        }
+        }, style = { bg_focus = "#222222", bg_occupied = "#222222a0",
+            bg_empty = "#22222220",
+            shape = gears.shape.circle,
+            font = "sans 12",
+        },
+        widget_template = {
+            {
+                {
+                    {
+                        id     = 'text_role',
+                        widget = wibox.widget.textbox,
+                        align = "center",
+                    },
+                    margins = 4, -- modify this value to adjust margin size
+                    widget  = wibox.container.margin,
+                },
+                id     = 'background_role',
+                widget = wibox.container.background,
+                forced_width = 40, -- modify this value to adjust button size
+            },
+            widget = wibox.container.margin
+        },
     }
 
     -- Create a tasklist widget
@@ -179,30 +300,43 @@ screen.connect_signal("request::desktop_decoration", function(s)
             awful.button({ }, 3, function() awful.menu.client_list { theme = { width = 250 } } end),
             awful.button({ }, 4, function() awful.client.focus.byidx(-1) end),
             awful.button({ }, 5, function() awful.client.focus.byidx( 1) end),
-        }
+        },
+	layout = {
+	    layout = wibox.layout.fixed.horizontal,
+	},
     }
 
     -- Create the wibox
     s.mywibox = awful.wibar {
         position = "top",
         screen   = s,
-        widget   = {
-            -- layout = wibox.layout.align.horizontal,
-            -- { -- Left widgets
-            --     layout = wibox.layout.fixed.horizontal,
-            --     mylauncher,
-            --     s.mytaglist,
-            --     s.mypromptbox,
-            -- },
-            -- s.mytasklist, -- Middle widget
-            -- { -- Right widgets
-            --     layout = wibox.layout.fixed.horizontal,
-            --     mykeyboardlayout,
-            --     wibox.widget.systray(),
-            --     mytextclock,
-            --     s.mylayoutbox,
-            -- },
-        }
+	fg = "#ffffff",
+	bg = "#00000000",
+        widget   = wibox.container.margin( 
+          {
+            layout = wibox.layout.align.horizontal,
+            { -- Left widgets
+                layout = wibox.layout.fixed.horizontal,
+                -- mylauncher,
+                s.mytaglist,
+                s.mypromptbox,
+            },
+            --s.mytasklist, -- Middle widget
+	          wibox.widget.textbox(),
+            { -- Right widgets
+                layout = wibox.layout.fixed.horizontal,
+                -- mykeyboardlayout,
+                systray_container,
+                --wibox.widget.systray(),
+                --wibox.container.margin(cpu_container, 10, 0, 0, 0),
+                wibox.container.margin(ram_container, 10, 0, 0, 0),
+                wibox.container.margin(volume_container, 10, 0, 0, 0),
+                wibox.container.margin(battery_container, 10, 0, 0, 0),
+                wibox.container.margin(clock_container, 10, 0, 0, 0),
+                -- insert 5 pixels of padding to the left
+                wibox.container.margin(s.mylayoutbox, 10, 0, 0, 0),
+            },
+          }, 10, 15, 10, 0),
     }
 end)
 
@@ -211,8 +345,8 @@ end)
 -- {{{ Mouse bindings
 awful.mouse.append_global_mousebindings({
     awful.button({ }, 3, function () mymainmenu:toggle() end),
-    awful.button({ }, 4, awful.tag.viewprev),
-    awful.button({ }, 5, awful.tag.viewnext),
+    -- awful.button({ }, 4, awful.tag.viewprev),
+    -- awful.button({ }, 5, awful.tag.viewnext),
 })
 -- }}}
 
@@ -240,10 +374,10 @@ awful.keyboard.append_global_keybindings({
               {description = "lua execute prompt", group = "awesome"}),
     awful.key({ modkey,           }, "Return", function () awful.spawn(terminal) end,
               {description = "open a terminal", group = "launcher"}),
-    -- awful.key({ modkey },            "r",     function () awful.screen.focused().mypromptbox:run() end,
-    --           {description = "run prompt", group = "launcher"}),
     awful.key({ modkey },            "r",     function () awful.util.spawn("rofi -show drun") end,
               {description = "run program", group = "launcher"}),
+    awful.key({ modkey },            "b",     function () awful.util.spawn("rofi -show filebrowser") end,
+              {description = "search file", group = "launcher"}),
     awful.key({ modkey }, "p", function() menubar.show() end,
               {description = "show the menubar", group = "launcher"}),
 })
@@ -391,13 +525,77 @@ awful.keyboard.append_global_keybindings({
     }
 })
 
--- Volume and brightness keybindings
+
+
+-- Define a function to update the notification widget
+local function update_notification_widget(widget, message)
+    widget:set_markup_silently("<b>Volume Control: </b>" .. message)
+end
+
+-- Create the notification widget
+local notification_widget = wibox.widget.textbox()
+update_notification_widget(notification_widget, "Ready")
+
+-- Define a function to show a notification with a given message
+local function show_notification(message)
+    naughty.notify({
+        preset = naughty.config.presets.normal,
+        title = "Volume Control",
+        text = message,
+        timeout = 2,
+        position = "top",
+        bg = "#222222",
+        fg = "#FFFFFF",
+        align = "center",
+        border_width = 0,
+        shape = function(cr, width, height)
+          local radius = 20
+          gears.shape.rounded_rect(cr, width, height, radius)
+        end,
+    })
+end
+
+local last_notification_id = nil
+
+-- local vol_notif_id
+-- Restore key bindings
 awful.keyboard.append_global_keybindings({
     awful.key({ }, "XF86AudioRaiseVolume", function ()
         awful.spawn("pamixer -i 5")
+        awful.spawn.easy_async("pamixer --get-volume", function(stdout)
+            local volume = tonumber(stdout)
+            local notification = naughty.notify({
+                title = "Volume",
+                text = volume .. "%",
+                timeout = 1,
+                position = "top_middle",
+                bg = "#222222",
+                fg = "#FFFFFF",
+                border_width = 0,
+                width = 100,
+                replaces_id = last_notification_id,
+            })
+            last_notification_id = notification.id
+        end)
     end),
     awful.key({ }, "XF86AudioLowerVolume", function ()
         awful.spawn("pamixer -d 5")
+        awful.spawn.easy_async("pamixer --get-volume", function(stdout)
+            local volume = tonumber(stdout)
+            local notification = naughty.notify({
+                title = "Volume",
+                text = volume .. "%",
+                timeout = 1,
+                position = "top_middle",
+                bg = "#222222",
+                fg = "#FFFFFF",
+                align = "center",
+                border_width = 0,
+                width = 100,
+                replaces_id = last_notification_id,
+            })
+            last_notification_id = notification.id
+        end)
     end),
     awful.key({ }, "XF86AudioMute", function ()
         awful.spawn("pamixer -t")
@@ -409,7 +607,6 @@ awful.keyboard.append_global_keybindings({
         awful.spawn("brightnessctl set 10%-")
     end)
 })
-
 
 client.connect_signal("request::default_mousebindings", function()
     awful.mouse.append_client_mousebindings({
@@ -591,6 +788,47 @@ client.connect_signal("mouse::enter", function(c)
 end)
 
 
+
+
+
+-- -- Set up a rounded rectangle shape
+-- local function rounded_shape(size)
+--     return function(cr, width, height)
+--         gears.shape.rounded_rect(cr, width, height, size)
+--     end
+-- end
+
+-- -- Set up shadow properties
+-- beautiful.shadow_radius = 10
+-- beautiful.shadow_offset = {x = 0, y = 0}
+-- beautiful.shadow_opacity = 0.8
+-- beautiful.shadow_shape = rounded_shape(10)
+
+-- -- Apply the shadow properties to the client's window
+-- client.connect_signal("manage", function(c)
+--     c.shape = rounded_shape(10)
+--     c.shadow = true
+-- end)
+
+
+-- -- Set up a rounded rectangle shape
+-- local function rounded_shape(size)
+--     return function(cr, width, height)
+--         gears.shape.rounded_rect(cr, width, height, size)
+--     end
+-- end
+
+-- -- Apply the rounded shape to the client's window
+-- client.connect_signal("manage", function(c)
+--     c.shape = rounded_shape(10)
+-- end)
+
+
 --Autostart applications
 awful.spawn.with_shell("picom --experimental-backend")
-awful.spawn.with_shell("polybar")
+--awful.spawn.with_shell("nitrogen --restore")
+-- awful.spawn.with_shell("$HOME/.config/awesome/scripts/wallpaper.sh")
+-- awful.spawn.with_shell("feh --bg-fill '/home/zeph/.config/awesome/wallpapers/firewatch.png'")
+
+
+awful.spawn.with_shell("nm-applet")
