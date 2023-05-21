@@ -326,7 +326,8 @@ screen.connect_signal("request::desktop_decoration", function(s)
             { -- Right widgets
                 layout = wibox.layout.fixed.horizontal,
                 -- mykeyboardlayout,
-                systray_container,
+                -- only display systray on primary screen
+                s == screen.primary and systray_container or nil,
                 --wibox.widget.systray(),
                 --wibox.container.margin(cpu_container, 10, 0, 0, 0),
                 wibox.container.margin(ram_container, 10, 0, 0, 0),
