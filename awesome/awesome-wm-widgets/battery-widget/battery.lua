@@ -89,6 +89,7 @@ local function worker(user_args)
                 position = position,
                 timeout = 5, hover_timeout = 0.5,
                 width = 200,
+                border_width = 0,
                 screen = mouse.screen
             }
         end
