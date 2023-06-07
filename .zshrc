@@ -102,18 +102,45 @@ source $ZSH/oh-my-zsh.sh
 
 path+=('/home/zeph/.local/bin')
 path+=('/opt/flutter/bin')
+# path+=('/usr/bin/chromium')
 export PATH
 
 
 
-CHROME_EXECUTABLE=/usr/bin/chromium
-export CHROME_EXECUTABLE
-
 
 alias nvidia="prime-offload; optimus-manager --switch nvidia --no-confirm"
-alias dual="xrandr --output eDP-1-1 --primary --mode 1920x1080 --rate 165.00 --output HDMI-0 --mode 1920x1080 --rate 60.00 --right-of eDP-1-1"
+alias hybrid="optimus-manager --switch hybrid --no-confirm"
+alias dual_hybrid="xrandr --output eDP-1 --primary --mode 1920x1080 --rate 165.00 --output HDMI-1-0 --mode 1920x1080 --rate 60.00 --right-of eDP-1"
+alias dual_nvidia="xrandr --output eDP-1-1 --primary --mode 1920x1080 --rate 165.00 --output HDMI-0 --mode 1920x1080 --rate 60.00 --right-of eDP-1-1"
 alias night="redshift -O 4000"
 alias day="redshift -x"
 alias fr="setxkbmap fr"
 alias us="setxkbmap us"
 alias intl="setxkbmap -layout us -variant intl"
+alias restart="killall -u zeph"
+alias btw="toilet --rainbow 'I use arch btw' -t"
+alias yeet="yay -Rns"
+alias draw="google-chrome-stable --new-window --app=https://excalidraw.com" 
+
+export PAGER="most"
+export CHROME_EXECUTABLE="google-chrome-stable"
+
+source /home/zeph/.config/broot/launcher/bash/br
+
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/usr/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/usr/etc/profile.d/conda.sh" ]; then
+        . "/usr/etc/profile.d/conda.sh"
+    else
+        export PATH="/usr/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
+
