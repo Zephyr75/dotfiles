@@ -11,7 +11,7 @@ an executable
 -- general
 lvim.log.level = "warn"
 lvim.format_on_save.enabled = false
-lvim.colorscheme = "lunar"
+lvim.colorscheme = "tokyonight-night"
 -- to disable icons and use a minimalist setup, uncomment the following
 -- lvim.use_icons = false
 
@@ -36,8 +36,15 @@ lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
 --   h = { "<cmd>2ToggleTerm size=30 direction=horizontal<cr>", "Split horizontal" },
 -- }
 
-vim.api.nvim_set_keymap('n', 'd', '"_d', { noremap = true })
+-- vim.api.nvim_set_keymap('n', 'd', '"_d', { noremap = true })
 vim.api.nvim_set_keymap('n', 'x', '"_x', { noremap = true })
+vim.api.nvim_set_keymap("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", { noremap = true })
+vim.api.nvim_set_keymap('n', '<C-f>', 'gggqG', { noremap = true })
+
+vim.opt.autochdir = true
+
+vim.g.terminal_emulator='alacritty'
+
 
 -- Change Telescope navigation to use j and k for navigation and n and p for history in both input and normal mode.
 -- we use protected-mode (pcall) just in case the plugin wasn't loaded yet.
@@ -175,6 +182,17 @@ lvim.builtin.treesitter.highlight.enable = true
 --   },
 -- }
 
+local cmp_nvim_lsp = require "cmp_nvim_lsp"
+
+require("lspconfig").clangd.setup {
+  on_attach = on_attach,
+  capabilities = cmp_nvim_lsp.default_capabilities(),
+  cmd = {
+    "clangd",
+    "--offset-encoding=utf-16",
+  },
+}
+
 vim.opt.relativenumber = true
 
 lvim.keys.normal_mode["<leader>y"] = ":w !xclip -selection clipboard<CR>"
@@ -190,16 +208,35 @@ lvim.plugins = {
       cmd = "TroubleToggle",
     },
     { 'wbthomason/packer.nvim' },
+    -- {
+    --   'navarasu/onedark.nvim',
+    --   config = function()
+    --     require('onedark').setup {
+    --       style = 'darker'
+    --     }
+    --     require('onedark').load()
+    --   end,
+    -- },
+    -- {
+    --   "folke/tokyonight.nvim",
+    --   lazy = false,
+    --   priority = 1000,
+    --   opts = {},
+    -- },
+    { 'github/copilot.vim' },
     {
-      'navarasu/onedark.nvim',
+      "Pocco81/auto-save.nvim",
       config = function()
-        require('onedark').setup {
-          style = 'darker'
-        }
-        require('onedark').load()
+         require("auto-save").setup {
+          -- your config goes here
+          -- or just leave it empty :)
+         }
       end,
     },
-    { 'github/copilot.vim' },
+    {
+      "iamcco/markdown-preview.nvim",
+      run = function() vim.fn["mkdp#util#install"]() end,
+    }
 }
 
 -- Autocommands (https://neovim.io/doc/user/autocmd.html)
