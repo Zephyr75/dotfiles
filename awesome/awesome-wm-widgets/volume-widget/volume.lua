@@ -39,7 +39,7 @@ local popup = awful.popup{
     ontop = true,
     visible = false,
     shape = gears.shape.rounded_rect,
-    border_width = 1,
+    border_width = 0,
     border_color = beautiful.bg_focus,
     maximum_width = 400,
     offset = { y = 5 },
