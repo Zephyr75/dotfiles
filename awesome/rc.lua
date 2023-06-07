@@ -100,7 +100,6 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 -- Table of layouts to cover with awful.layout.inc, order matters.
 tag.connect_signal("request::default_layouts", function()
     awful.layout.append_default_layouts({
-        --awful.layout.suit.floating,
         awful.layout.suit.tile,
         --awful.layout.suit.tile.left,
         --awful.layout.suit.tile.bottom,
@@ -113,6 +112,7 @@ tag.connect_signal("request::default_layouts", function()
         --awful.layout.suit.max.fullscreen,
         --awful.layout.suit.magnifier,
         --awful.layout.suit.corner.nw,
+        awful.layout.suit.floating,
     })
 end)
 -- }}}
@@ -160,7 +160,7 @@ clock_container.shape = function(cr, width, height)
 end
 
 -- Style the textclock
-mytextclock.font = "sans 12"
+mytextclock.font = "JetBrains Mono Nerd Font 12"
 
 -- Create a new container with 20 pixels of padding on the left and right
 local padded_ram = wibox.container.margin(ram_widget(), 5, 5)
@@ -268,7 +268,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
         }, style = { bg_focus = "#222222", bg_occupied = "#222222a0",
             bg_empty = "#22222220",
             shape = gears.shape.circle,
-            font = "sans 12",
+            font = "JetBrains Mono Nerd Font 12",
         },
         widget_template = {
             {
