@@ -160,7 +160,7 @@ clock_container.shape = function(cr, width, height)
 end
 
 -- Style the textclock
-mytextclock.font = "JetBrains Mono Nerd Font 12"
+mytextclock.font = "JetBrains Mono Nerd Font 11"
 
 -- Create a new container with 20 pixels of padding on the left and right
 local padded_ram = wibox.container.margin(ram_widget(), 5, 5)
