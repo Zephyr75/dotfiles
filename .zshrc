@@ -116,16 +116,26 @@ alias night="redshift -O 4000"
 alias day="redshift -x"
 alias fr="setxkbmap fr"
 alias us="setxkbmap us"
+alias no="setxkbmap no"
 alias intl="setxkbmap -layout us -variant intl"
 alias restart="killall -u zeph"
 alias btw="toilet --rainbow 'I use arch btw' -t"
 alias yeet="yay -Rns"
 alias draw="google-chrome-stable --new-window --app=https://excalidraw.com" 
+alias lock="dm-tool lock"
+alias lgit="lazygit"
+alias ldocker="lazydocker"
+alias weather="curl 'http://wttr.in/Paris?0'"
+alias weather_full="curl 'http://wttr.in'"
+alias sprunge="curl -F 'sprunge=<-' http://sprunge.us"
+alias bettercap_setup="sudo iptables -A FORWARD -i wlan0 -j ACCEPT;sudo iptables -A FORWARD -o wlan0 -j ACCEPT"
+
 
 export PAGER="most"
 export CHROME_EXECUTABLE="google-chrome-stable"
+export EDITOR="lvim"
 
-source /home/zeph/.config/broot/launcher/bash/br
+## source /home/zeph/.config/broot/launcher/bash/br
 
 
 # >>> conda initialize >>>
@@ -142,5 +152,4 @@ else
 fi
 unset __conda_setup
 # <<< conda initialize <<<
-
 
