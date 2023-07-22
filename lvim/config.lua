@@ -3,14 +3,39 @@
 -- Forum: https://www.reddit.com/r/lunarvim/
 -- Discord: https://discord.com/invite/Xb9B4Ny
 
+-----------------------------------------------------------------------------
+--FOLD
+--:set foldmethod=indent
+--zR
+--za
+-----------------------------------------------------------------------------
+--WRAP LINES
+--:set wrap
+-----------------------------------------------------------------------------
+--REPLACE ALL
+--:%s/old/new/g
+-----------------------------------------------------------------------------
+
+require'luasnip'.filetype_extend("dart", {"flutter"})
+require('leap').add_default_mappings()
+
+
+-- require("flutter-tools").setup {} -- use defaults
+
+-- require("luasnip.loaders.from_vscode").lazy_load()
 
 lvim.colorscheme = "tokyonight-storm"
 
 vim.api.nvim_set_keymap('n', 'd', '"_d', { noremap = true })
+vim.api.nvim_set_keymap('n', 'D', '"_D', { noremap = true })
 vim.api.nvim_set_keymap('n', 'x', '"_x', { noremap = true })
+vim.api.nvim_set_keymap('n', 'X', '"_X', { noremap = true })
+vim.api.nvim_set_keymap('n', 'c', '"_c', { noremap = true })
+vim.api.nvim_set_keymap('n', 'C', '"_C', { noremap = true })
 vim.api.nvim_set_keymap('n', '<C-f>', 'gggqG', { noremap = true })
 
-vim.api.nvim_set_keymap("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", { noremap = true })
+-- vim.api.nvim_set_keymap("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", { noremap = true })
+
 
 
 vim.keymap.set("n", "gp", "<cmd>lua require('goto-preview').goto_preview_definition()<CR>", { noremap = true })
@@ -24,9 +49,10 @@ vim.opt.relativenumber = true
 vim.opt.autochdir = true
 
 
-vim.g.copilot_assume_mapped = true
+-- vim.g.copilot_assume_mapped = true
 
-
+-- vim.g.copilot_no_tab_map = true
+vim.api.nvim_set_keymap("i", "<A-Tab>", 'copilot#Accept("<CR>")', { silent = true, expr = true })
 
 lvim.plugins = {
   { 'github/copilot.vim' },
@@ -49,13 +75,6 @@ lvim.plugins = {
     "iamcco/markdown-preview.nvim",
     build = function() vim.fn["mkdp#util#install"]() end,
   },
-  -- {
-  --   'ray-x/navigator.lua',
-  --   requires = {
-  --       { 'ray-x/guihua.lua', run = 'cd lua/fzy && make' },
-  --       { 'neovim/nvim-lspconfig' },
-  --   },
-  -- }
   {
     'rmagatti/goto-preview',
     config = function()
@@ -64,13 +83,39 @@ lvim.plugins = {
   },
   { 'ekickx/clipboard-image.nvim' },
 
+  {
+    'akinsho/flutter-tools.nvim',
+    lazy = false,
+    dependencies = {
+        'nvim-lua/plenary.nvim',
+        'stevearc/dressing.nvim', -- optional for vim.ui.select
+    },
+    config = true,
+  },
 
+  { 'ggandor/leap.nvim' },
+
+  { 'mg979/vim-visual-multi' },
+  -- {
+  --   "dnlhc/glance.nvim",
+  --   config = function()
+  --     require('glance').setup({
+  --       -- your configuration
+  --     })
+  --   end,
+  -- }
 
   -- {
   --   'filipdutescu/renamer.nvim',
   --   branch = 'master',
   --   requires = { {'nvim-lua/plenary.nvim'} }
   -- },
-
+  -- {
+  --   "L3MON4D3/LuaSnip",
+  --   dependencies = { "rafamadriz/friendly-snippets" },
+  -- },
+  -- { "rafamadriz/friendly-snippets" },
 
 }
+
+
