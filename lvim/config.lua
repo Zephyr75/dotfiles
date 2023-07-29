@@ -11,9 +11,45 @@
 -----------------------------------------------------------------------------
 --WRAP LINES
 --:set wrap
+--:set wrap! or :set invwrap
+--:set linebreak to wrap at word boundaries
 -----------------------------------------------------------------------------
 --REPLACE ALL
 --:%s/old/new/g
+-----------------------------------------------------------------------------
+--MULTICURSOR
+--Ctrl + n = add multicursor (move with arrow keys)
+-----------------------------------------------------------------------------
+--PASTE IMAGE IN MARKDOWN
+--:PasteImg
+-----------------------------------------------------------------------------
+--VIM COMMANDS
+--f + char = jump to char
+--F + char = jump to char backwards
+--t + char = jump to char but before
+--T + char = jump to char but before backwards
+--; = repeat last f, F, t or T
+--ct + char = change until char
+--cT + char = change until char backwards
+--E = jump to end of word (ignores punctuation)
+--B = jump to beginning of word (ignores punctuation)
+--vi + char = select inside char
+--va + char = select around char
+--vib = select inside brackets
+--viB = select inside brackets (including brackets)
+--viw = select inside word
+--]m = jump to next symbol
+--[m = jump to previous symbol
+--* = forward search for word under cursor
+--# = backward search for word under cursor
+--Ctrl + r = select visually selected text
+--:g/word/d = delete all lines containing word
+--Ctrl + a = increment number under cursor
+--Ctrl + x = decrement number under cursor
+--g + Ctrl + a = increment number under cursor in visual mode
+--g + Ctrl + x = decrement number under cursor in visual mode
+--"0p = paste from register 0 (yanked before delete)
+--Ctrl + r + = = evaluate expression in insert mode
 -----------------------------------------------------------------------------
 
 -- Enable Flutter snippets
@@ -22,17 +58,17 @@ require'luasnip'.filetype_extend("dart", {"flutter"})
 -- Setup leap mappings
 require('leap').add_default_mappings()
 
+-- Setup symbols tab
+require("symbols-outline").setup()
+
 -- Set color scheme
 lvim.colorscheme = "tokyonight-storm"
 
--- Do not copy when deleting
-vim.api.nvim_set_keymap('n', 'd', '"_d', { noremap = true })
-vim.api.nvim_set_keymap('n', 'D', '"_D', { noremap = true })
-vim.api.nvim_set_keymap('n', 'x', '"_x', { noremap = true })
-vim.api.nvim_set_keymap('n', 'X', '"_X', { noremap = true })
-vim.api.nvim_set_keymap('n', 'c', '"_c', { noremap = true })
-vim.api.nvim_set_keymap('n', 'C', '"_C', { noremap = true })
+-- Format file
 vim.api.nvim_set_keymap('n', '<C-f>', 'gggqG', { noremap = true })
+
+-- Replace visual selection with confirmation
+vim.api.nvim_set_keymap('v', '<C-r>', '"hy:%s/<C-r>h//gc<left><left><left>', { noremap = true })
 
 -- Preview method definition
 vim.keymap.set("n", "gp", "<cmd>lua require('goto-preview').goto_preview_definition()<CR>", { noremap = true })
@@ -83,6 +119,22 @@ lvim.plugins = {
   },
   { 'ggandor/leap.nvim' },
   { 'mg979/vim-visual-multi' },
+  { 'simrat39/symbols-outline.nvim' },
+  {
+    "ray-x/go.nvim",
+    dependencies = {  -- optional packages
+      "ray-x/guihua.lua",
+      "neovim/nvim-lspconfig",
+      "nvim-treesitter/nvim-treesitter",
+    },
+    config = function()
+      require("go").setup()
+    end,
+    event = {"CmdlineEnter"},
+    ft = {"go", 'gomod'},
+    build = ':lua require("go.install").update_all_sync()' -- if you need to install/update all binaries
+  }
+
 }
 
 
