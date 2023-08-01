@@ -28,7 +28,7 @@ local battery_widget = require("awesome-wm-widgets.battery-widget.battery")
 local cpu_widget = require("awesome-wm-widgets.cpu-widget.cpu-widget")
 local ram_widget = require("awesome-wm-widgets.ram-widget.ram-widget")
 local volume_widget = require("awesome-wm-widgets.volume-widget.volume")
-
+local logout_popup = require("awesome-wm-widgets.logout-popup-widget.logout-popup")
 
 
 -- {{{ Error handling
@@ -381,6 +381,7 @@ awful.keyboard.append_global_keybindings({
               {description = "search file", group = "launcher"}),
     awful.key({ modkey }, "p", function() menubar.show() end,
               {description = "show the menubar", group = "launcher"}),
+    awful.key({ modkey }, "Escape", function() logout_popup.launch() end, {description = "Show logout screen", group = "custom"}),
 })
 
 -- Tags related keybindings
@@ -631,7 +632,8 @@ client.connect_signal("request::default_keybindings", function()
                 c:raise()
             end,
             {description = "toggle fullscreen", group = "client"}),
-        awful.key({ modkey, "Shift"   }, "c",      function (c) c:kill()                         end,
+        -- awful.key({ modkey, "Shift"   }, "c",      function (c) c:kill()                         end,
+        awful.key({ modkey }, "q",      function (c) c:kill()                         end,
                 {description = "close", group = "client"}),
         awful.key({ modkey, "Control" }, "space",  awful.client.floating.toggle                     ,
                 {description = "toggle floating", group = "client"}),
@@ -833,3 +835,4 @@ awful.spawn.with_shell("picom --experimental-backend")
 
 
 awful.spawn.with_shell("nm-applet")
+awful.spawn.with_shell("setxkbmap no")
