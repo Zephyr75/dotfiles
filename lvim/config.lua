@@ -51,9 +51,24 @@
 --"0p = paste from register 0 (yanked before delete)
 --Ctrl + r + = = evaluate expression in insert mode
 -----------------------------------------------------------------------------
+-- RANGER COMMANDS
+--S = open shell
+--cw = rename
+--a = add to file name
+--yy = copy
+--dd = cut
+--dD = delete
+--pp = paste
+--:mkdir = create directory
+--:touch = create file
+--v = visual mode (select files)
+--V = invert selection (select all if empty)
+--! = open shell command
+-----------------------------------------------------------------------------
 
--- Enable Flutter snippets
+-- Enable useful snippets
 require'luasnip'.filetype_extend("dart", {"flutter"})
+require'luasnip'.filetype_extend("cs", {"unity"})
 
 -- Setup leap mappings
 require('leap').add_default_mappings()
@@ -63,12 +78,19 @@ require("symbols-outline").setup()
 
 -- Set color scheme
 lvim.colorscheme = "tokyonight-storm"
-
--- Format file
-vim.api.nvim_set_keymap('n', '<C-f>', 'gggqG', { noremap = true })
+-- require('onedark').setup {
+--     style = 'darker'
+-- }
+-- require('onedark').load()
 
 -- Replace visual selection with confirmation
 vim.api.nvim_set_keymap('v', '<C-r>', '"hy:%s/<C-r>h//gc<left><left><left>', { noremap = true })
+
+-- Open symbols tab
+vim.api.nvim_set_keymap('n', '<C-o>', ':SymbolsOutline<Enter>', { noremap = true })
+
+-- Paste image in markdown
+vim.api.nvim_set_keymap('n', '<C-p>', ':PasteImg<Enter>', { noremap = true })
 
 -- Preview method definition
 vim.keymap.set("n", "gp", "<cmd>lua require('goto-preview').goto_preview_definition()<CR>", { noremap = true })
@@ -96,10 +118,6 @@ lvim.plugins = {
     config = function()
       require("auto-save").setup {}
     end,
-  },
-  {
-    "iamcco/markdown-preview.nvim",
-    build = function() vim.fn["mkdp#util#install"]() end,
   },
   {
     'rmagatti/goto-preview',
@@ -133,6 +151,28 @@ lvim.plugins = {
     event = {"CmdlineEnter"},
     ft = {"go", 'gomod'},
     build = ':lua require("go.install").update_all_sync()' -- if you need to install/update all binaries
+  },
+  {
+    "iamcco/markdown-preview.nvim",
+    build = function() vim.fn["mkdp#util#install"]() end,
+  },
+  {
+    "loctvl842/monokai-pro.nvim",
+    config = function()
+      require("monokai-pro").setup()
+    end
+  },
+  { 'navarasu/onedark.nvim' },
+  { 'tpope/vim-eunuch' },
+  { 'tikhomirov/vim-glsl' },
+  {
+    "folke/todo-comments.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    opts = {
+      -- your configuration comes here
+      -- or leave it empty to use the default settings
+      -- refer to the configuration section below
+    }
   }
 
 }

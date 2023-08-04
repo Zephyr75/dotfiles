@@ -55,7 +55,7 @@ local function create_button(icon_name, action_name, accent_color, label_color, 
         end
     }
     button:connect_signal("mouse::enter", function()
-            action:set_markup('<span color="' .. label_color .. '">' .. action_name .. '</span>')
+            action:set_markup('<span font="JetBrains Mono Nerd Font 7" color="' .. label_color .. '">' .. action_name .. '</span>')
         end)
 
     button:connect_signal("mouse::leave", function() action:set_markup('<span> </span>') end)
@@ -75,7 +75,7 @@ local function launch(args)
     local icon_margin = args.icon_margin or 16
 
     local onlogout = args.onlogout or function () awesome.quit() end
-    local onlock = args.onlock or function() awful.spawn.with_shell("i3lock") end
+    local onlock = args.onlock or function() awful.spawn.with_shell("dm-tool lock") end
     local onreboot = args.onreboot or function() awful.spawn.with_shell("reboot") end
     local onsuspend = args.onsuspend or function() awful.spawn.with_shell("systemctl suspend") end
     local onpoweroff = args.onpoweroff or function() awful.spawn.with_shell("shutdown now") end
@@ -83,7 +83,7 @@ local function launch(args)
     w:set_bg(bg_color)
     if #phrases > 0 then
         phrase_widget:set_markup(
-            '<span color="'.. text_color .. '" size="20000">' .. phrases[ math.random( #phrases ) ] .. '</span>')
+            '<span color="'.. text_color .. '" font="JetBrains Mono Nerd Font 11" size="20000">' .. phrases[ math.random( #phrases ) ] .. '</span>')
     end
 
     w:setup {
