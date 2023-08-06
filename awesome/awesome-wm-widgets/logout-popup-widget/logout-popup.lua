@@ -91,9 +91,9 @@ local function launch(args)
             phrase_widget,
             {
                 {
-                    create_button('log-out', 'Log Out (l)',
+                    create_button('log-out', 'Log Out (o)',
                         accent_color, label_color, onlogout, icon_size, icon_margin),
-                    create_button('lock', 'Lock (k)',
+                    create_button('lock', 'Lock (l)',
                         accent_color, label_color, onlock, icon_size, icon_margin),
                     create_button('refresh-cw', 'Reboot (r)',
                         accent_color, label_color, onreboot, icon_size, icon_margin),
@@ -136,8 +136,8 @@ local function launch(args)
             elseif key == 's' then onpoweroff()
             elseif key == 'r' then onreboot()
             elseif key == 'u' then onsuspend()
-            elseif key == 'k' then onlock()
-            elseif key == 'l' then onlogout()
+            elseif key == 'l' then onlock()
+            elseif key == 'o' then onlogout()
             end
 
             if key == 'Escape' or string.match("srukl", key) then
