@@ -157,7 +157,8 @@ end)
 mykeyboardlayout = awful.widget.keyboardlayout()
 
 -- Create a textclock widget
-mytextclock = wibox.widget.textclock("%d %B %H:%M")
+-- add week day
+mytextclock = wibox.widget.textclock("%a %d %b %H:%M")
 
 
 -- Create a new container with 20 pixels of padding on the left and right
@@ -394,6 +395,8 @@ awful.keyboard.append_global_keybindings({
               {description = "run program", group = "launcher"}),
     awful.key({ modkey },            "e",     function () awful.util.spawn(terminal.." -e ranger") end,
               {description = "search file", group = "launcher"}),
+    awful.key({ modkey },            "g",     function () awful.util.spawn("github-desktop") end,
+              {description = "run github desktop", group = "launcher"}),
     awful.key({ modkey }, "p", function() menubar.show() end,
               {description = "show the menubar", group = "launcher"}),
     awful.key({ modkey }, "Escape", function() logout_popup.launch() end, {description = "Show logout screen", group = "custom"}),
