@@ -2,7 +2,7 @@ xorg
 pulseaudio
 awesome
 
-dhcpcd
+dhcpcd: assigns local IP
 git
 firefox
 alacritty + theme
@@ -34,7 +34,6 @@ acpi
 alsa-utils
 zsh-syntax-highlighting
 kotlin
-github desktop
 qt5ct
 steam = https://www.makeuseof.com/turn-arch-linux-into-a-gaming-system-with-steam/
 breeze = https://unix.stackexchange.com/questions/680483/how-to-add-qt-qpa-platformtheme-qt5ct-environment-variable-in-arch-linux
@@ -58,3 +57,10 @@ cmake
 moonlight
 zerotier
 tailscale
+
+grip
+live-server
+portainer
+github-desktop
+lazygit
+lazydocker

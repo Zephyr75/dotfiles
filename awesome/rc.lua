@@ -29,7 +29,9 @@ local cpu_widget = require("awesome-wm-widgets.cpu-widget.cpu-widget")
 local ram_widget = require("awesome-wm-widgets.ram-widget.ram-widget")
 local volume_widget = require("awesome-wm-widgets.volume-widget.volume")
 local logout_popup = require("awesome-wm-widgets.logout-popup-widget.logout-popup")
-local docker_widget = require("awesome-wm-widgets.docker-widget.docker")
+-- local docker_widget = require("awesome-wm-widgets.docker-widget.docker")
+
+local calendar_widget = require("awesome-wm-widgets.calendar-widget.calendar")
 
 -- -- Create a new container with 20 pixels of padding on the left and right
 -- local padded_docker = wibox.container.margin(docker_widget(), 10, 10)
@@ -159,6 +161,19 @@ mykeyboardlayout = awful.widget.keyboardlayout()
 -- Create a textclock widget
 -- add week day
 mytextclock = wibox.widget.textclock("%a %d %b %H:%M")
+
+local cw = calendar_widget({
+    -- theme = 'outrun',
+    placement = 'top_right',
+    radius = 0,
+-- with customized next/previous (see table above)
+    previous_month_button = 1,
+    next_month_button = 3,
+})
+mytextclock:connect_signal("button::press",
+    function(_, _, _, button)
+        if button == 1 then cw.toggle() end
+    end)
 
 
 -- Create a new container with 20 pixels of padding on the left and right
@@ -397,6 +412,8 @@ awful.keyboard.append_global_keybindings({
               {description = "search file", group = "launcher"}),
     awful.key({ modkey },            "g",     function () awful.util.spawn("github-desktop") end,
               {description = "run github desktop", group = "launcher"}),
+    awful.key({ modkey },            "d",     function () awful.util.spawn("google-chrome-stable --new-window --app=https://excalidraw.com") end,
+              {description = "run excalidraw", group = "launcher"}),
     awful.key({ modkey }, "p", function() menubar.show() end,
               {description = "show the menubar", group = "launcher"}),
     awful.key({ modkey }, "Escape", function() logout_popup.launch() end, {description = "Show logout screen", group = "custom"}),

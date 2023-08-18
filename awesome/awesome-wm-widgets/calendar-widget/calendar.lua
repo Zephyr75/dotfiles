@@ -74,10 +74,11 @@ local function worker(user_args)
             fg = beautiful.notification_fg or beautiful.fg,
             focus_date_bg = beautiful.notification_fg or beautiful.fg,
             focus_date_fg = beautiful.notification_bg or beautiful.bg,
-            weekend_day_bg = beautiful.bg_focus,
+            -- weekend_day_bg = beautiful.bg_focus,
             weekday_fg = beautiful.fg,
             header_fg = beautiful.fg,
-            border = beautiful.border_normal
+            -- border = beautiful.border_normal
+            -- border ='#00000000'
         }
 
     }
