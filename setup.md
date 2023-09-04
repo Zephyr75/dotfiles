@@ -1,12 +1,33 @@
+# OS
+
 xorg
 pulseaudio
-awesome
-
+awesome-git
 dhcpcd: assigns local IP
+picom-jonaburg
+firefox
+alacritty + theme tokyonight
+thunar
+ranger
+fzf
+lvim + theme tokyonight
+timeshift
+duf
+htop
+rxfetch
+calcure
+
+## lxappearance
+
+papirus dark
+orchis
+cantarell
+
+
+
+
 git
 firefox
-alacritty + theme
-awesome-git
 thunar
 lxappearance
 picom

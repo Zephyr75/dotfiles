@@ -67,6 +67,7 @@ beautiful.init("/home/zeph/.config/awesome/default/theme.lua")
 -- make it transparent
 beautiful.bg_normal = "#222222"
 beautiful.bg_urgent = "#EB4034"
+beautiful.bg_focus = "#444444"
 
 -- make top bar twice as tall
 beautiful.wibar_height = 40
@@ -257,6 +258,8 @@ systray_container.shape = function(cr, width, height)
 end
 
 
+
+
 screen.connect_signal("request::desktop_decoration", function(s)
     -- Each screen has its own tag table.
     awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
@@ -275,6 +278,22 @@ screen.connect_signal("request::desktop_decoration", function(s)
             awful.button({ }, 5, function () awful.layout.inc( 1) end),
         }
     }
+
+
+    local padded_layout_box = wibox.container.margin(s.mylayoutbox, 10, 10, 5, 5)
+
+    -- Create a background container for the systray
+    local layout_box_container = wibox.container.background(padded_layout_box)
+
+    -- Set the background color and shape
+    layout_box_container.bg = "#222222"
+    layout_box_container.shape = function(cr, width, height)
+      local radius = 20
+      gears.shape.rounded_rect(cr, width, height, radius)
+    end
+
+
+
 
     -- Create a taglist widget
     s.mytaglist = awful.widget.taglist {
@@ -366,7 +385,8 @@ screen.connect_signal("request::desktop_decoration", function(s)
                 wibox.container.margin(clock_container, 10, 0, 0, 0),
                 -- wibox.container.margin(docker_widget(), 10, 0, 0, 0),
                 -- insert 5 pixels of padding to the left
-                wibox.container.margin(s.mylayoutbox, 10, 0, 0, 0),
+                -- wibox.container.margin(s.mylayoutbox, 10, 0, 0, 0),
+                wibox.container.margin(layout_box_container, 10, 0, 0, 0),
             },
           }, 10, 15, 10, 0),
     }
@@ -408,7 +428,7 @@ awful.keyboard.append_global_keybindings({
               {description = "open a terminal", group = "launcher"}),
     awful.key({ modkey },            "r",     function () awful.util.spawn("rofi -show drun") end,
               {description = "run program", group = "launcher"}),
-    awful.key({ modkey },            "e",     function () awful.util.spawn(terminal.." -e ranger") end,
+    awful.key({ modkey },            "e",     function () awful.util.spawn("thunar") end,
               {description = "search file", group = "launcher"}),
     awful.key({ modkey },            "g",     function () awful.util.spawn("github-desktop") end,
               {description = "run github desktop", group = "launcher"}),
@@ -869,7 +889,5 @@ awful.spawn.with_shell("picom --experimental-backend")
 --awful.spawn.with_shell("nitrogen --restore")
 -- awful.spawn.with_shell("$HOME/.config/awesome/scripts/wallpaper.sh")
 -- awful.spawn.with_shell("feh --bg-fill '/home/zeph/.config/awesome/wallpapers/firewatch.png'")
-
-
 awful.spawn.with_shell("nm-applet")
 awful.spawn.with_shell("setxkbmap no")

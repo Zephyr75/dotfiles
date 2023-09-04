@@ -1,7 +1,10 @@
-
+-- Read the docs: https://www.lunarvim.org/docs/configuration
+-- Example configs: https://github.com/LunarVim/starter.lvim
 -- Video Tutorials: https://www.youtube.com/watch?v=sFA9kX-Ud_c&list=PLhoH5vyxr6QqGu0i7tt_XoVK9v-KvZ3m6
 -- Forum: https://www.reddit.com/r/lunarvim/
 -- Discord: https://discord.com/invite/Xb9B4Ny
+
+
 
 -----------------------------------------------------------------------------
 --FOLD
@@ -46,8 +49,8 @@
 --:g/word/d = delete all lines containing word
 --Ctrl + a = increment number under cursor
 --Ctrl + x = decrement number under cursor
---g + Ctrl + a = increment number under cursor in visual mode
---g + Ctrl + x = decrement number under cursor in visual mode
+--U = capitalize visually selected text
+--u = lowercase visually selected text
 --"0p = paste from register 0 (yanked before delete)
 --Ctrl + r + = = evaluate expression in insert mode
 -----------------------------------------------------------------------------
@@ -70,30 +73,16 @@
 require'luasnip'.filetype_extend("dart", {"flutter"})
 require'luasnip'.filetype_extend("cs", {"unity"})
 
--- Setup leap mappings
--- require('leap').add_default_mappings()
-
+--
 -- Set color scheme
 lvim.colorscheme = "tokyonight-storm"
--- require('onedark').setup {
---     style = 'darker'
--- }
--- require('onedark').load()
 
--- require('dap-go').setup()
 
--- Replace visual selection with confirmation
-vim.api.nvim_set_keymap('v', '<C-r>', '"hy:%s/<C-r>h//gc<left><left><left>', { noremap = true })
 
--- Open symbols tab
--- vim.api.nvim_set_keymap('n', '<C-o>', ':SymbolsOutline<Enter>', { noremap = true })
-vim.api.nvim_set_keymap('n', '<C-e>', ':Navbuddy<Enter>', { noremap = true })
 
--- Paste image in markdown
-vim.api.nvim_set_keymap('n', '<C-p>', ':PasteImg<Enter>', { noremap = true })
+vim.api.nvim_set_keymap('n', '<A-u>', '<C-u>', { noremap = true })
 
--- Preview method definition
-vim.keymap.set("n", "gp", "<cmd>lua require('goto-preview').goto_preview_definition()<CR>", { noremap = true })
+vim.api.nvim_set_keymap('n', '<A-d>', '<C-d>', { noremap = true })
 
 -- Enable relative line numbers
 vim.opt.relativenumber = true
@@ -125,42 +114,7 @@ lvim.plugins = {
       require('goto-preview').setup {}
     end
   },
-  { 'ekickx/clipboard-image.nvim' },
-  {
-    'akinsho/flutter-tools.nvim',
-    lazy = false,
-    dependencies = {
-        'nvim-lua/plenary.nvim',
-        'stevearc/dressing.nvim',
-    },
-    config = true,
-  },
   { 'mg979/vim-visual-multi' },
-  {
-    "ray-x/go.nvim",
-    dependencies = {  -- optional packages
-      "ray-x/guihua.lua",
-      "neovim/nvim-lspconfig",
-      "nvim-treesitter/nvim-treesitter",
-    },
-    config = function()
-      require("go").setup()
-    end,
-    event = {"CmdlineEnter"},
-    ft = {"go", 'gomod'},
-    build = ':lua require("go.install").update_all_sync()' -- if you need to install/update all binaries
-  },
-  {
-    "iamcco/markdown-preview.nvim",
-    build = function() vim.fn["mkdp#util#install"]() end,
-  },
-  {
-    "loctvl842/monokai-pro.nvim",
-    config = function()
-      require("monokai-pro").setup()
-    end
-  },
-  { 'navarasu/onedark.nvim' },
   { 'tpope/vim-eunuch' },
   { 'tikhomirov/vim-glsl' },
   {
@@ -197,15 +151,38 @@ lvim.plugins = {
     },
   },
   { 'leoluz/nvim-dap-go' },
+  { 'ekickx/clipboard-image.nvim' },
+  { 'jbyuki/nabla.nvim' },
+
 }
 
 
-require('go').setup()
+require'lspconfig'.marksman.setup{}
 
-require('dap-go').setup()
 
+
+-- Replace visual selection with confirmation
+vim.api.nvim_set_keymap('v', '<A-r>', '"hy:%s/<C-r>h//gc<left><left><left>', { noremap = true })
+
+-- Open symbols tab
+vim.api.nvim_set_keymap('n', '<A-e>', ':Navbuddy<Enter>', { noremap = true })
+
+-- Paste image in markdown
+vim.api.nvim_set_keymap('n', '<A-p>', ':PasteImg<Enter>', { noremap = true })
+
+-- Preview method definition
+vim.keymap.set("n", "gp", "<cmd>lua require('goto-preview').goto_preview_definition()<CR>", { noremap = true })
+vim.keymap.set("n", "gl", "<cmd>lua require('nabla').popup()<CR>", { noremap = true })
+
+
+
+
+-- require('go').setup()
+
+-- require('dap-go').setup()
+
+-- fix clangd problem
 local cmp_nvim_lsp = require "cmp_nvim_lsp"
-
 require("lspconfig").clangd.setup {
   on_attach = on_attach,
   capabilities = cmp_nvim_lsp.default_capabilities(),
@@ -217,35 +194,35 @@ require("lspconfig").clangd.setup {
 
 
 
-local dap = require('dap')
-dap.adapters.cppdbg = {
-  id = 'cppdbg',
-  type = 'executable',
-  -- command = '/absolute/path/to/cpptools/extension/debugAdapters/bin/OpenDebugAD7',
-  command = '',
-}
+-- local dap = require('dap')
+-- dap.adapters.cppdbg = {
+--   id = 'cppdbg',
+--   type = 'executable',
+--   -- command = '/absolute/path/to/cpptools/extension/debugAdapters/bin/OpenDebugAD7',
+--   command = '',
+-- }
 
-dap.configurations.cpp = {
-  {
-    name = "Launch file",
-    type = "cppdbg",
-    request = "launch",
-    program = function()
-      return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
-    end,
-    cwd = '${workspaceFolder}',
-    stopAtEntry = true,
-  },
-  {
-    name = 'Attach to gdbserver :1234',
-    type = 'cppdbg',
-    request = 'launch',
-    MIMode = 'gdb',
-    miDebuggerServerAddress = 'localhost:1234',
-    miDebuggerPath = '/usr/bin/gdb',
-    cwd = '${workspaceFolder}',
-    program = function()
-      return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
-    end,
-  },
-}
+-- dap.configurations.cpp = {
+--   {
+--     name = "Launch file",
+--     type = "cppdbg",
+--     request = "launch",
+--     program = function()
+--       return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+--     end,
+--     cwd = '${workspaceFolder}',
+--     stopAtEntry = true,
+--   },
+--   {
+--     name = 'Attach to gdbserver :1234',
+--     type = 'cppdbg',
+--     request = 'launch',
+--     MIMode = 'gdb',
+--     miDebuggerServerAddress = 'localhost:1234',
+--     miDebuggerPath = '/usr/bin/gdb',
+--     cwd = '${workspaceFolder}',
+--     program = function()
+--       return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+--     end,
+--   },
+-- }
