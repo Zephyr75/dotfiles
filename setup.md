@@ -5,23 +5,72 @@ pulseaudio
 awesome-git
 dhcpcd: assigns local IP
 picom-jonaburg
-firefox
 alacritty + theme tokyonight
 thunar
 ranger
-fzf
-lvim + theme tokyonight
 timeshift
 duf
 htop
 rxfetch
-calcure
+aether greeter
+pamixer
+brightnessctl
+redshift
+rofi
+cronie
+network manager + nmcli
 
-## lxappearance
+# Alacritty
+
+zsh
+oh my zsh
+zsh-syntax-highlighting
+zsh-autosuggestions
+
+# Editor
+
+hexcurse
+lvim + theme tokyonight / flatwhite
+[Health problem](https://github.com/ekickx/clipboard-image.nvim/pull/48)
+
+# Terminal
+
+htop
+nvtop
+ag: grep but better
+fzf: find but better
+tldr: man but better
+bc: calculator
+calcure: calendar
+rsync: copy file to nas
+ix: copy file to temporary url
+grip: markdown renderer
+live-server
+
+## Custom commands
+
+todo
+money
+stopwatch
+mount_nas
+weather
+weather_full
+draw
+
+# lxappearance
 
 papirus dark
 orchis
 cantarell
+jetbrains mono
+
+# Firefox
+
+Vimium
+Tab Stash
+Dark mode
+![](img/2023-09-05-17-01-51.png)
+
 
 
 
@@ -31,19 +80,14 @@ firefox
 thunar
 lxappearance
 picom
-rofi
 papirus maia
 orchis
 jetbrains mono nerd font
 oh my zsh
 arc icon theme
 neovim + lunar vim
-pamixer
-brightnessctl
-redshift
 heroic games launcher
 gnome disk utility
-network manager + nmcli
 mangohud
 blender
 discord
@@ -62,14 +106,12 @@ gThumb
 vlc
 optimus manager
 lightdm
-lightdm-gtk-greeter = https://www.addictivetips.com/ubuntu-linux-tips/set-up-lightdm-on-arch-linux/
 gradle
 nodejs
 npm
 nvtop
 bluez + bluez-utils
 virt-manager
-polybar
 gnu-netcat
 wireshark-qt
 ghidra
