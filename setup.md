@@ -46,6 +46,8 @@ rsync: copy file to nas
 ix: copy file to temporary url
 grip: markdown renderer
 live-server
+ncdu: view folders size
+bmon: monitor network usage
 
 ## Custom commands
 
