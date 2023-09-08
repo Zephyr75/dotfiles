@@ -19,6 +19,8 @@ redshift
 rofi
 cronie
 network manager + nmcli
+edex-ui
+tmux
 
 # Alacritty
 

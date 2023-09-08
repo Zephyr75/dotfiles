@@ -1,9 +1,7 @@
 -- Read the docs: https://www.lunarvim.org/docs/configuration
--- Example configs: https://github.com/LunarVim/starter.lvim
 -- Video Tutorials: https://www.youtube.com/watch?v=sFA9kX-Ud_c&list=PLhoH5vyxr6QqGu0i7tt_XoVK9v-KvZ3m6
 -- Forum: https://www.reddit.com/r/lunarvim/
 -- Discord: https://discord.com/invite/Xb9B4Ny
-
 
 
 -----------------------------------------------------------------------------
@@ -53,6 +51,9 @@
 --u = lowercase visually selected text
 --"0p = paste from register 0 (yanked before delete)
 --Ctrl + r + = = evaluate expression in insert mode
+--m + char = mark line with char
+--m + capital char = mark line across files with char
+--' + char = jump to mark char
 -----------------------------------------------------------------------------
 -- RANGER COMMANDS
 --S = open shell
@@ -68,21 +69,31 @@
 --V = invert selection (select all if empty)
 --! = open shell command
 -----------------------------------------------------------------------------
+-- TMUX COMMANDS
+--tmux new -s name = create session
+--tmux a -t name = attach to session
+--tmux ls = list sessions
+--tmux kill-session -t name = kill session
+--Ctrl + b + d = detach from session
+--Ctrl + b + c = create window
+--Ctrl + b + n = next window
+--Ctrl + b + p = previous window
+--Ctrl + b + x = kill window
+-----------------------------------------------------------------------------
 
 -- Enable useful snippets
 require'luasnip'.filetype_extend("dart", {"flutter"})
 require'luasnip'.filetype_extend("cs", {"unity"})
 
---
 -- Set color scheme
 lvim.colorscheme = "tokyonight-storm"
 
 
 
-
+-- Remap half page up/down to Alt+u/d
 vim.api.nvim_set_keymap('n', '<A-u>', '<C-u>', { noremap = true })
-
 vim.api.nvim_set_keymap('n', '<A-d>', '<C-d>', { noremap = true })
+
 
 -- Enable relative line numbers
 vim.opt.relativenumber = true
@@ -102,17 +113,12 @@ lvim.plugins = {
     priority = 1000,
     opts = {},
   },
+
   {
     "Pocco81/auto-save.nvim",
     config = function()
       require("auto-save").setup {}
     end,
-  },
-  {
-    'rmagatti/goto-preview',
-    config = function()
-      require('goto-preview').setup {}
-    end
   },
   { 'mg979/vim-visual-multi' },
   { 'tpope/vim-eunuch' },
@@ -153,7 +159,25 @@ lvim.plugins = {
   { 'leoluz/nvim-dap-go' },
   { 'ekickx/clipboard-image.nvim' },
   { 'jbyuki/nabla.nvim' },
-
+  {
+      'akinsho/flutter-tools.nvim',
+      lazy = false,
+      dependencies = {
+          'nvim-lua/plenary.nvim',
+          'stevearc/dressing.nvim', -- optional for vim.ui.select
+      },
+      config = true,
+  },
+  {'iamcco/markdown-preview.nvim'},
+  {
+   "folke/trouble.nvim",
+   dependencies = { "nvim-tree/nvim-web-devicons" },
+   opts = {
+    -- your configuration comes here
+    -- or leave it empty to use the default settings
+    -- refer to the configuration section below
+   },
+  },
 }
 
 
@@ -162,16 +186,15 @@ require'lspconfig'.marksman.setup{}
 
 
 -- Replace visual selection with confirmation
-vim.api.nvim_set_keymap('v', '<A-r>', '"hy:%s/<C-r>h//gc<left><left><left>', { noremap = true })
+vim.api.nvim_set_keymap('v', '<C-r>', '"hy:%s/<C-r>h//gc<left><left><left>', { noremap = true })
 
 -- Open symbols tab
 vim.api.nvim_set_keymap('n', '<A-e>', ':Navbuddy<Enter>', { noremap = true })
 
 -- Paste image in markdown
-vim.api.nvim_set_keymap('n', '<A-p>', ':PasteImg<Enter>', { noremap = true })
+vim.api.nvim_set_keymap('n', '<C-p>', ':PasteImg<Enter>', { noremap = false })
 
 -- Preview method definition
-vim.keymap.set("n", "gp", "<cmd>lua require('goto-preview').goto_preview_definition()<CR>", { noremap = true })
 vim.keymap.set("n", "gl", "<cmd>lua require('nabla').popup()<CR>", { noremap = true })
 
 
