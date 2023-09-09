@@ -131,3 +131,10 @@ portainer
 github-desktop
 lazygit
 lazydocker
+
+
+
+# Fix unwanted committed file
+
+git filter-repo --use-base-name --path <file_name> --invert-paths --force
+git push --set-upstream <git_url> <main_branche_name> --force
