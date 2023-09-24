@@ -1,0 +1,110 @@
+<layout>
+    <area type="offset">
+	    <display>
+	        <evenrow>
+		    <evencolumn>
+		        <foreground>#2ac3de</foreground>
+		        <background>#24283b</background>
+		    </evencolumn>
+	        </evenrow>
+	        <oddrow>
+		    <evencolumn>
+		        <foreground>white</foreground>
+		        <background>#222222</background>
+		    </evencolumn>
+	        </oddrow>    
+	    </display>
+    </area>
+    
+
+    <area type="separator">
+        <display>
+            <evenrow>
+                <evencolumn>
+                    <foreground>white</foreground>
+                    <background>#222222</background>
+                </evencolumn>
+            </evenrow>
+        </display>                        
+    </area>
+
+    <area type="hexadecimal">
+	<case>upper</case>
+        <display>
+            <evenrow>
+                <evencolumn>
+                    <foreground>#9ece6a</foreground>
+                    <background>#24283b</background>
+                </evencolumn>
+                <oddcolumn>
+                    <foreground>#2ac3de</foreground>
+                    <background>#24283b</background>
+                </oddcolumn>
+                <selectedcolumn>
+                    <foreground>#2ac3de</foreground>
+                    <background>#565f89</background>
+                </selectedcolumn>
+            </evenrow>    
+            <oddrow>
+                <evencolumn>
+                    <foreground>#9ece6a</foreground>
+                    <background>#222222</background>
+                </evencolumn>
+                <oddcolumn>
+                    <foreground>white</foreground>
+                    <background>#222222</background>
+                </oddcolumn>
+                <selectedcolumn>
+                    <foreground>white</foreground>
+                    <background>#565f89</background>
+                </selectedcolumn>
+            </oddrow>    
+        </display>  
+    </area>
+
+    <area type="separator">
+    	<display>
+	        <evenrow>
+		    <evencolumn>
+		        <foreground>white</foreground>
+		        <background>#222222</background>
+		    </evencolumn>
+	        </evenrow>    
+	    </display>
+
+    </area>
+    
+    <area type="ascii">
+        <display>
+            <evenrow>
+                <evencolumn>
+                    <foreground>#2ac3de</foreground>
+                    <background>#24283b</background>
+                </evencolumn>
+                <oddcolumn>
+                    <foreground>#2ac3de</foreground>
+                    <background>#24283b</background>
+                </oddcolumn>
+                <selectedcolumn>
+                    <foreground>#2ac3de</foreground>
+                    <background>#565f89</background>
+                </selectedcolumn>
+            </evenrow>    
+            <oddrow>
+                <evencolumn>
+                    <foreground>white</foreground>
+                    <background>#222228</background>
+                </evencolumn>
+                <oddcolumn>
+                    <foreground>white</foreground>
+                    <background>#222228</background>
+                </oddcolumn>
+                <selectedcolumn>
+                    <foreground>white</foreground>
+                    <background>#565f89</background>
+                </selectedcolumn>
+            </oddrow>    
+        </display>  
+    </area>
+
+</layout>
