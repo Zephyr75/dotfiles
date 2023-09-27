@@ -22,6 +22,11 @@ network manager + nmcli
 edex-ui
 tmux
 
+# Pacman
+
+ILoveCandy in /etc/pacman.conf
+ParallelDownloads = 5
+
 # Alacritty
 
 zsh
