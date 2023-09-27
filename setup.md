@@ -36,7 +36,7 @@ zsh-autosuggestions
 
 # Editor
 
-hexcurse
+bless
 lvim + theme tokyonight / flatwhite
 [Health problem](https://github.com/ekickx/clipboard-image.nvim/pull/48)
 
