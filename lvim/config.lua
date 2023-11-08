@@ -3,7 +3,9 @@
 -- Forum: https://www.reddit.com/r/lunarvim/
 -- Discord: https://discord.com/invite/Xb9B4Ny
 
-
+-----------------------------------------------------------------------------
+--ERROR MESSAGE
+--:mess after running command
 -----------------------------------------------------------------------------
 --FOLD
 --:set foldmethod=indent
@@ -82,14 +84,16 @@
 -----------------------------------------------------------------------------
 
 -- Enable useful snippets
-require'luasnip'.filetype_extend("dart", {"flutter"})
-require'luasnip'.filetype_extend("cs", {"unity"})
+require 'luasnip'.filetype_extend("dart", { "flutter" })
+require 'luasnip'.filetype_extend("cs", { "unity" })
 
 -- Set color scheme
 lvim.colorscheme = "tokyonight-storm"
 
 
 require('leap').add_default_mappings()
+
+vim.cmd('set clipboard+=unnamedplus')
 
 
 -- Remap half page up/down to Alt+u/d
@@ -134,58 +138,57 @@ lvim.plugins = {
   {
     "neovim/nvim-lspconfig",
     dependencies = {
-        {
-            "SmiteshP/nvim-navbuddy",
-            dependencies = {
-                "SmiteshP/nvim-navic",
-                "MunifTanjim/nui.nvim"
-            },
-            opts = { lsp = { auto_attach = true } }
-        }
+      {
+        "SmiteshP/nvim-navbuddy",
+        dependencies = {
+          "SmiteshP/nvim-navic",
+          "MunifTanjim/nui.nvim"
+        },
+        opts = { lsp = { auto_attach = true } }
+      }
     },
   },
-  -- {
-  --   "folke/flash.nvim",
-  --   event = "VeryLazy",
-  --   ---@type Flash.Config
-  --   opts = {},
-  --   -- stylua: ignore
-  --   keys = {
-  --     { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
-  --     { "S", mode = { "n", "o", "x" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
-  --     { "r", mode = "o", function() require("flash").remote() end, desc = "Remote Flash" },
-  --     { "R", mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
-  --     { "<c-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "Toggle Flash Search" },
-  --   },
-  -- },
   { 'leoluz/nvim-dap-go' },
   { 'ekickx/clipboard-image.nvim' },
   { 'jbyuki/nabla.nvim' },
   {
-      'akinsho/flutter-tools.nvim',
-      lazy = false,
-      dependencies = {
-          'nvim-lua/plenary.nvim',
-          'stevearc/dressing.nvim', -- optional for vim.ui.select
-      },
-      config = true,
+    'akinsho/flutter-tools.nvim',
+    lazy = false,
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      'stevearc/dressing.nvim',
+    },
+    config = true,
   },
-  {'iamcco/markdown-preview.nvim'},
   {
-   "folke/trouble.nvim",
-   dependencies = { "nvim-tree/nvim-web-devicons" },
-   opts = {
-    -- your configuration comes here
-    -- or leave it empty to use the default settings
-    -- refer to the configuration section below
-   },
+    "folke/trouble.nvim",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    opts = {
+    },
   },
   { 'ggandor/leap.nvim' },
+  { 'tpope/vim-dadbod' },
+  { 'kristijanhusak/vim-dadbod-ui' },
+  {
+    "iamcco/markdown-preview.nvim",
+    build = function() vim.fn["mkdp#util#install"]() end,
+  },
+  {
+    'rmagatti/goto-preview',
+    config = function()
+      require('goto-preview').setup {}
+    end
+  },
+  {
+    "loctvl842/monokai-pro.nvim",
+    config = function()
+      require("monokai-pro").setup()
+    end
+  },
 }
 
 
-require'lspconfig'.marksman.setup{}
-
+require 'lspconfig'.marksman.setup {}
 
 -- Replace visual selection with confirmation
 vim.api.nvim_set_keymap('v', '<C-r>', '"hy:%s/<C-r>h//gc<left><left><left>', { noremap = true })
@@ -197,17 +200,17 @@ vim.api.nvim_set_keymap('n', '<A-e>', ':Navbuddy<Enter>', { noremap = true })
 vim.api.nvim_set_keymap('n', '<C-p>', ':PasteImg<Enter>', { noremap = false })
 
 -- Preview method definition
-vim.keymap.set("n", "gl", "<cmd>lua require('nabla').popup()<CR>", { noremap = true })
+vim.keymap.set("n", "gm", "<cmd>lua require('nabla').popup()<CR>", { noremap = true })
 
+vim.keymap.set("n", "gp", "<cmd>lua require('goto-preview').goto_preview_definition()<CR>", { noremap = true })
 
-vim.api.nvim_set_keymap('n', 'gl', '$', { noremap = true })
-vim.api.nvim_set_keymap('n', 'gh', '^', { noremap = true })
-
-
+-- remove current behavior of gl
+vim.api.nvim_set_keymap('n', 'H', '^', { noremap = true })
+vim.api.nvim_set_keymap('n', 'L', '$', { noremap = true })
 
 -- require('go').setup()
 
--- require('dap-go').setup()
+require('dap-go').setup()
 
 -- fix clangd problem
 local cmp_nvim_lsp = require "cmp_nvim_lsp"
@@ -220,10 +223,13 @@ require("lspconfig").clangd.setup {
   },
 }
 
-
+require("nvim-navbuddy").setup {
+  window = {
+    size = { height = "40%", width = "92%"}
+  },
+}
 
 -- local dap = require('dap')
--- dap.adapters.cppdbg = {
 --   id = 'cppdbg',
 --   type = 'executable',
 --   -- command = '/absolute/path/to/cpptools/extension/debugAdapters/bin/OpenDebugAD7',
