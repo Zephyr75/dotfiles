@@ -439,6 +439,10 @@ awful.keyboard.append_global_keybindings({
     { description = "open a terminal", group = "launcher" }),
   awful.key({ modkey }, "r", function() awful.util.spawn("rofi -show drun") end,
     { description = "run program", group = "launcher" }),
+  awful.key({ modkey }, "c", function() awful.util.spawn("rofi -show calc -modi calc -no-show-match -no-sort") end,
+    { description = "open calculator", group = "launcher" }),
+  awful.key({ modkey }, "a", function() awful.util.spawn("rofi  -show find -modi find:~/.local/share/rofi/finder.sh") end,
+    { description = "file finder", group = "launcher" }),
   awful.key({ modkey }, "e", function() awful.util.spawn("thunar") end,
     { description = "search file", group = "launcher" }),
   awful.key({ modkey }, "g", function() awful.util.spawn("github-desktop") end,
@@ -920,4 +924,4 @@ end)
 awful.spawn.with_shell("picom --experimental-backend")
 awful.spawn.with_shell("nm-applet")
 awful.spawn.with_shell("setxkbmap no")
-awful.spawn.with_shell("libinput-gestures-setup start")
+-- awful.spawn.with_shell("libinput-gestures-setup start")
