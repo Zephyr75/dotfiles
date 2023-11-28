@@ -10,7 +10,7 @@ thunar
 ranger
 timeshift
 duf
-htop
+btop
 rxfetch
 aether greeter
 pamixer
