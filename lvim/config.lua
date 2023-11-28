@@ -14,8 +14,8 @@
 -----------------------------------------------------------------------------
 --WRAP LINES
 --:set wrap
---:set wrap! or :set invwrap
 --:set linebreak to wrap at word boundaries
+--:set wrap! and :set linebreak! to revert
 -----------------------------------------------------------------------------
 --REPLACE ALL
 --:%s/old/new/g
@@ -66,9 +66,9 @@
 --dD = delete
 --pp = paste
 --:mkdir = create directory
---:touch = create file
---v = visual mode (select files)
---V = invert selection (select all if empty)
+--:touch = create file 
+--V = visual mode (select files)
+--v = invert selection (select all if empty)
 --! = open shell command
 -----------------------------------------------------------------------------
 -- TMUX COMMANDS
@@ -198,6 +198,12 @@ vim.api.nvim_set_keymap('n', '<A-e>', ':Navbuddy<Enter>', { noremap = true })
 
 -- Paste image in markdown
 vim.api.nvim_set_keymap('n', '<C-p>', ':PasteImg<Enter>', { noremap = false })
+
+-- Make Ctrl+f act as / (search)
+vim.api.nvim_set_keymap('n', '<C-f>', '/', { noremap = true })
+
+-- Make Ctrl+s act as :w (save)
+vim.api.nvim_set_keymap('n', '<C-s>', ':w<Enter>', { noremap = true })
 
 -- Preview method definition
 vim.keymap.set("n", "gm", "<cmd>lua require('nabla').popup()<CR>", { noremap = true })

@@ -445,6 +445,8 @@ awful.keyboard.append_global_keybindings({
     { description = "file finder", group = "launcher" }),
   awful.key({ modkey }, "d", function() awful.util.spawn('alacritty -e sh -c "cd $(find . -type d -print | fzf); zsh"') end,
     { description = "directory finder", group = "launcher" }),
+  awful.key({ modkey }, "b", function() awful.util.spawn("blueman-manager") end,
+    { description = "bluetooth manager", group = "launcher" }),
   awful.key({ modkey }, "t", function() awful.util.spawn("thunar") end,
     { description = "open thunar", group = "launcher" }),
   awful.key({ modkey }, "g", function() awful.util.spawn("github-desktop") end,
@@ -456,6 +458,8 @@ awful.keyboard.append_global_keybindings({
     { description = "show the menubar", group = "launcher" }),
   awful.key({ modkey }, "Escape", function() logout_popup.launch() end,
     { description = "Show logout screen", group = "custom" }),
+  awful.key({ }, "Print", function () awful.spawn("flameshot gui") end,
+    {description = "Take screenshot with Flameshot", group = "screenshot"}),
 })
 
 -- Tags related keybindings
@@ -694,7 +698,10 @@ awful.keyboard.append_global_keybindings({
   end),
   awful.key({}, "XF86MonBrightnessDown", function()
     awful.spawn("brightnessctl set 10%-")
-  end)
+  end),
+  awful.key({}, "XF86Display", function()
+    awful.spawn.with_shell("arandr")
+  end),
 })
 
 client.connect_signal("request::default_mousebindings", function()
