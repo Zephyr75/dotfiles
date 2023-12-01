@@ -1,5 +1,5 @@
 /*******************************************************************************
- * ROFI SQUARED THEME USING THE NORD PALETTE 
+ * ROFI SQUARED THEME USING THE MATERIAL DARKER PALETTE 
  * User                 : LR-Tech               
  * Theme Repo           : https://github.com/lr-tech/rofi-themes-collection
  *******************************************************************************/
@@ -7,12 +7,12 @@
 * {
     font:   "FiraCode Nerd Font Medium 12";
 
-    bg0:     #2E3440;
-    bg1:     #3B4252;
-    fg0:     #D8DEE9;
+    bg0:     #212121;
+    bg1:     #404040;
+    fg0:     #eeffff;
 
-    accent-color:     #88C0D0;
-    urgent-color:     #EBCB8B;
+    accent-color:     #f07178;
+    urgent-color:     #ffcb6b;
 
     background-color:   transparent;
     text-color:         @fg0;
