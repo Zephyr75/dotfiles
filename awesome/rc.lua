@@ -443,6 +443,8 @@ awful.keyboard.append_global_keybindings({
     { description = "open calculator", group = "launcher" }),
   awful.key({ modkey }, "e", function() awful.util.spawn('alacritty -e sh -c "xdg-open \"$(fzf)\"; zsh"') end,
     { description = "file finder", group = "launcher" }),
+  -- awful.key({ modkey }, "XF86Bluetooth", function() awful.util.spawn("blueman-manager") end,
+  --   { description = "bluetooth manager", group = "launcher" }),
   awful.key({ modkey }, "d", function() awful.util.spawn('alacritty -e sh -c "thunar $(find . -type d -print | fzf); zsh"') end,
     { description = "directory finder", group = "launcher" }),
   awful.key({ modkey }, "g", function() awful.util.spawn("github-desktop") end,
@@ -707,10 +709,10 @@ awful.keyboard.append_global_keybindings({
     awful.spawn.with_shell("arandr")
   end),
   awful.key({}, "XF86Bluetooth", function()
-    awful.util.spawn("blueman-manager")
+    awful.spawn.with_shell("rfkill unblock bluetooth; blueman-manager")
   end),
   awful.key({}, "XF86Tools", function()
-    awful.spawn.with_shell("alacritty --working-directory .config")
+    awful.util.spawn('alacritty -e sh -c "/home/zeph/.local/bin/lvim .config/awesome/rc.lua; zsh"')
   end),
 })
 
@@ -945,5 +947,5 @@ awful.spawn.with_shell("nm-applet")
 awful.spawn.with_shell("setxkbmap no")
 awful.spawn.with_shell("fzf")
 awful.spawn.with_shell("find . -type d")
--- awful.spawn.with_shell("libinput-gestures-setup start")
+awful.spawn.with_shell("libinput-gestures-setup start")
 
