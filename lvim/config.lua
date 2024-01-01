@@ -81,6 +81,11 @@
 --Ctrl + b + n = next window
 --Ctrl + b + p = previous window
 --Ctrl + b + x = kill window
+--Ctrl + b + % = split vertically
+--Ctrl + b + " = split horizontally
+--Ctrl + b + arrow = move to pane
+--Ctrl + b + z = zoom pane
+--Ctrl + b + space = change pane layout
 -----------------------------------------------------------------------------
 
 -- Enable useful snippets
@@ -88,10 +93,9 @@ require 'luasnip'.filetype_extend("dart", { "flutter" })
 require 'luasnip'.filetype_extend("cs", { "unity" })
 
 -- Set color scheme
-lvim.colorscheme = "tokyonight-storm"
+lvim.colorscheme = "tokyonight-moon"
 
 
-require('leap').add_default_mappings()
 
 vim.cmd('set clipboard+=unnamedplus')
 
@@ -119,6 +123,7 @@ lvim.plugins = {
     priority = 1000,
     opts = {},
   },
+  { "rebelot/kanagawa.nvim" },
 
   {
     "Pocco81/auto-save.nvim",
@@ -188,6 +193,8 @@ lvim.plugins = {
 }
 
 
+require('leap').add_default_mappings()
+
 require 'lspconfig'.marksman.setup {}
 
 -- Replace visual selection with confirmation
@@ -204,6 +211,9 @@ vim.api.nvim_set_keymap('n', '<C-f>', '/', { noremap = true })
 
 -- Make Ctrl+s act as :w (save)
 vim.api.nvim_set_keymap('n', '<C-s>', ':w<Enter>', { noremap = true })
+
+-- Make U act as Ctrl+r (redo)
+vim.api.nvim_set_keymap('n', 'U', '<C-r>', { noremap = true })
 
 -- Preview method definition
 vim.keymap.set("n", "gm", "<cmd>lua require('nabla').popup()<CR>", { noremap = true })

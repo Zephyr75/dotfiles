@@ -443,12 +443,8 @@ awful.keyboard.append_global_keybindings({
     { description = "open calculator", group = "launcher" }),
   awful.key({ modkey }, "e", function() awful.util.spawn('alacritty -e sh -c "xdg-open \"$(fzf)\"; zsh"') end,
     { description = "file finder", group = "launcher" }),
-  awful.key({ modkey }, "d", function() awful.util.spawn('alacritty -e sh -c "cd $(find . -type d -print | fzf); zsh"') end,
+  awful.key({ modkey }, "d", function() awful.util.spawn('alacritty -e sh -c "thunar $(find . -type d -print | fzf); zsh"') end,
     { description = "directory finder", group = "launcher" }),
-  awful.key({ modkey }, "b", function() awful.util.spawn("blueman-manager") end,
-    { description = "bluetooth manager", group = "launcher" }),
-  awful.key({ modkey }, "t", function() awful.util.spawn("thunar") end,
-    { description = "open thunar", group = "launcher" }),
   awful.key({ modkey }, "g", function() awful.util.spawn("github-desktop") end,
     { description = "run github desktop", group = "launcher" }),
   awful.key({ modkey }, "a",
@@ -461,6 +457,14 @@ awful.keyboard.append_global_keybindings({
   awful.key({ }, "Print", function () awful.spawn("flameshot gui") end,
     {description = "Take screenshot with Flameshot", group = "screenshot"}),
 })
+
+-- Define the rules table
+awful.rules = {
+    {
+        rule = { class = "Google-chrome" },
+        properties = { floating = false }
+    },
+}
 
 -- Tags related keybindings
 awful.keyboard.append_global_keybindings({
@@ -507,7 +511,7 @@ awful.keyboard.append_global_keybindings({
       end
     end,
     { description = "restore minimized", group = "client" }),
-  awful.key({ modkey }, "a",
+  awful.key({ modkey }, "b",
     function()
       awful.layout.set(awful.layout.suit.tile)
       for _, c in ipairs(client.get()) do
@@ -701,6 +705,12 @@ awful.keyboard.append_global_keybindings({
   end),
   awful.key({}, "XF86Display", function()
     awful.spawn.with_shell("arandr")
+  end),
+  awful.key({}, "XF86Bluetooth", function()
+    awful.util.spawn("blueman-manager")
+  end),
+  awful.key({}, "XF86Tools", function()
+    awful.spawn.with_shell("alacritty --working-directory .config")
   end),
 })
 
@@ -933,4 +943,7 @@ end)
 awful.spawn.with_shell("picom --experimental-backend")
 awful.spawn.with_shell("nm-applet")
 awful.spawn.with_shell("setxkbmap no")
+awful.spawn.with_shell("fzf")
+awful.spawn.with_shell("find . -type d")
 -- awful.spawn.with_shell("libinput-gestures-setup start")
+
