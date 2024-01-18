@@ -23,8 +23,8 @@
 --MULTICURSOR
 --Ctrl + n = add multicursor (move with arrow keys)
 -----------------------------------------------------------------------------
---PASTE IMAGE IN MARKDOWN
---:PasteImg
+-- DISABLE HIGHLIGHT ON BIG FILES
+-- TSBufDisable highlight'
 -----------------------------------------------------------------------------
 --VIM COMMANDS
 --f + char = jump to char
@@ -53,6 +53,7 @@
 --u = lowercase visually selected text
 --"0p = paste from register 0 (yanked before delete)
 --Ctrl + r + = = evaluate expression in insert mode
+--Ctrl + r + " = paste yank register content to live grep
 --m + char = mark line with char
 --m + capital char = mark line across files with char
 --' + char = jump to mark char
@@ -66,7 +67,7 @@
 --dD = delete
 --pp = paste
 --:mkdir = create directory
---:touch = create file 
+--:touch = create file
 --V = visual mode (select files)
 --v = invert selection (select all if empty)
 --! = open shell command
@@ -95,24 +96,20 @@ require 'luasnip'.filetype_extend("cs", { "unity" })
 -- Set color scheme
 lvim.colorscheme = "tokyonight-moon"
 
-
-
 vim.cmd('set clipboard+=unnamedplus')
-
 
 -- Remap half page up/down to Alt+u/d
 vim.api.nvim_set_keymap('n', '<A-u>', '<C-u>', { noremap = true })
 vim.api.nvim_set_keymap('n', '<A-d>', '<C-d>', { noremap = true })
 
-
 -- Enable relative line numbers
 vim.opt.relativenumber = true
 
--- Enable auto directory change
-vim.opt.autochdir = true
-
 -- Force accept Copilot suggestion when pressing Alt+Tab
 vim.api.nvim_set_keymap("i", "<A-Tab>", 'copilot#Accept("<CR>")', { silent = true, expr = true })
+
+
+
 
 -- Define plugins list
 lvim.plugins = {
@@ -123,17 +120,14 @@ lvim.plugins = {
     priority = 1000,
     opts = {},
   },
-  { "rebelot/kanagawa.nvim" },
-
-  {
-    "Pocco81/auto-save.nvim",
-    config = function()
-      require("auto-save").setup {}
-    end,
-  },
+  -- {
+  --   "Pocco81/auto-save.nvim",
+  --   config = function()
+  --     require("auto-save").setup {}
+  --   end,
+  -- },
   { 'mg979/vim-visual-multi' },
   { 'tpope/vim-eunuch' },
-  { 'tikhomirov/vim-glsl' },
   {
     "folke/todo-comments.nvim",
     dependencies = { "nvim-lua/plenary.nvim" },
@@ -153,18 +147,8 @@ lvim.plugins = {
       }
     },
   },
-  { 'leoluz/nvim-dap-go' },
   { 'ekickx/clipboard-image.nvim' },
   { 'jbyuki/nabla.nvim' },
-  {
-    'akinsho/flutter-tools.nvim',
-    lazy = false,
-    dependencies = {
-      'nvim-lua/plenary.nvim',
-      'stevearc/dressing.nvim',
-    },
-    config = true,
-  },
   {
     "folke/trouble.nvim",
     dependencies = { "nvim-tree/nvim-web-devicons" },
@@ -172,8 +156,6 @@ lvim.plugins = {
     },
   },
   { 'ggandor/leap.nvim' },
-  { 'tpope/vim-dadbod' },
-  { 'kristijanhusak/vim-dadbod-ui' },
   {
     "iamcco/markdown-preview.nvim",
     build = function() vim.fn["mkdp#util#install"]() end,
@@ -184,11 +166,15 @@ lvim.plugins = {
       require('goto-preview').setup {}
     end
   },
+  { 'akinsho/git-conflict.nvim', version = "*", config = true },
   {
-    "loctvl842/monokai-pro.nvim",
-    config = function()
-      require("monokai-pro").setup()
-    end
+    'stevearc/dressing.nvim',
+    opts = {},
+  },
+  {
+    "ThePrimeagen/harpoon",
+    branch = "harpoon2",
+    dependencies = { "nvim-lua/plenary.nvim" }
   },
 }
 
@@ -197,11 +183,40 @@ require('leap').add_default_mappings()
 
 require 'lspconfig'.marksman.setup {}
 
+
+local harpoon = require("harpoon")
+
+-- REQUIRED
+harpoon:setup()
+-- REQUIRED
+
+vim.keymap.set("n", "<leader>a", function() harpoon:list():append() end)
+vim.keymap.set("n", "<A-h>", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
+
+vim.keymap.set("n", "<C-1>", function() harpoon:list():select(1) end)
+vim.keymap.set("n", "<C-2>", function() harpoon:list():select(2) end)
+vim.keymap.set("n", "<C-3>", function() harpoon:list():select(3) end)
+vim.keymap.set("n", "<C-4>", function() harpoon:list():select(4) end)
+vim.keymap.set("n", "<C-5>", function() harpoon:list():select(5) end)
+vim.keymap.set("n", "<C-6>", function() harpoon:list():select(6) end)
+vim.keymap.set("n", "<C-7>", function() harpoon:list():select(7) end)
+vim.keymap.set("n", "<C-8>", function() harpoon:list():select(8) end)
+vim.keymap.set("n", "<C-9>", function() harpoon:list():select(9) end)
+vim.keymap.set("n", "<C-0>", function() harpoon:list():select(10) end)
+
+-- Toggle previous & next buffers stored within Harpoon list
+vim.keymap.set("n", "<C-h>", function() harpoon:list():prev() end)
+vim.keymap.set("n", "<C-l>", function() harpoon:list():next() end)
+
+
 -- Replace visual selection with confirmation
 vim.api.nvim_set_keymap('v', '<C-r>', '"hy:%s/<C-r>h//gc<left><left><left>', { noremap = true })
 
 -- Open symbols tab
 vim.api.nvim_set_keymap('n', '<A-e>', ':Navbuddy<Enter>', { noremap = true })
+
+-- Open TodoTrouble
+vim.api.nvim_set_keymap('n', '<A-t>', ':TodoTelescope<Enter>', { noremap = true })
 
 -- Paste image in markdown
 vim.api.nvim_set_keymap('n', '<C-p>', ':PasteImg<Enter>', { noremap = false })
@@ -215,18 +230,18 @@ vim.api.nvim_set_keymap('n', '<C-s>', ':w<Enter>', { noremap = true })
 -- Make U act as Ctrl+r (redo)
 vim.api.nvim_set_keymap('n', 'U', '<C-r>', { noremap = true })
 
--- Preview method definition
+-- Make kj in insert mode act as Esc
+vim.api.nvim_set_keymap('i', 'kj', '<Esc>', { noremap = true })
+
+-- Preview LaTeX equations
 vim.keymap.set("n", "gm", "<cmd>lua require('nabla').popup()<CR>", { noremap = true })
 
+-- Preview method definition
 vim.keymap.set("n", "gp", "<cmd>lua require('goto-preview').goto_preview_definition()<CR>", { noremap = true })
 
 -- remove current behavior of gl
 vim.api.nvim_set_keymap('n', 'H', '^', { noremap = true })
 vim.api.nvim_set_keymap('n', 'L', '$', { noremap = true })
-
--- require('go').setup()
-
-require('dap-go').setup()
 
 -- fix clangd problem
 local cmp_nvim_lsp = require "cmp_nvim_lsp"
@@ -241,38 +256,6 @@ require("lspconfig").clangd.setup {
 
 require("nvim-navbuddy").setup {
   window = {
-    size = { height = "40%", width = "92%"}
+    size = { height = "40%", width = "80%" }
   },
 }
-
--- local dap = require('dap')
---   id = 'cppdbg',
---   type = 'executable',
---   -- command = '/absolute/path/to/cpptools/extension/debugAdapters/bin/OpenDebugAD7',
---   command = '',
--- }
-
--- dap.configurations.cpp = {
---   {
---     name = "Launch file",
---     type = "cppdbg",
---     request = "launch",
---     program = function()
---       return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
---     end,
---     cwd = '${workspaceFolder}',
---     stopAtEntry = true,
---   },
---   {
---     name = 'Attach to gdbserver :1234',
---     type = 'cppdbg',
---     request = 'launch',
---     MIMode = 'gdb',
---     miDebuggerServerAddress = 'localhost:1234',
---     miDebuggerPath = '/usr/bin/gdb',
---     cwd = '${workspaceFolder}',
---     program = function()
---       return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
---     end,
---   },
--- }
