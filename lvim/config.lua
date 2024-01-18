@@ -126,6 +126,7 @@ lvim.plugins = {
   --     require("auto-save").setup {}
   --   end,
   -- },
+  { 'chentoast/marks.nvim' },
   { 'mg979/vim-visual-multi' },
   { 'tpope/vim-eunuch' },
   {
@@ -147,7 +148,7 @@ lvim.plugins = {
       }
     },
   },
-  { 'ekickx/clipboard-image.nvim' },
+  { 'dfendr/clipboard-image.nvim' },
   { 'jbyuki/nabla.nvim' },
   {
     "folke/trouble.nvim",
@@ -208,6 +209,16 @@ vim.keymap.set("n", "<C-0>", function() harpoon:list():select(10) end)
 vim.keymap.set("n", "<C-h>", function() harpoon:list():prev() end)
 vim.keymap.set("n", "<C-l>", function() harpoon:list():next() end)
 
+-- vim.keymap.set('n', 's', function ()
+--   require('leap').leap { target_windows = { vim.api.nvim_get_current_win() } }
+-- end)
+vim.keymap.set('n', 's', function ()
+  local focusable_windows = vim.tbl_filter(
+    function (win) return vim.api.nvim_win_get_config(win).focusable end,
+    vim.api.nvim_tabpage_list_wins(0)
+  )
+  require('leap').leap { target_windows = focusable_windows }
+end)
 
 -- Replace visual selection with confirmation
 vim.api.nvim_set_keymap('v', '<C-r>', '"hy:%s/<C-r>h//gc<left><left><left>', { noremap = true })
@@ -219,7 +230,7 @@ vim.api.nvim_set_keymap('n', '<A-e>', ':Navbuddy<Enter>', { noremap = true })
 vim.api.nvim_set_keymap('n', '<A-t>', ':TodoTelescope<Enter>', { noremap = true })
 
 -- Paste image in markdown
-vim.api.nvim_set_keymap('n', '<C-p>', ':PasteImg<Enter>', { noremap = false })
+vim.api.nvim_set_keymap('n', '<C-p>', ':cd %:h <BAR> :PasteImg<Enter>', { noremap = false })
 
 -- Make Ctrl+f act as / (search)
 vim.api.nvim_set_keymap('n', '<C-f>', '/', { noremap = true })
@@ -258,4 +269,41 @@ require("nvim-navbuddy").setup {
   window = {
     size = { height = "40%", width = "80%" }
   },
+}
+
+require'marks'.setup {
+  -- whether to map keybinds or not. default true
+  default_mappings = true,
+  -- which builtin marks to show. default {}
+  builtin_marks = { ".", "<", ">", "^" },
+  -- whether movements cycle back to the beginning/end of buffer. default true
+  cyclic = true,
+  -- whether the shada file is updated after modifying uppercase marks. default false
+  force_write_shada = false,
+  -- how often (in ms) to redraw signs/recompute mark positions. 
+  -- higher values will have better performance but may cause visual lag, 
+  -- while lower values may cause performance penalties. default 150.
+  refresh_interval = 250,
+  -- sign priorities for each type of mark - builtin marks, uppercase marks, lowercase
+  -- marks, and bookmarks.
+  -- can be either a table with all/none of the keys, or a single number, in which case
+  -- the priority applies to all marks.
+  -- default 10.
+  sign_priority = { lower=10, upper=15, builtin=8, bookmark=20 },
+  -- disables mark tracking for specific filetypes. default {}
+  excluded_filetypes = {},
+  -- disables mark tracking for specific buftypes. default {}
+  excluded_buftypes = {},
+  -- marks.nvim allows you to configure up to 10 bookmark groups, each with its own
+  -- sign/virttext. Bookmarks can be used to group together positions and quickly move
+  -- across multiple buffers. default sign is '!@#$%^&*()' (from 0 to 9), and
+  -- default virt_text is "".
+  bookmark_0 = {
+    sign = "⚑",
+    virt_text = "hello world",
+    -- explicitly prompt for a virtual line annotation when setting a bookmark from this group.
+    -- defaults to false.
+    annotate = false,
+  },
+  mappings = {}
 }
