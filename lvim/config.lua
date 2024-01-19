@@ -24,7 +24,7 @@
 --Ctrl + n = add multicursor (move with arrow keys)
 -----------------------------------------------------------------------------
 -- DISABLE HIGHLIGHT ON BIG FILES
--- TSBufDisable highlight'
+--:TSBufDisable highlight'
 -----------------------------------------------------------------------------
 --VIM COMMANDS
 --f + char = jump to char
@@ -57,6 +57,8 @@
 --m + char = mark line with char
 --m + capital char = mark line across files with char
 --' + char = jump to mark char
+--:delmarks a = delete mark a
+--:delmarks a-zA-Z0-9 = delete all marks
 -----------------------------------------------------------------------------
 -- RANGER COMMANDS
 --S = open shell
@@ -108,9 +110,6 @@ vim.opt.relativenumber = true
 -- Force accept Copilot suggestion when pressing Alt+Tab
 vim.api.nvim_set_keymap("i", "<A-Tab>", 'copilot#Accept("<CR>")', { silent = true, expr = true })
 
-
-
-
 -- Define plugins list
 lvim.plugins = {
   { 'github/copilot.vim' },
@@ -149,7 +148,6 @@ lvim.plugins = {
     },
   },
   { 'dfendr/clipboard-image.nvim' },
-  { 'jbyuki/nabla.nvim' },
   {
     "folke/trouble.nvim",
     dependencies = { "nvim-tree/nvim-web-devicons" },
@@ -177,6 +175,7 @@ lvim.plugins = {
     branch = "harpoon2",
     dependencies = { "nvim-lua/plenary.nvim" }
   },
+  { 'tpope/vim-surround' },
 }
 
 
@@ -192,22 +191,12 @@ harpoon:setup()
 -- REQUIRED
 
 vim.keymap.set("n", "<leader>a", function() harpoon:list():append() end)
-vim.keymap.set("n", "<A-h>", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
-
-vim.keymap.set("n", "<C-1>", function() harpoon:list():select(1) end)
-vim.keymap.set("n", "<C-2>", function() harpoon:list():select(2) end)
-vim.keymap.set("n", "<C-3>", function() harpoon:list():select(3) end)
-vim.keymap.set("n", "<C-4>", function() harpoon:list():select(4) end)
-vim.keymap.set("n", "<C-5>", function() harpoon:list():select(5) end)
-vim.keymap.set("n", "<C-6>", function() harpoon:list():select(6) end)
-vim.keymap.set("n", "<C-7>", function() harpoon:list():select(7) end)
-vim.keymap.set("n", "<C-8>", function() harpoon:list():select(8) end)
-vim.keymap.set("n", "<C-9>", function() harpoon:list():select(9) end)
-vim.keymap.set("n", "<C-0>", function() harpoon:list():select(10) end)
+vim.keymap.set("n", "<leader>r", function() harpoon:list():remove() end)
+vim.keymap.set("n", "<leader>h", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
 
 -- Toggle previous & next buffers stored within Harpoon list
-vim.keymap.set("n", "<C-h>", function() harpoon:list():prev() end)
-vim.keymap.set("n", "<C-l>", function() harpoon:list():next() end)
+-- vim.keymap.set("n", "<A-h>", function() harpoon:list():prev() end)
+-- vim.keymap.set("n", "<A-l>", function() harpoon:list():next() end)
 
 -- vim.keymap.set('n', 's', function ()
 --   require('leap').leap { target_windows = { vim.api.nvim_get_current_win() } }
@@ -221,25 +210,30 @@ vim.keymap.set('n', 's', function ()
 end)
 
 -- Replace visual selection with confirmation
-vim.api.nvim_set_keymap('v', '<C-r>', '"hy:%s/<C-r>h//gc<left><left><left>', { noremap = true })
+vim.api.nvim_set_keymap('v', '<A-r>', '"hy:%s/<C-r>h//gc<left><left><left>', { noremap = true })
 
 -- Open symbols tab
 vim.api.nvim_set_keymap('n', '<A-e>', ':Navbuddy<Enter>', { noremap = true })
 
+-- Open marks finder in Telescope
+vim.api.nvim_set_keymap('n', '<leader>sm', ":lua require'telescope.builtin'.marks{}<Enter>", { noremap = true })
+
 -- Open TodoTrouble
-vim.api.nvim_set_keymap('n', '<A-t>', ':TodoTelescope<Enter>', { noremap = true })
+vim.api.nvim_set_keymap('n', '<leader>tt', ':TodoTelescope<Enter>', { noremap = true })
+vim.api.nvim_set_keymap('n', '<leader>te', ':Trouble<Enter>', { noremap = true })
 
 -- Paste image in markdown
-vim.api.nvim_set_keymap('n', '<C-p>', ':cd %:h <BAR> :PasteImg<Enter>', { noremap = false })
+vim.api.nvim_set_keymap('n', '<A-p>', ':cd %:h <BAR> :PasteImg<Enter>', { noremap = false })
 
 -- Make Ctrl+f act as / (search)
-vim.api.nvim_set_keymap('n', '<C-f>', '/', { noremap = true })
-
--- Make Ctrl+s act as :w (save)
-vim.api.nvim_set_keymap('n', '<C-s>', ':w<Enter>', { noremap = true })
+vim.api.nvim_set_keymap('n', '<A-f>', '/', { noremap = true })
 
 -- Make U act as Ctrl+r (redo)
 vim.api.nvim_set_keymap('n', 'U', '<C-r>', { noremap = true })
+
+vim.api.nvim_set_keymap('n', '<A-w>', '<C-w>', { noremap = true })
+
+vim.api.nvim_set_keymap('n', '<A-c>', ':so /home/zeph/.config/lvim/config.lua<Enter>', { noremap = true })
 
 -- Make kj in insert mode act as Esc
 vim.api.nvim_set_keymap('i', 'kj', '<Esc>', { noremap = true })
@@ -254,6 +248,29 @@ vim.keymap.set("n", "gp", "<cmd>lua require('goto-preview').goto_preview_definit
 vim.api.nvim_set_keymap('n', 'H', '^', { noremap = true })
 vim.api.nvim_set_keymap('n', 'L', '$', { noremap = true })
 
+
+-- Lua
+vim.keymap.set("n", "gR", function() require("trouble").toggle("lsp_references") end)
+
+
+
+require("nvim-navbuddy").setup {
+  window = {
+    size = { height = "40%", width = "80%" }
+  },
+}
+
+require'marks'.setup {
+  mappings = {
+    set_next = "<A-m>",
+    next = "<A-n>",
+    preview = "m:",
+    set_bookmark0 = "m0",
+    prev = false -- pass false to disable only this default mapping
+  }
+}
+
+
 -- fix clangd problem
 local cmp_nvim_lsp = require "cmp_nvim_lsp"
 require("lspconfig").clangd.setup {
@@ -265,45 +282,3 @@ require("lspconfig").clangd.setup {
   },
 }
 
-require("nvim-navbuddy").setup {
-  window = {
-    size = { height = "40%", width = "80%" }
-  },
-}
-
-require'marks'.setup {
-  -- whether to map keybinds or not. default true
-  default_mappings = true,
-  -- which builtin marks to show. default {}
-  builtin_marks = { ".", "<", ">", "^" },
-  -- whether movements cycle back to the beginning/end of buffer. default true
-  cyclic = true,
-  -- whether the shada file is updated after modifying uppercase marks. default false
-  force_write_shada = false,
-  -- how often (in ms) to redraw signs/recompute mark positions. 
-  -- higher values will have better performance but may cause visual lag, 
-  -- while lower values may cause performance penalties. default 150.
-  refresh_interval = 250,
-  -- sign priorities for each type of mark - builtin marks, uppercase marks, lowercase
-  -- marks, and bookmarks.
-  -- can be either a table with all/none of the keys, or a single number, in which case
-  -- the priority applies to all marks.
-  -- default 10.
-  sign_priority = { lower=10, upper=15, builtin=8, bookmark=20 },
-  -- disables mark tracking for specific filetypes. default {}
-  excluded_filetypes = {},
-  -- disables mark tracking for specific buftypes. default {}
-  excluded_buftypes = {},
-  -- marks.nvim allows you to configure up to 10 bookmark groups, each with its own
-  -- sign/virttext. Bookmarks can be used to group together positions and quickly move
-  -- across multiple buffers. default sign is '!@#$%^&*()' (from 0 to 9), and
-  -- default virt_text is "".
-  bookmark_0 = {
-    sign = "⚑",
-    virt_text = "hello world",
-    -- explicitly prompt for a virtual line annotation when setting a bookmark from this group.
-    -- defaults to false.
-    annotate = false,
-  },
-  mappings = {}
-}
