@@ -33,7 +33,7 @@ local logout_popup = require("awesome-wm-widgets.logout-popup-widget.logout-popu
 
 local calendar_widget = require("awesome-wm-widgets.calendar-widget.calendar")
 
--- -- Create a new container with 20 pixels of padding on the left and right
+-- -- Create a new container with 10 pixels of padding on the left and right
 -- local padded_docker = wibox.container.margin(docker_widget(), 10, 10)
 
 -- -- Create a background container for the battery_widget
@@ -42,7 +42,7 @@ local calendar_widget = require("awesome-wm-widgets.calendar-widget.calendar")
 -- -- Set the background color and shape
 -- docker_container.bg = "#222222"
 -- docker_container.shape = function(cr, width, height)
---   local radius = 20
+--   local radius = 10
 --   gears.shape.rounded_rect(cr, width, height, radius)
 -- end
 
@@ -65,7 +65,7 @@ end)
 beautiful.init("/home/zeph/.config/awesome/default/theme.lua")
 
 -- make it transparent
-beautiful.bg_normal = "#222222"
+beautiful.bg_normal = "#1a1b26"
 beautiful.bg_urgent = "#EB4034"
 beautiful.bg_focus = "#444444"
 
@@ -172,6 +172,11 @@ mykeyboardlayout = awful.widget.keyboardlayout()
 -- add week day
 mytextclock = wibox.widget.textclock("%a %d %b %H:%M")
 
+local textclock_clr = wibox.widget.background()
+textclock_clr:set_widget(mytextclock)
+-- INFO: color text clock
+textclock_clr:set_fg("#e0af68")
+
 local cw = calendar_widget({
   -- theme = 'outrun',
   placement = 'top_right',
@@ -180,77 +185,77 @@ local cw = calendar_widget({
   previous_month_button = 1,
   next_month_button = 3,
 })
-mytextclock:connect_signal("button::press",
+textclock_clr:connect_signal("button::press",
   function(_, _, _, button)
     if button == 1 then cw.toggle() end
   end)
 
 
--- Create a new container with 20 pixels of padding on the left and right
-local padded_clock = wibox.container.margin(mytextclock, 15, 15)
+-- Create a new container with 10 pixels of padding on the left and right
+local padded_clock = wibox.container.margin(textclock_clr, 15, 15)
 
 -- Create a background container for the text clock
 local clock_container = wibox.container.background(padded_clock)
 
 -- Set the background color and shape
-clock_container.bg = "#222222"
+clock_container.bg = "#1a1b26"
 clock_container.shape = function(cr, width, height)
-  local radius = 20
+  local radius = 10
   gears.shape.rounded_rect(cr, width, height, radius)
 end
 
 -- Style the textclock
-mytextclock.font = "JetBrains Mono Nerd Font 11"
+mytextclock.font = "JetBrains Mono Nerd Font SemiBold 12"
 
--- Create a new container with 20 pixels of padding on the left and right
+-- Create a new container with 10 pixels of padding on the left and right
 local padded_ram = wibox.container.margin(ram_widget(), 5, 5)
 
 -- Create a background container for the ram_widget
 local ram_container = wibox.container.background(padded_ram)
 
 -- Set the background color and shape
-ram_container.bg = "#222222"
+ram_container.bg = "#1a1b26"
 ram_container.shape = function(cr, width, height)
-  local radius = 20
+  local radius = 10
   gears.shape.rounded_rect(cr, width, height, radius)
 end
 
--- Create a new container with 20 pixels of padding on the left and right
+-- Create a new container with 10 pixels of padding on the left and right
 local padded_cpu = wibox.container.margin(cpu_widget(), 15, 15)
 
 -- Create a background container for the cpu_widget
 local cpu_container = wibox.container.background(padded_cpu)
 
 -- Set the background color and shape
-cpu_container.bg = "#222222"
+cpu_container.bg = "#1a1b26"
 cpu_container.shape = function(cr, width, height)
-  local radius = 20
+  local radius = 10
   gears.shape.rounded_rect(cr, width, height, radius)
 end
 
--- Create a new container with 20 pixels of padding on the left and right
+-- Create a new container with 10 pixels of padding on the left and right
 local padded_battery = wibox.container.margin(battery_widget(), 10, 10)
 
 -- Create a background container for the battery_widget
 local battery_container = wibox.container.background(padded_battery)
 
 -- Set the background color and shape
-battery_container.bg = "#222222"
+battery_container.bg = "#1a1b26"
 battery_container.shape = function(cr, width, height)
-  local radius = 20
+  local radius = 10
   gears.shape.rounded_rect(cr, width, height, radius)
 end
 
--- Create a new container with 20 pixels of padding on the left and right
+-- Create a new container with 10 pixels of padding on the left and right
 local padded_volume = wibox.container.margin(volume_widget(), 10, 10)
 
 -- Create a background container for the volume_widget
 local volume_container = wibox.container.background(padded_volume)
 
 -- Set the background color and shape
-volume_container.bg = "#222222"
+volume_container.bg = "#1a1b26"
 volume_container.shape = function(cr, width, height)
-  local radius = 20
+  local radius = 10
   gears.shape.rounded_rect(cr, width, height, radius)
 end
 
@@ -260,9 +265,9 @@ local padded_systray = wibox.container.margin(wibox.widget.systray(), 15, 15, 5,
 local systray_container = wibox.container.background(padded_systray)
 
 -- Set the background color and shape
-systray_container.bg = "#222222"
+systray_container.bg = "#1a1b26"
 systray_container.shape = function(cr, width, height)
-  local radius = 20
+  local radius = 10
   gears.shape.rounded_rect(cr, width, height, radius)
 end
 
@@ -295,9 +300,9 @@ screen.connect_signal("request::desktop_decoration", function(s)
   local layout_box_container = wibox.container.background(padded_layout_box)
 
   -- Set the background color and shape
-  layout_box_container.bg = "#222222"
+  layout_box_container.bg = "#1a1b26"
   layout_box_container.shape = function(cr, width, height)
-    local radius = 20
+    local radius = 10
     gears.shape.rounded_rect(cr, width, height, radius)
   end
 
@@ -324,11 +329,11 @@ screen.connect_signal("request::desktop_decoration", function(s)
       awful.button({}, 4, function(t) awful.tag.viewprev(t.screen) end),
       awful.button({}, 5, function(t) awful.tag.viewnext(t.screen) end),
     }, style = {
-    bg_focus = "#222222",
-    bg_occupied = "#222222a0",
-    bg_empty = "#22222220",
+    bg_focus = "#1a1b26",
+    bg_occupied = "#1a1b26a0",
+    bg_empty = "#1a1b2620",
     shape = gears.shape.circle,
-    font = "JetBrains Mono Nerd Font 12",
+    font = "JetBrains Mono Nerd Font SemiBold 12",
   },
     widget_template = {
       {
@@ -399,7 +404,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
           -- wibox.container.margin(s.mylayoutbox, 10, 0, 0, 0),
           wibox.container.margin(layout_box_container, 10, 0, 0, 0),
         },
-      }, 10, 15, 10, 0),
+      }, 5, 10, 10, 0),
   }
 end)
 
@@ -443,8 +448,8 @@ awful.keyboard.append_global_keybindings({
     { description = "open calculator", group = "launcher" }),
   awful.key({ modkey }, "e", function() awful.util.spawn('alacritty -e sh -c "xdg-open \"$(fzf)\"; zsh"') end,
     { description = "file finder", group = "launcher" }),
-  -- awful.key({ modkey }, "XF86Bluetooth", function() awful.util.spawn("blueman-manager") end,
-  --   { description = "bluetooth manager", group = "launcher" }),
+  awful.key({ modkey }, "b", function() awful.util.spawn("blueman-manager") end,
+    { description = "bluetooth manager", group = "launcher" }),
   awful.key({ modkey }, "d", function() awful.util.spawn('alacritty -e sh -c "thunar $(find . -type d -print | fzf); zsh"') end,
     { description = "directory finder", group = "launcher" }),
   awful.key({ modkey }, "g", function() awful.util.spawn("github-desktop") end,
@@ -454,7 +459,7 @@ awful.keyboard.append_global_keybindings({
     { description = "run excalidraw", group = "launcher" }),
   awful.key({ modkey }, "p", function() menubar.show() end,
     { description = "show the menubar", group = "launcher" }),
-  awful.key({ modkey }, "Escape", function() logout_popup.launch() end,
+awful.key({ modkey }, "Escape", function() logout_popup.launch() end,
     { description = "Show logout screen", group = "custom" }),
   awful.key({ }, "Print", function () awful.spawn("flameshot gui") end,
     {description = "Take screenshot with Flameshot", group = "screenshot"}),
@@ -513,7 +518,7 @@ awful.keyboard.append_global_keybindings({
       end
     end,
     { description = "restore minimized", group = "client" }),
-  awful.key({ modkey }, "b",
+  awful.key({ modkey }, "v",
     function()
       awful.layout.set(awful.layout.suit.tile)
       for _, c in ipairs(client.get()) do
@@ -641,12 +646,12 @@ local function show_notification(message)
     text = message,
     timeout = 2,
     position = "top",
-    bg = "#222222",
+    bg = "#1a1b26",
     fg = "#FFFFFF",
     align = "center",
     border_width = 0,
     shape = function(cr, width, height)
-      local radius = 20
+      local radius = 10
       gears.shape.rounded_rect(cr, width, height, radius)
     end,
   })
@@ -666,12 +671,12 @@ awful.keyboard.append_global_keybindings({
         text = "    " .. volume,
         timeout = 1,
         position = "top_middle",
-        bg = "#222222",
+        bg = "#1a1b26",
         fg = "#FFFFFF",
         border_width = 0,
-        width = 90,
+        width = 100,
         replaces_id = last_notification_id,
-        font = "JetBrainsMono Nerd Font 10",
+        font = "JetBrainsMono Nerd Font SemiBold 10",
       })
       last_notification_id = notification.id
     end)
@@ -685,13 +690,13 @@ awful.keyboard.append_global_keybindings({
         text = "    " .. volume,
         timeout = 1,
         position = "top_middle",
-        bg = "#222222",
+        bg = "#1a1b26",
         fg = "#FFFFFF",
         align = "center",
         border_width = 0,
-        width = 90,
+        width = 100,
         replaces_id = last_notification_id,
-        font = "JetBrainsMono Nerd Font 10",
+        font = "JetBrainsMono Nerd Font SemiBold 10",
       })
       last_notification_id = notification.id
     end)
@@ -708,9 +713,9 @@ awful.keyboard.append_global_keybindings({
   awful.key({}, "XF86Display", function()
     awful.spawn.with_shell("arandr")
   end),
-  awful.key({}, "XF86Bluetooth", function()
-    awful.spawn.with_shell("rfkill unblock bluetooth; blueman-manager")
-  end),
+  -- awful.key({}, "XF86Bluetooth", function()
+  --   awful.spawn.with_shell("rfkill unblock bluetooth; blueman-manager")
+  -- end),
   awful.key({}, "XF86Tools", function()
     awful.util.spawn('alacritty -e sh -c "/home/zeph/.local/bin/lvim .config/awesome/rc.lua; zsh"')
   end),

@@ -8,8 +8,7 @@ local ICON_DIR = os.getenv("HOME") .. '/.config/awesome/awesome-wm-widgets/volum
 function widget.get_widget(widgets_args)
     local args = widgets_args or {}
 
-    -- TODO
-    local font = args.font or 'JetBrains Mono Nerd Font 10' --beautiful.font
+    local font = args.font or 'JetBrains Mono Nerd Font SemiBold 12' --beautiful.font
     local icon_dir = args.icon_dir or ICON_DIR
 
     return wibox.widget {
@@ -18,18 +17,22 @@ function widget.get_widget(widgets_args)
                 id = "icon",
                 resize = false,
                 widget = wibox.widget.imagebox,
+                markup = '<span color="#FF0000">Icon Color</span>'
             },
             valign = 'center',
-            layout = wibox.container.place
+            layout = wibox.container.place,
+            markup = '<span color="#FF0000">Text Color</span>'
         },
         {
             id = 'txt',
             font = font,
-            widget = wibox.widget.textbox
+            widget = wibox.widget.textbox,
+            markup = '<span color="#FF0000">Text Color</span>'
         },
         layout = wibox.layout.fixed.horizontal,
         set_volume_level = function(self, new_value)
-            self:get_children_by_id('txt')[1]:set_text(new_value)
+            -- INFO: text color volume widget
+            self:get_children_by_id('txt')[1]:set_markup('<span color="#7dcfff">'..new_value..'</span>')
             local volume_icon_name
             if self.is_muted then
                 volume_icon_name = 'audio-volume-muted-symbolic'

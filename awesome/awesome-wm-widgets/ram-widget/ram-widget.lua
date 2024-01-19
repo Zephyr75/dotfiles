@@ -9,17 +9,17 @@ local ramgraph_widget = {}
 local function worker(user_args)
     local args = user_args or {}
     local timeout = args.timeout or 1
-    local color_used = "#ffffffbb"
-    local color_free = "#ffffff33"
-    local color_buf = "#ffffff77"
+    -- INFO: color icons ram widget
+    local color_used = "#9ece6abb"
+    local color_free = "#9ece6a33"
+    local color_buf = "#9ece6a77"
     local widget_show_buf = args.widget_show_buf or false
     local widget_height = args.widget_height or 25
     local widget_width = args.widget_width or 25
 
     --- Text widget to display RAM used as a number
     local ram_text_widget = wibox.widget {
-        -- TODO
-        font = 'JetBrains Mono Nerd Font 10', -- beautiful.font,
+        font = 'JetBrains Mono Nerd Font SemiBold 12', -- beautiful.font,
         align = "center",
         valign = "center",
         widget = wibox.widget.textbox,
@@ -86,7 +86,9 @@ local function worker(user_args)
                 piechart.data = { used, total - used }
             end
 
-            ram_text_widget:set_text(getPercentageWithoutPercent(used + used_swap))
+            -- ram_text_widget:set_text(getPercentageWithoutPercent(used + used_swap))
+            -- INFO: text color ram widget
+            ram_text_widget:set_markup('<span color="#9ece6a">'..getPercentageWithoutPercent(used + used_swap)..'</span>')
 
             if popup.visible then
                 popup:get_widget().data_list = {

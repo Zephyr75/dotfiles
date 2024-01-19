@@ -55,7 +55,7 @@ local function create_button(icon_name, action_name, accent_color, label_color, 
         end
     }
     button:connect_signal("mouse::enter", function()
-            action:set_markup('<span font="JetBrains Mono Nerd Font 7" color="' .. label_color .. '">' .. action_name .. '</span>')
+            action:set_markup('<span font="JetBrains Mono Nerd Font SemiBold 7" color="' .. label_color .. '">' .. action_name .. '</span>')
         end)
 
     button:connect_signal("mouse::leave", function() action:set_markup('<span> </span>') end)
@@ -83,7 +83,7 @@ local function launch(args)
     w:set_bg(bg_color)
     if #phrases > 0 then
         phrase_widget:set_markup(
-            '<span color="'.. text_color .. '" font="JetBrains Mono Nerd Font 11" size="20000">' .. phrases[ math.random( #phrases ) ] .. '</span>')
+            '<span color="'.. text_color .. '" font="JetBrains Mono Nerd Font SemiBold 12" size="20000">' .. phrases[ math.random( #phrases ) ] .. '</span>')
     end
 
     w:setup {

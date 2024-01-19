@@ -27,11 +27,14 @@ local function worker(user_args)
     local args = user_args or {}
 
     -- local font = args.font or 'Play 8'
-    local font = args.font or 'JetBrains Mono Nerd Font 10'
-    local path_to_icons = args.path_to_icons or "/usr/share/icons/Arc/status/symbolic/"
+    local font = args.font or 'JetBrains Mono Nerd Font SemiBold 12'
+    -- local path_to_icons = args.path_to_icons or "/usr/share/icons/Arc/status/symbolic/"
+    local path_to_icons = args.path_to_icons or "/home/zeph/.config/awesome/awesome-wm-widgets/symbolic/"
     local show_current_level = args.show_current_level or true
     local margin_left = args.margin_left or 0
     local margin_right = args.margin_right or 0
+
+    local text_color = '#00EE00'
 
     local display_notification = args.display_notification or false
     local display_notification_onClick = args.display_notification_onClick or true
@@ -59,14 +62,15 @@ local function worker(user_args)
         {
             id = "icon",
             widget = wibox.widget.imagebox,
-            resize = false
+            resize = false,
+            tint = text_color
         },
         valign = 'center',
         layout = wibox.container.place,
     }
     local level_widget = wibox.widget {
         font = font,
-        widget = wibox.widget.textbox
+        widget = wibox.widget.textbox,
     }
 
     battery_widget = wibox.widget {
@@ -165,7 +169,9 @@ local function worker(user_args)
         charge = charge / capacity
 
         if show_current_level then
-            level_widget.text = string.format('%d', charge)
+            -- INFO: battery widget text color
+            chargeText = string.format('%d', charge)
+            level_widget.markup = '<span color="#f7768e">' .. chargeText .. '</span>'
         end
 
         if (charge >= 1 and charge < 15) then
