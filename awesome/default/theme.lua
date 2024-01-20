@@ -11,24 +11,35 @@ local themes_path = gfs.get_themes_dir()
 
 local theme = {}
 
-theme.font          = "sans 8"
+-- theme.font          = "sans 8"
+theme.font          = "JetBrains Mono Nerd Font SemiBold 9"
 
-theme.bg_normal     = "#222222"
-theme.bg_focus      = "#535d6c"
-theme.bg_urgent     = "#ff0000"
+theme.bg_normal     = "#1a1b26"
+theme.bg_focus      = "#444444"
+theme.bg_urgent     = "#f7768e"
 theme.bg_minimize   = "#444444"
-theme.bg_systray    = theme.bg_normal
+theme.bg_systray    = "#1a1b26"
 
 theme.fg_normal     = "#aaaaaa"
 theme.fg_focus      = "#ffffff"
 theme.fg_urgent     = "#ffffff"
 theme.fg_minimize   = "#ffffff"
 
-theme.useless_gap   = dpi(0)
-theme.border_width  = dpi(1)
-theme.border_normal = "#000000"
-theme.border_focus  = "#535d6c"
-theme.border_marked = "#91231c"
+theme.useless_gap   = 4
+theme.border_width  = 0
+-- theme.border_normal = "#000000"
+-- theme.border_focus  = "#535d6c"
+-- theme.border_marked = "#91231c"
+
+
+
+-- make top bar twice as tall
+theme.wibar_height = 40
+
+
+
+
+
 
 -- There are other variable sets
 -- overriding the default one when

@@ -20,7 +20,7 @@ local function worker(user_args)
     --- Text widget to display RAM used as a number
     local ram_text_widget = wibox.widget {
         font = 'JetBrains Mono Nerd Font SemiBold 12', -- beautiful.font,
-        align = "center",
+        align = "right",
         valign = "center",
         widget = wibox.widget.textbox,
     }

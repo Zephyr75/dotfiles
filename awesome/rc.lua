@@ -64,22 +64,12 @@ end)
 --beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
 beautiful.init("/home/zeph/.config/awesome/default/theme.lua")
 
--- make it transparent
-beautiful.bg_normal = "#1a1b26"
-beautiful.bg_urgent = "#EB4034"
-beautiful.bg_focus = "#444444"
-
--- make top bar twice as tall
-beautiful.wibar_height = 40
-
-
-beautiful.useless_gap = 4
-beautiful.border_width = 0
-
 -- set notifications border width to 0
 naughty.config.defaults.border_width = 0
 -- add padding to notifications
-naughty.config.defaults.margin = 10
+naughty.config.defaults.margin = 15
+
+naughty.config.defaults.icon_size = 60
 
 
 
@@ -395,9 +385,9 @@ screen.connect_signal("request::desktop_decoration", function(s)
           s == screen.primary and systray_container or nil,
           --wibox.widget.systray(),
           --wibox.container.margin(cpu_container, 10, 0, 0, 0),
-          wibox.container.margin(ram_container, 10, 0, 0, 0),
           wibox.container.margin(volume_container, 10, 0, 0, 0),
           wibox.container.margin(battery_container, 10, 0, 0, 0),
+          wibox.container.margin(ram_container, 10, 0, 0, 0),
           wibox.container.margin(clock_container, 10, 0, 0, 0),
           -- wibox.container.margin(docker_widget(), 10, 0, 0, 0),
           -- insert 5 pixels of padding to the left
@@ -638,25 +628,6 @@ end
 local notification_widget = wibox.widget.textbox()
 update_notification_widget(notification_widget, "Ready")
 
--- Define a function to show a notification with a given message
-local function show_notification(message)
-  naughty.notify({
-    preset = naughty.config.presets.normal,
-    title = "Volume Control",
-    text = message,
-    timeout = 2,
-    position = "top",
-    bg = "#1a1b26",
-    fg = "#FFFFFF",
-    align = "center",
-    border_width = 0,
-    shape = function(cr, width, height)
-      local radius = 10
-      gears.shape.rounded_rect(cr, width, height, radius)
-    end,
-  })
-end
-
 local last_notification_id = nil
 
 -- local vol_notif_id
@@ -667,14 +638,15 @@ awful.keyboard.append_global_keybindings({
     awful.spawn.easy_async("pamixer --get-volume", function(stdout)
       local volume = tonumber(stdout)
       local notification = naughty.notify({
-        title = "  Volume",
-        text = "    " .. volume,
+        title = " Volume",
+        text = "   " .. volume,
         timeout = 1,
         position = "top_middle",
         bg = "#1a1b26",
         fg = "#FFFFFF",
         border_width = 0,
-        width = 100,
+        width = 95,
+        height = 75,
         replaces_id = last_notification_id,
         font = "JetBrainsMono Nerd Font SemiBold 10",
       })
@@ -686,15 +658,16 @@ awful.keyboard.append_global_keybindings({
     awful.spawn.easy_async("pamixer --get-volume", function(stdout)
       local volume = tonumber(stdout)
       local notification = naughty.notify({
-        title = "  Volume",
-        text = "    " .. volume,
+        title = " Volume",
+        text = "   " .. volume,
         timeout = 1,
         position = "top_middle",
         bg = "#1a1b26",
         fg = "#FFFFFF",
         align = "center",
         border_width = 0,
-        width = 100,
+        width = 95,
+        height = 75,
         replaces_id = last_notification_id,
         font = "JetBrainsMono Nerd Font SemiBold 10",
       })
