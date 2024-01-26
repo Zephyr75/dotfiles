@@ -1,7 +1,13 @@
 # Run install script
 
 ```bash
-bash setup.sh
+./setup.sh
+```
+
+# Run update script
+
+```bash
+./update.sh
 ```
 
 # ArchInstall
@@ -28,6 +34,7 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/too
 
 In `/etc/pacman.conf`
 ```bash
+Color
 ILoveCandy
 ParallelDownloads = 5
  
