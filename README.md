@@ -13,7 +13,7 @@ bash setup.sh
 # Git
 
 ```bash
-ssh-keygen -t ed25519 -C "antoine.familleroger@gmail.com"
+ssh-keygen -t ed25519 -C "<email>@gmail.com"
 
 cat ~/.ssh/id_ed25519.pub
 ```
