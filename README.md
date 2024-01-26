@@ -1,3 +1,9 @@
+# Run install script
+
+```bash
+bash setup.sh
+```
+
 # ArchInstall
 
 - Single partition for home and root
