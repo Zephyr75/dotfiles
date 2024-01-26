@@ -54,7 +54,7 @@ func loadTasks() []task.Task {
 	// absPath, _ := filepath.Abs("~/Documents/todos.txt")
 
 	executablePath, err := os.Executable()
-	absPath := filepath.Join(filepath.Dir(executablePath), "../todo/todos.txt")
+	absPath := filepath.Join(filepath.Dir(executablePath), "todos.txt")
 
 	file, err := os.Open(absPath)
 	if err != nil {
@@ -93,7 +93,7 @@ func saveTasks(tasks []task.Task) {
 	// absPath, _ := filepath.Abs("/Documents/todos.txt")
 
 	executablePath, err := os.Executable()
-	absPath := filepath.Join(filepath.Dir(executablePath), "../todo/todos.txt")
+	absPath := filepath.Join(filepath.Dir(executablePath), "todos.txt")
 
 	file, err := os.Create(absPath)
 	if err != nil {

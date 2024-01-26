@@ -63,7 +63,7 @@ func computeTotal(transfers *[]transfer.Transfer) float64 {
 func loadTransfers() []transfer.Transfer {
 
 	executablePath, err := os.Executable()
-	absPath := filepath.Join(filepath.Dir(executablePath), "../money/transfers.txt")
+	absPath := filepath.Join(filepath.Dir(executablePath), "transfers.txt")
 
 	file, err := os.Open(absPath)
 	if err != nil {
@@ -99,7 +99,7 @@ func loadTransfers() []transfer.Transfer {
 func saveTransfers(tranfers []transfer.Transfer) {
 
 	executablePath, err := os.Executable()
-	absPath := filepath.Join(filepath.Dir(executablePath), "../money/transfers.txt")
+	absPath := filepath.Join(filepath.Dir(executablePath), "transfers.txt")
 
 	file, err := os.Create(absPath)
 	if err != nil {
