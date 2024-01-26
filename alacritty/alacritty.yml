@@ -1,5 +1,5 @@
-import:
-  - ~/.config/alacritty/themes/themes/tokyo-night.yaml
+# import:
+# - ~/.config/alacritty/themes/themes/tokyo-night.toml
 
 font:
   # Normal (roman) font face

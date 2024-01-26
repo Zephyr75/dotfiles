@@ -1,0 +1,22 @@
+import = [
+	"~/.config/alacritty/themes/themes/tokyo-night.toml"
+]
+
+[font]
+size = 7.0
+
+[font.bold]
+family = "JetBrains Mono Nerd Font"
+style = "Bold"
+
+[font.italic]
+family = "JetBrains Mono Nerd Font"
+style = "Italic"
+
+[font.normal]
+family = "JetBrains Mono Nerd Font"
+style = "Regular"
+
+[shell]
+args = ["--login"]
+program = "/bin/zsh"

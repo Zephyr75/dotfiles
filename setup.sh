@@ -1,4 +1,37 @@
-# Main dotfiles
+########## Yay ##########
+
+pacman -S --needed git base-devel
+git clone https://aur.archlinux.org/yay.git
+cd yay
+makepkg -si
+
+########## Packages ########## 
+
+pacman -S - < pkglist.txt
+
+yay awesome-git
+
+# picom
+git clone https://github.com/jonaburg/picom
+cd picom
+meson --buildtype=release . build
+ninja -C build
+
+# AUR packages
+yay bibata-cursor-theme
+yay rxfetch
+yay lightdm-webkit2-theme-glorious
+yay orchis-theme
+yay bluez
+
+########## .zshrc ##########
+
+cd ..
+git clone git@github.com:Zephyr75/dotfiles_private.git
+cp dotfiles_private/.zshrc ..
+
+########## Dotfiles ##########
+
 rm -r ../awesome
 cp -r awesome ..
 
@@ -14,17 +47,10 @@ cp -r lvim ..
 rm -r ../picom
 cp -r picom ..
 
-rm -r ../ranger
-cp -r ranger ..
-
 rm -r ../rofi
 cp -r rofi ..
 
-# Bless
 rm /usr/share/bless/bless-custom.layout
-cp bless-custom.layout /usr/share/bless/
+sudo cp bless-custom.layout /usr/share/bless/
 
-# .zshrc
-cd ..
-git clone git@github.com:Zephyr75/dotfiles_private.git
-cp dotfiles_private/.zshrc ..
+cp libinput-gestures.conf ..

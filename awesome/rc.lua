@@ -71,6 +71,10 @@ naughty.config.defaults.margin = 15
 
 naughty.config.defaults.icon_size = 60
 
+-- vertically center notifications
+-- naughty.config.defaults.position = "middle"
+
+
 
 
 
@@ -420,27 +424,29 @@ awful.keyboard.append_global_keybindings({
     { description = "reload awesome", group = "awesome" }),
   awful.key({ modkey, "Shift" }, "q", awesome.quit,
     { description = "quit awesome", group = "awesome" }),
-  awful.key({ modkey }, "x",
-    function()
-      awful.prompt.run {
-        prompt       = "Run Lua code: ",
-        textbox      = awful.screen.focused().mypromptbox.widget,
-        exe_callback = awful.util.eval,
-        history_path = awful.util.get_cache_dir() .. "/history_eval"
-      }
-    end,
-    { description = "lua execute prompt", group = "awesome" }),
+  -- awful.key({ modkey }, "x",
+  --   function()
+  --     awful.prompt.run {
+  --       prompt       = "Run Lua code: ",
+  --       textbox      = awful.screen.focused().mypromptbox.widget,
+  --       exe_callback = awful.util.eval,
+  --       history_path = awful.util.get_cache_dir() .. "/history_eval"
+  --     }
+  --   end,
+  --   { description = "lua execute prompt", group = "awesome" }),
   awful.key({ modkey, }, "Return", function() awful.spawn(terminal) end,
     { description = "open a terminal", group = "launcher" }),
   awful.key({ modkey }, "r", function() awful.util.spawn("rofi -show drun") end,
     { description = "run program", group = "launcher" }),
   awful.key({ modkey }, "c", function() awful.util.spawn("rofi -show calc -modi calc -no-show-match -no-sort") end,
     { description = "open calculator", group = "launcher" }),
-  awful.key({ modkey }, "e", function() awful.util.spawn('alacritty -e sh -c "xdg-open \"$(fzf)\"; zsh"') end,
-    { description = "file finder", group = "launcher" }),
   awful.key({ modkey }, "b", function() awful.util.spawn("blueman-manager") end,
     { description = "bluetooth manager", group = "launcher" }),
-  awful.key({ modkey }, "d", function() awful.util.spawn('alacritty -e sh -c "thunar $(find . -type d -print | fzf); zsh"') end,
+  awful.key({ modkey }, "e", function() awful.util.spawn('alacritty -e sh -c "/home/zeph/.local/bin/lvim $(find . | fzf); zsh"') end,
+    { description = "file finder", group = "launcher" }),
+  awful.key({ modkey }, "d", function() awful.util.spawn('alacritty -e sh -c "cd $(find . -type d | fzf); thunar .; zsh"') end,
+    { description = "directory finder", group = "launcher" }),
+  awful.key({ modkey }, "x", function() awful.util.spawn("rofi -show file-browser-extended -file-browser-depth 5")end,
     { description = "directory finder", group = "launcher" }),
   awful.key({ modkey }, "g", function() awful.util.spawn("github-desktop") end,
     { description = "run github desktop", group = "launcher" }),
@@ -637,16 +643,19 @@ awful.keyboard.append_global_keybindings({
     awful.spawn("pamixer -i 5")
     awful.spawn.easy_async("pamixer --get-volume", function(stdout)
       local volume = tonumber(stdout)
+      if volume >= 100 then
+        volume = 99
+      end
       local notification = naughty.notify({
-        title = " Volume",
-        text = "   " .. volume,
+        title = "Vol " .. volume,
+        -- text = "   " .. volume,
         timeout = 1,
         position = "top_middle",
         bg = "#1a1b26",
         fg = "#FFFFFF",
         border_width = 0,
-        width = 95,
-        height = 75,
+        width = 80,
+        height = 40,
         replaces_id = last_notification_id,
         font = "JetBrainsMono Nerd Font SemiBold 10",
       })
@@ -657,17 +666,20 @@ awful.keyboard.append_global_keybindings({
     awful.spawn("pamixer -d 5")
     awful.spawn.easy_async("pamixer --get-volume", function(stdout)
       local volume = tonumber(stdout)
+      if volume >= 100 then
+        volume = 99
+      end
       local notification = naughty.notify({
-        title = " Volume",
-        text = "   " .. volume,
+        title = "Vol " .. volume,
+        -- text = "   " .. volume,
         timeout = 1,
         position = "top_middle",
         bg = "#1a1b26",
         fg = "#FFFFFF",
         align = "center",
         border_width = 0,
-        width = 95,
-        height = 75,
+        width = 80,
+        height = 40,
         replaces_id = last_notification_id,
         font = "JetBrainsMono Nerd Font SemiBold 10",
       })

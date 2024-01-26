@@ -10,7 +10,7 @@ configuration {
     display-ssh: "SSH connections";
     drun-display-format: "{icon} {name}";
     font: "JetBrainsMono Nerd Font Medium 10";
-    modi: "drun,filebrowser,ssh";
+    modi: "drun,filebrowser,ssh,file-browser-extended";
     show-icons: true;
     icon-theme: "Papirus";
 }
@@ -18,9 +18,9 @@ configuration {
 * {
     font:   "Montserrat 12";
 
-    bg0:    #22222288;
-    bg1:    #7E7E7E80;
-    bg2:    #88888888;
+    bg0:    #1a1b26B8;
+    bg1:    #24283b80;
+    bg2:    #565f8988;
 
     fg0:    #DEDEDE;
     fg1:    #FFFFFF;
