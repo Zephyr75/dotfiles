@@ -16,6 +16,7 @@ brightnessctl
 btop
 cifs-utils
 cmake
+cronie
 discord
 docker
 duf
