@@ -24,6 +24,11 @@ yay lightdm-webkit2-theme-glorious
 yay orchis-theme
 yay bluez
 
+########## Utilities ##########
+
+npm install -g md-to-pdf
+npx puppeteer browsers install chrome
+
 ########## .zshrc ##########
 
 cd ..
