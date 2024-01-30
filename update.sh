@@ -5,9 +5,6 @@ cp -r awesome ..
 rm -r ../alacritty
 cp -r alacritty ..
 
-rm -r ../feh
-cp -r feh ..
-
 rm -r ../lvim
 cp -r lvim ..
 

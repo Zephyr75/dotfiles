@@ -21,7 +21,6 @@ discord
 docker
 duf
 eza
-feh
 file-roller
 firefox
 flameshot
@@ -30,12 +29,15 @@ ghidra
 gnome-keyring
 gnu-netcat
 go
+gum
 gvfs
 iwd
+jq
 lightdm
 lxappearance
 marksman
 meson
+mirage
 ncdu
 neovim
 network-manager-applet

@@ -26,6 +26,7 @@ yay bluez
 
 ########## Utilities ##########
 
+npm install -g live-server
 npm install -g md-to-pdf
 npx puppeteer browsers install chrome
 
