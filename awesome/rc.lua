@@ -418,7 +418,7 @@ awful.mouse.append_global_mousebindings({
 awful.keyboard.append_global_keybindings({
   awful.key({ modkey, }, "s", hotkeys_popup.show_help,
     { description = "show help", group = "awesome" }),
-  awful.key({ modkey, }, "w", function() mymainmenu:show() end,
+  awful.key({ modkey, }, "v", function() mymainmenu:show() end,
     { description = "show main menu", group = "awesome" }),
   awful.key({ modkey, "Control" }, "r", awesome.restart,
     { description = "reload awesome", group = "awesome" }),
@@ -444,15 +444,20 @@ awful.keyboard.append_global_keybindings({
     { description = "bluetooth manager", group = "launcher" }),
   awful.key({ modkey }, "e", function() awful.util.spawn('alacritty -e sh -c "/home/zeph/.local/bin/lvim $(find . | fzf); zsh"') end,
     { description = "file finder", group = "launcher" }),
-  awful.key({ modkey }, "d", function() awful.util.spawn('alacritty -e sh -c "cd $(find . -type d | fzf); thunar .; zsh"') end,
+  awful.key({ modkey }, "z", function() awful.util.spawn('alacritty -e sh -c "cd $(find . -type d | fzf); zsh"') end,
     { description = "directory finder", group = "launcher" }),
-  awful.key({ modkey }, "x", function() awful.util.spawn("rofi -show file-browser-extended -file-browser-depth 5")end,
+  awful.key({ modkey }, "x", function() awful.util.spawn("rofi -show file-browser-extended -file-browser-depth 7")end,
     { description = "directory finder", group = "launcher" }),
   awful.key({ modkey }, "g", function() awful.util.spawn("github-desktop") end,
     { description = "run github desktop", group = "launcher" }),
-  awful.key({ modkey }, "a",
-    function() awful.util.spawn("google-chrome-stable --new-window --app=https://excalidraw.com") end,
+  awful.key({ modkey }, "d", function() awful.util.spawn("discord") end,
+    { description = "run discord", group = "launcher" }),
+  awful.key({ modkey }, "a", function() awful.util.spawn("google-chrome-stable --new-window --app=https://excalidraw.com") end,
     { description = "run excalidraw", group = "launcher" }),
+  awful.key({ modkey }, "w", function() awful.util.spawn("firefox --new-window https://web.whatsapp.com") end,
+    { description = "run whatsapp", group = "launcher" }),
+  awful.key({ modkey }, "t", function() awful.util.spawn("firefox --new-window https://web.telegram.org") end,
+    { description = "run telegram", group = "launcher" }),
   awful.key({ modkey }, "p", function() menubar.show() end,
     { description = "show the menubar", group = "launcher" }),
 awful.key({ modkey }, "Escape", function() logout_popup.launch() end,
@@ -460,6 +465,8 @@ awful.key({ modkey }, "Escape", function() logout_popup.launch() end,
   awful.key({ }, "Print", function () awful.spawn("flameshot gui") end,
     {description = "Take screenshot with Flameshot", group = "screenshot"}),
 })
+
+-- z, v, t, y, u, i, o
 
 -- Define the rules table
 awful.rules = {
