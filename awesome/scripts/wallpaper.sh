@@ -14,7 +14,8 @@ while true; do
     NEXT_WALLPAPER=$((HOUR % NUM_WALLPAPERS))
 
     # Set the path to the next wallpaper image
-    WALLPAPER_PATH="$WALLPAPER_DIR/firewatch/$NEXT_WALLPAPER.png"
+    # WALLPAPER_PATH="$WALLPAPER_DIR/firewatch/$NEXT_WALLPAPER.png"
+    WALLPAPER_PATH="$WALLPAPER_DIR/catalina/$NEXT_WALLPAPER.jpg"
 
     # Set the wallpaper using feh
     feh --bg-fill "$WALLPAPER_PATH"

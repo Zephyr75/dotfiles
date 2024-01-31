@@ -171,7 +171,7 @@ local function worker(user_args)
         if show_current_level then
             -- INFO: battery widget text color
             chargeText = string.format('%d', charge)
-            level_widget.markup = '<span color="#f7768e">' .. chargeText .. '</span>'
+            level_widget.markup = chargeText
         end
 
         if (charge >= 1 and charge < 15) then

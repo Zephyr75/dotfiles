@@ -10,9 +10,10 @@ local function worker(user_args)
     local args = user_args or {}
     local timeout = args.timeout or 1
     -- INFO: color icons ram widget
-    local color_used = "#9ece6abb"
-    local color_free = "#9ece6a33"
-    local color_buf = "#9ece6a77"
+    -- TODO: fix
+    local color_used = "#ffffffbb"
+    local color_free = "#ffffff33"
+    local color_buf = "#ffffff77"
     local widget_show_buf = args.widget_show_buf or false
     local widget_height = args.widget_height or 25
     local widget_width = args.widget_width or 25
@@ -29,7 +30,7 @@ local function worker(user_args)
     local ramgraph_widget = wibox.layout.fixed.horizontal()
 
     local piechart = wibox.widget {
-        border_width = 0,
+        border_width = 5,
         colors = {
             color_used,
             color_free,
@@ -88,7 +89,7 @@ local function worker(user_args)
 
             -- ram_text_widget:set_text(getPercentageWithoutPercent(used + used_swap))
             -- INFO: text color ram widget
-            ram_text_widget:set_markup('<span color="#9ece6a">'..getPercentageWithoutPercent(used + used_swap)..'</span>')
+            ram_text_widget:set_markup(getPercentageWithoutPercent(used + used_swap))
 
             if popup.visible then
                 popup:get_widget().data_list = {
