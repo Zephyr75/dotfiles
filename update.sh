@@ -14,8 +14,11 @@ cp -r picom ..
 rm -r ../rofi
 cp -r rofi ..
 
-rm /usr/share/bless/bless-custom.layout
-sudo cp bless-custom.layout /usr/share/bless/
+rm -r ../feh
+cp -r feh ..
+
+rm /usr/share/bless/bless-arc-dark.layout
+sudo cp bless-arc-dark.layout /usr/share/bless/
 
 cp libinput-gestures.conf ..
 

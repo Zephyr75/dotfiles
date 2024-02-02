@@ -1,0 +1,124 @@
+<layout>
+    <area type="offset">
+        <display>
+            <font>Monospace 12</font>
+            <evenrow>
+                <evencolumn>
+                    <foreground>#e5e5e5</foreground>
+                    <background>#404552</background>
+                </evencolumn>
+            </evenrow>
+            <oddrow>
+                <evencolumn>
+                    <foreground>#e5e5e5</foreground>
+                    <background>#404552</background>
+                </evencolumn>
+            </oddrow>
+        </display>
+    </area>
+
+    <area type="separator">
+        <display>
+            <evenrow>
+            <evencolumn>
+                <foreground>#2F343F</foreground>
+                <background>#404552</background>
+            </evencolumn>
+            </evenrow>
+       </display>
+    </area>
+
+    <area type="hexadecimal">
+        <case>upper</case>
+        <display>
+            <font>Monospace 12</font>
+            <evenrow>
+                <evencolumn>
+                    <foreground>#5294e2</foreground>
+                    <background>#404552</background>
+                </evencolumn>
+                <oddcolumn>
+                    <foreground>#e5e5e5</foreground>
+                    <background>#404552</background>
+                </oddcolumn>
+            </evenrow>
+            <oddrow>
+                <evencolumn>
+                    <foreground>#5294e2</foreground>
+                    <background>#404552</background>
+                </evencolumn>
+                <oddcolumn>
+                    <foreground>#e5e5e5</foreground>
+                    <background>#404552</background>
+                </oddcolumn>
+            </oddrow>
+       </display>
+    </area>
+
+    <area type="separator">
+        <display>
+            <font>Monospace 12</font>
+            <evenrow>
+                <evencolumn>
+                    <foreground>#2F343F</foreground>
+                    <background>#404552</background>
+                </evencolumn>
+            </evenrow>
+        </display>
+    </area>
+
+    <area type="ascii">
+        <display>
+            <font>Monospace 12</font>
+            <evenrow>
+                <evencolumn>
+                    <foreground>#e5e5e5</foreground>
+                    <background>#404552</background>
+                </evencolumn>
+                <oddcolumn>
+                    <foreground>#e5e5e5</foreground>
+                    <background>#404552</background>
+                </oddcolumn>
+            </evenrow>
+            <oddrow>
+                <evencolumn>
+                    <foreground>#e5e5e5</foreground>
+                    <background>#404552</background>
+                </evencolumn>
+                <oddcolumn>
+                    <foreground>#e5e5e5</foreground>
+                    <background>#404552</background>
+                </oddcolumn>
+            </oddrow>
+       </display>
+    </area>
+
+    <area type="separator">
+        <display>
+            <evenrow>
+            <evencolumn>
+                <foreground>#2F343F</foreground>
+                <background>#404552</background>
+            </evencolumn>
+            </evenrow>
+        </display>
+    </area>
+
+    <area type="offsetx">
+        <display>
+            <font>Monospace 12</font>
+            <evenrow>
+                <evencolumn>
+                    <foreground>#e5e5e5</foreground>
+                    <background>#404552</background>
+                </evencolumn>
+            </evenrow>
+            <oddrow>
+                <evencolumn>
+                    <foreground>#e5e5e5</foreground>
+                    <background>#404552</background>
+                </evencolumn>
+            </oddrow>
+        </display>
+    </area>
+</layout>

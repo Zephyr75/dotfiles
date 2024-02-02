@@ -10,7 +10,6 @@ local function worker(user_args)
     local args = user_args or {}
     local timeout = args.timeout or 1
     -- INFO: color icons ram widget
-    -- TODO: fix
     local color_used = "#ffffffbb"
     local color_free = "#ffffff33"
     local color_buf = "#ffffff77"
@@ -30,7 +29,7 @@ local function worker(user_args)
     local ramgraph_widget = wibox.layout.fixed.horizontal()
 
     local piechart = wibox.widget {
-        border_width = 5,
+        border_width = 0,
         colors = {
             color_used,
             color_free,
