@@ -32,6 +32,7 @@ gnu-netcat
 go
 gum
 gvfs
+hexyl
 iwd
 jq
 lightdm

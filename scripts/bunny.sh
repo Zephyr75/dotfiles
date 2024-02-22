@@ -1,5 +1,0 @@
-echo ""
-echo " (\ /)"
-echo " ( . .)"
-echo " c(\")(\")"
-echo ""
