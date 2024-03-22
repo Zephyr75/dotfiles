@@ -414,11 +414,12 @@ awful.mouse.append_global_mousebindings({
 
 -- {{{ Key bindings
 
+
 -- General Awesome keys
 awful.keyboard.append_global_keybindings({
   awful.key({ modkey, }, "s", hotkeys_popup.show_help,
     { description = "show help", group = "awesome" }),
-  awful.key({ modkey, }, "v", function() mymainmenu:show() end,
+  awful.key({ modkey, }, "w", function() mymainmenu:show() end,
     { description = "show main menu", group = "awesome" }),
   awful.key({ modkey, "Control" }, "r", awesome.restart,
     { description = "reload awesome", group = "awesome" }),
@@ -438,14 +439,16 @@ awful.keyboard.append_global_keybindings({
     { description = "open a terminal", group = "launcher" }),
   awful.key({ modkey }, "r", function() awful.util.spawn("rofi -show drun") end,
     { description = "run program", group = "launcher" }),
-  awful.key({ modkey }, "c", function() awful.util.spawn("rofi -show calc -modi calc -no-show-match -no-sort") end,
+  awful.key({ modkey }, "c", function() awful.util.spawn('alacritty -e sh -c "qalc"') end,
     { description = "open calculator", group = "launcher" }),
   awful.key({ modkey }, "b", function() awful.util.spawn("blueman-manager") end,
     { description = "bluetooth manager", group = "launcher" }),
-  awful.key({ modkey }, "e", function() awful.util.spawn('alacritty -e sh -c "/home/zeph/.local/bin/lvim $(find . | fzf); zsh"') end,
-    { description = "file finder", group = "launcher" }),
-  awful.key({ modkey }, "z", function() awful.util.spawn('alacritty -e sh -c "cd $(find . -type d | fzf); zsh"') end,
-    { description = "directory finder", group = "launcher" }),
+  awful.key({ modkey }, "e", function() awful.util.spawn('alacritty -e sh -c "cd $(dirname $(find . | fzf)); zsh"') end,
+    { description = "open code editor", group = "launcher" }),
+  awful.key({ modkey }, "z", function() awful.util.spawn('alacritty -e sh -c "btop"') end,
+    { description = "run btop", group = "launcher" }),
+  awful.key({ modkey }, "i", function() awful.util.spawn('alacritty -e sh -c "/home/zeph/.config/dotfiles_private/scripts/todo/todo"') end,
+    { description = "open todo", group = "launcher" }),
   awful.key({ modkey }, "x", function() awful.util.spawn("rofi -show file-browser-extended -file-browser-depth 7")end,
     { description = "directory finder", group = "launcher" }),
   awful.key({ modkey }, "g", function() awful.util.spawn("github-desktop") end,
@@ -454,19 +457,15 @@ awful.keyboard.append_global_keybindings({
     { description = "run discord", group = "launcher" }),
   awful.key({ modkey }, "a", function() awful.util.spawn("google-chrome-stable --new-window --app=https://excalidraw.com") end,
     { description = "run excalidraw", group = "launcher" }),
-  awful.key({ modkey }, "w", function() awful.util.spawn("firefox --new-window https://web.whatsapp.com") end,
-    { description = "run whatsapp", group = "launcher" }),
-  awful.key({ modkey }, "t", function() awful.util.spawn("firefox --new-window https://web.telegram.org") end,
-    { description = "run telegram", group = "launcher" }),
+  awful.key({ modkey }, "y", function() awful.util.spawn('alacritty -e sh -c "tgpt -i"') end,
+    { description = "run yarvis", group = "launcher" }),
   awful.key({ modkey }, "p", function() menubar.show() end,
     { description = "show the menubar", group = "launcher" }),
-awful.key({ modkey }, "Escape", function() logout_popup.launch() end,
+  awful.key({ modkey }, "Escape", function() logout_popup.launch() end,
     { description = "Show logout screen", group = "custom" }),
   awful.key({ }, "Print", function () awful.spawn("flameshot gui") end,
     {description = "Take screenshot with Flameshot", group = "screenshot"}),
 })
-
--- z, v, t, y, u, i, o
 
 -- Define the rules table
 awful.rules = {
@@ -941,7 +940,7 @@ awful.spawn.with_shell("$HOME/.config/awesome/scripts/wallpaper.sh")
 -- awful.spawn.with_shell("feh --bg-fill '/home/zeph/.config/awesome/wallpapers/firewatch.png'")
 awful.spawn.with_shell("picom --experimental-backend")
 awful.spawn.with_shell("nm-applet")
-awful.spawn.with_shell("setxkbmap no")
+awful.spawn.with_shell("setxkbmap intl")
 awful.spawn.with_shell("fzf")
 awful.spawn.with_shell("find . -type d")
 awful.spawn.with_shell("libinput-gestures-setup start")

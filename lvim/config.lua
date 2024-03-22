@@ -24,7 +24,7 @@
 --Ctrl + n = add multicursor (move with arrow keys)
 -----------------------------------------------------------------------------
 -- DISABLE HIGHLIGHT ON BIG FILES
---:TSBufDisable highlight'
+--:TSBufDisable highlight
 -----------------------------------------------------------------------------
 --VIM COMMANDS
 --f + char = jump to char
@@ -59,6 +59,9 @@
 --' + char = jump to mark char
 --:delmarks a = delete mark a
 --:delmarks a-zA-Z0-9 = delete all marks
+--z + = = spell check
+--y + s + i + w + " = surround word with quotes
+--c + s + " + ' = change surrounding quotes to single quotes
 -----------------------------------------------------------------------------
 -- RANGER COMMANDS
 --S = open shell
@@ -96,7 +99,7 @@ require 'luasnip'.filetype_extend("dart", { "flutter" })
 require 'luasnip'.filetype_extend("cs", { "unity" })
 
 -- Set color scheme
-lvim.colorscheme = "tokyonight-moon"
+lvim.colorscheme = "catppuccin-macchiato"
 
 vim.cmd('set clipboard+=unnamedplus')
 
@@ -119,12 +122,13 @@ lvim.plugins = {
     priority = 1000,
     opts = {},
   },
-  -- {
-  --   "Pocco81/auto-save.nvim",
-  --   config = function()
-  --     require("auto-save").setup {}
-  --   end,
-  -- },
+  { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
+  {
+    "Pocco81/auto-save.nvim",
+    config = function()
+      require("auto-save").setup {}
+    end,
+  },
   { 'chentoast/marks.nvim' },
   { 'mg979/vim-visual-multi' },
   { 'tpope/vim-eunuch' },
@@ -170,12 +174,21 @@ lvim.plugins = {
     'stevearc/dressing.nvim',
     opts = {},
   },
+  -- {
+  --   "ThePrimeagen/harpoon",
+  --   branch = "harpoon2",
+  --   dependencies = { "nvim-lua/plenary.nvim" }
+  -- },
   {
-    "ThePrimeagen/harpoon",
-    branch = "harpoon2",
-    dependencies = { "nvim-lua/plenary.nvim" }
+    "otavioschwanck/arrow.nvim",
+    opts = {
+      show_icons = true,
+      leader_key = ',' -- Recommended to be a single key
+    }
   },
   { 'tpope/vim-surround' },
+  { 'sindrets/diffview.nvim' },
+  { 'ThePrimeagen/vim-be-good' },
 }
 
 
@@ -184,19 +197,7 @@ require('leap').add_default_mappings()
 require 'lspconfig'.marksman.setup {}
 
 
-local harpoon = require("harpoon")
-
--- REQUIRED
-harpoon:setup()
--- REQUIRED
-
-vim.keymap.set("n", "<leader>a", function() harpoon:list():append() end)
-vim.keymap.set("n", "<leader>r", function() harpoon:list():remove() end)
-vim.keymap.set("n", "<leader>h", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
-
--- Toggle previous & next buffers stored within Harpoon list
--- vim.keymap.set("n", "<A-h>", function() harpoon:list():prev() end)
--- vim.keymap.set("n", "<A-l>", function() harpoon:list():next() end)
+-- local harpoon = require("harpoon")
 
 -- vim.keymap.set('n', 's', function ()
 --   require('leap').leap { target_windows = { vim.api.nvim_get_current_win() } }
@@ -237,9 +238,6 @@ vim.api.nvim_set_keymap('n', '<A-c>', ':so /home/zeph/.config/lvim/config.lua<En
 
 -- Make kj in insert mode act as Esc
 vim.api.nvim_set_keymap('i', 'kj', '<Esc>', { noremap = true })
-
--- Preview LaTeX equations
-vim.keymap.set("n", "gm", "<cmd>lua require('nabla').popup()<CR>", { noremap = true })
 
 -- Preview method definition
 vim.keymap.set("n", "gp", "<cmd>lua require('goto-preview').goto_preview_definition()<CR>", { noremap = true })
