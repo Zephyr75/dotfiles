@@ -61,6 +61,7 @@ thunar
 tldr
 tree
 ttf-jetbrains-mono-nerd
+tumbler
 vim
 vlc
 volatility3

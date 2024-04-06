@@ -18,12 +18,12 @@ configuration {
 * {
     font:   "Montserrat 12";
 
-    bg0:    #1a1b26B8;
-    bg1:    #24283b80;
-    bg2:    #565f8988;
+    bg0:    #1e1e2eE6;
+    bg1:    #31324480;
+    bg2:    #b4befeE6;
 
     fg0:    #DEDEDE;
-    fg1:    #FFFFFF;
+    fg1:    #1e1e2e;
     fg2:    #DEDEDE80;
 
     background-color:   transparent;

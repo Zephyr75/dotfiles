@@ -196,7 +196,7 @@ local padded_clock = wibox.container.margin(textclock_clr, 15, 15)
 local clock_container = wibox.container.background(padded_clock)
 
 -- Set the background color and shape
-clock_container.bg = "#1a1b26"
+clock_container.bg = "#1e1e2e"
 clock_container.shape = function(cr, width, height)
   local radius = 10
   gears.shape.rounded_rect(cr, width, height, radius)
@@ -212,7 +212,7 @@ local padded_ram = wibox.container.margin(ram_widget(), 5, 5)
 local ram_container = wibox.container.background(padded_ram)
 
 -- Set the background color and shape
-ram_container.bg = "#1a1b26"
+ram_container.bg = "#1e1e2e"
 ram_container.shape = function(cr, width, height)
   local radius = 10
   gears.shape.rounded_rect(cr, width, height, radius)
@@ -225,7 +225,7 @@ local padded_cpu = wibox.container.margin(cpu_widget(), 15, 15)
 local cpu_container = wibox.container.background(padded_cpu)
 
 -- Set the background color and shape
-cpu_container.bg = "#1a1b26"
+cpu_container.bg = "#1e1e2e"
 cpu_container.shape = function(cr, width, height)
   local radius = 10
   gears.shape.rounded_rect(cr, width, height, radius)
@@ -238,7 +238,7 @@ local padded_battery = wibox.container.margin(battery_widget(), 10, 10)
 local battery_container = wibox.container.background(padded_battery)
 
 -- Set the background color and shape
-battery_container.bg = "#1a1b26"
+battery_container.bg = "#1e1e2e"
 battery_container.shape = function(cr, width, height)
   local radius = 10
   gears.shape.rounded_rect(cr, width, height, radius)
@@ -251,7 +251,7 @@ local padded_volume = wibox.container.margin(volume_widget(), 10, 10)
 local volume_container = wibox.container.background(padded_volume)
 
 -- Set the background color and shape
-volume_container.bg = "#1a1b26"
+volume_container.bg = "#1e1e2e"
 volume_container.shape = function(cr, width, height)
   local radius = 10
   gears.shape.rounded_rect(cr, width, height, radius)
@@ -263,7 +263,7 @@ local padded_systray = wibox.container.margin(wibox.widget.systray(), 15, 15, 5,
 local systray_container = wibox.container.background(padded_systray)
 
 -- Set the background color and shape
-systray_container.bg = "#1a1b26"
+systray_container.bg = "#1e1e2e"
 systray_container.shape = function(cr, width, height)
   local radius = 10
   gears.shape.rounded_rect(cr, width, height, radius)
@@ -298,7 +298,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
   local layout_box_container = wibox.container.background(padded_layout_box)
 
   -- Set the background color and shape
-  layout_box_container.bg = "#1a1b26"
+  layout_box_container.bg = "#1e1e2e"
   layout_box_container.shape = function(cr, width, height)
     local radius = 10
     gears.shape.rounded_rect(cr, width, height, radius)
@@ -327,9 +327,9 @@ screen.connect_signal("request::desktop_decoration", function(s)
       awful.button({}, 4, function(t) awful.tag.viewprev(t.screen) end),
       awful.button({}, 5, function(t) awful.tag.viewnext(t.screen) end),
     }, style = {
-    bg_focus = "#1a1b26",
-    bg_occupied = "#1a1b26a0",
-    bg_empty = "#1a1b2620",
+    bg_focus = "#1e1e2e",
+    bg_occupied = "#1e1e2ea0",
+    bg_empty = "#1e1e2e20",
     shape = gears.shape.circle,
     font = "JetBrains Mono Nerd Font SemiBold 12",
   },
@@ -442,11 +442,11 @@ awful.keyboard.append_global_keybindings({
     { description = "open a terminal", group = "launcher" }),
   awful.key({ modkey }, "r", function() awful.util.spawn("rofi -show drun") end,
     { description = "run program", group = "launcher" }),
-  awful.key({ modkey }, "c", function() awful.util.spawn('alacritty -e sh -c "qalc"') end,
+  awful.key({ modkey }, "c", function() awful.util.spawn('alacritty -e sh -c "bold=$(tput bold); normal=$(tput sgr0); echo "${bold}Qalc${normal}"; qalc"') end,
     { description = "open calculator", group = "launcher" }),
   awful.key({ modkey }, "b", function() awful.util.spawn("blueman-manager") end,
     { description = "bluetooth manager", group = "launcher" }),
-  awful.key({ modkey }, "e", function() awful.util.spawn('alacritty -e sh -c "cd $(/home/zeph/.config/dotfiles_private/scripts/smartcd.sh $(find . | fzf)); zsh"') end,
+  awful.key({ modkey }, "e", function() awful.util.spawn('alacritty -e sh -c "cd $(/home/zeph/.config/dotfiles_private/scripts/smartcd.sh $(find . | fzf --color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8,fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc,marker:#f5e0dc,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8)); zsh"') end,
     { description = "open code editor", group = "launcher" }),
   awful.key({ modkey }, "z", function() awful.util.spawn('alacritty -e sh -c "btop"') end,
     { description = "run btop", group = "launcher" }),
@@ -456,8 +456,8 @@ awful.keyboard.append_global_keybindings({
     { description = "directory finder", group = "launcher" }),
   awful.key({ modkey }, "g", function() awful.util.spawn("github-desktop") end,
     { description = "run github desktop", group = "launcher" }),
-  awful.key({ modkey }, "d", function() awful.util.spawn("discord") end,
-    { description = "run discord", group = "launcher" }),
+  awful.key({ modkey }, "d", function() awful.util.spawn('alacritty -e sh -c "trans :fr -brief -shell"') end,
+    { description = "translate text", group = "launcher" }),
   awful.key({ modkey }, "a", function() awful.util.spawn("google-chrome-stable --new-window --app=https://excalidraw.com") end,
     { description = "run excalidraw", group = "launcher" }),
   awful.key({ modkey }, "y", function() awful.util.spawn('alacritty -e sh -c "tgpt -i"') end,
@@ -661,7 +661,7 @@ awful.keyboard.append_global_keybindings({
         -- text = "   " .. volume,
         timeout = 1,
         position = "top_middle",
-        bg = "#1a1b26",
+        bg = "#1e1e2e",
         fg = "#FFFFFF",
         border_width = 0,
         width = 80,
@@ -684,7 +684,7 @@ awful.keyboard.append_global_keybindings({
         -- text = "   " .. volume,
         timeout = 1,
         position = "top_middle",
-        bg = "#1a1b26",
+        bg = "#1e1e2e",
         fg = "#FFFFFF",
         align = "center",
         border_width = 0,
@@ -700,10 +700,10 @@ awful.keyboard.append_global_keybindings({
     awful.spawn("pamixer -t")
   end),
   awful.key({}, "XF86MonBrightnessUp", function()
-    awful.spawn("brightnessctl set +10%")
+    awful.spawn("brightnessctl set +5%")
   end),
   awful.key({}, "XF86MonBrightnessDown", function()
-    awful.spawn("brightnessctl set 10%-")
+    awful.spawn("brightnessctl set 5%-")
   end),
   awful.key({}, "XF86Display", function()
     awful.spawn.with_shell("arandr")
@@ -712,7 +712,7 @@ awful.keyboard.append_global_keybindings({
   --   awful.spawn.with_shell("rfkill unblock bluetooth; blueman-manager")
   -- end),
   awful.key({}, "XF86Tools", function()
-    awful.util.spawn('alacritty -e sh -c "/home/zeph/.local/bin/lvim .config/awesome/rc.lua; zsh"')
+    awful.util.spawn('alacritty -e sh -c "cd .config/awesome; /home/zeph/.local/bin/lvim rc.lua; zsh"')
   end),
 })
 
@@ -940,8 +940,8 @@ end)
 
 --Autostart applications
 --awful.spawn.with_shell("nitrogen --restore")
-awful.spawn.with_shell("$HOME/.config/awesome/scripts/wallpaper.sh")
--- awful.spawn.with_shell("feh --bg-fill '/home/zeph/.config/awesome/wallpapers/firewatch.png'")
+-- awful.spawn.with_shell("$HOME/.config/awesome/scripts/wallpaper.sh")
+awful.spawn.with_shell("feh --bg-fill '/home/zeph/.config/awesome/wallpapers/sky.png'")
 awful.spawn.with_shell("picom --experimental-backend")
 awful.spawn.with_shell("nm-applet")
 awful.spawn.with_shell("setxkbmap intl")

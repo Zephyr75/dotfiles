@@ -23,10 +23,10 @@ local w = wibox {
     bg = beautiful.fg_normal,
     max_widget_size = 500,
     ontop = true,
-    height = 200,
-    width = 400,
+    height = 150,
+    width = 380,
     shape = function(cr, width, height)
-        gears.shape.rounded_rect(cr, width, height, 8)
+        gears.shape.rounded_rect(cr, width, height, 32)
     end
 }
 
@@ -55,10 +55,12 @@ local function create_button(icon_name, action_name, accent_color, label_color, 
         end
     }
     button:connect_signal("mouse::enter", function()
-            action:set_markup('<span font="JetBrains Mono Nerd Font SemiBold 7" color="' .. label_color .. '">' .. action_name .. '</span>')
+            action:set_markup('<span font="JetBrains Mono Nerd Font SemiBold 8" color="' .. label_color .. '">' .. action_name .. '</span>')
         end)
 
-    button:connect_signal("mouse::leave", function() action:set_markup('<span> </span>') end)
+    button:connect_signal("mouse::leave", function() 
+            action:set_markup('<span font="JetBrains Mono Nerd Font SemiBold 8" color="' .. label_color .. '">' .. " " .. '</span>')
+        end)
 
     return button
 end
@@ -70,9 +72,9 @@ local function launch(args)
     local accent_color = args.accent_color or beautiful.bg_focus
     local text_color = args.text_color or beautiful.fg_normal
     local label_color = args.label_color or beautiful.fg_focus
-    local phrases = args.phrases or {'Goodbye!'}
+    local phrases = args.phrases or {' '}
     local icon_size = args.icon_size or 40
-    local icon_margin = args.icon_margin or 16
+    local icon_margin = args.icon_margin or 12
 
     local onlogout = args.onlogout or function () awesome.quit() end
     local onlock = args.onlock or function() awful.spawn.with_shell("dm-tool lock") end
@@ -83,7 +85,7 @@ local function launch(args)
     w:set_bg(bg_color)
     if #phrases > 0 then
         phrase_widget:set_markup(
-            '<span color="'.. text_color .. '" font="JetBrains Mono Nerd Font SemiBold 12" size="20000">' .. phrases[ math.random( #phrases ) ] .. '</span>')
+            '<span color="'.. text_color .. '" font="JetBrains Mono Nerd Font SemiBold 12" size="6000">' .. phrases[ math.random( #phrases ) ] .. '</span>')
     end
 
     w:setup {
@@ -102,7 +104,7 @@ local function launch(args)
                     create_button('power', 'Power Off (s)',
                         accent_color, label_color, onpoweroff, icon_size, icon_margin),
                     id = 'buttons',
-                    spacing = 8,
+                    spacing = 4,
                     layout = wibox.layout.fixed.horizontal
                 },
                 valign = 'center',
@@ -113,7 +115,7 @@ local function launch(args)
                 haligh = 'center',
                 layout = wibox.container.place
             },
-            spacing = 32,
+            spacing = 8,
             layout = wibox.layout.fixed.vertical
         },
         id = 'a',

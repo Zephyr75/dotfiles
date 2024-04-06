@@ -14,11 +14,11 @@ local theme = {}
 -- theme.font          = "sans 8"
 theme.font          = "JetBrains Mono Nerd Font SemiBold 9"
 
-theme.bg_normal     = "#1a1b26"
+theme.bg_normal     = "#1e1e2e"
 theme.bg_focus      = "#444444"
 theme.bg_urgent     = "#f7768e"
 theme.bg_minimize   = "#444444"
-theme.bg_systray    = "#1a1b26"
+theme.bg_systray    = "#1e1e2e"
 
 theme.fg_normal     = "#aaaaaa"
 theme.fg_focus      = "#ffffff"
