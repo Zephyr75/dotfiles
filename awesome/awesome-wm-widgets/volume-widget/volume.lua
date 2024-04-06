@@ -149,10 +149,12 @@ local function rebuild_popup()
 
         for i = 0, #rows do rows[i]=nil end
 
+        table.insert(rows, build_header_row(" "))
         table.insert(rows, build_header_row("SINKS"))
         table.insert(rows, build_rows(sinks, function() rebuild_popup() end, "sink"))
         table.insert(rows, build_header_row("SOURCES"))
         table.insert(rows, build_rows(sources, function() rebuild_popup() end, "source"))
+        table.insert(rows, build_header_row(" "))
 
         popup:setup(rows)
     end)
