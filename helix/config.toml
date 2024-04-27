@@ -1,0 +1,51 @@
+theme = "catppuccin_macchiato"
+
+[editor]
+line-number = "relative"
+auto-save = true
+
+[editor.cursor-shape]
+insert = "bar"
+
+[editor.soft-wrap]
+enable = true
+
+[keys.insert.k]
+j = "normal_mode" # Maps `kj` to exit insert mode
+
+[keys.insert]
+A-h = ["normal_mode", "move_char_left"]
+A-j = ["normal_mode", "move_visual_line_down"]
+A-k = ["normal_mode", "move_visual_line_up"]
+A-l = ["normal_mode", "move_char_right"]
+
+[keys.normal]
+A-s = "goto_word"
+A-u = "page_cursor_half_up"
+A-d = "page_cursor_half_down"
+A-1 = ":sh alacritty"
+A-2 = ":sh thunar"
+A-3 = ":sh alacritty -e octodown"
+A-4 = ":sh alacritty -e live-server"
+A-h = "jump_view_left"
+A-j = ["extend_to_line_bounds", "delete_selection", "paste_after"]
+A-k = ["extend_to_line_bounds", "delete_selection", "move_line_up", "paste_before"]
+A-l = "jump_view_right"
+A-c = "copy_selection_on_next_line"
+D = ["ensure_selections_forward", "extend_to_line_end", "delete_selection"]
+C = ["ensure_selections_forward", "extend_to_line_end", "delete_selection", "insert_at_line_end"]
+Y = ["ensure_selections_forward", "extend_to_line_end", "yank", "flip_selections"]
+"*" = ["move_char_right", "move_prev_word_start", "move_next_word_end", "search_selection", "search_next"]
+esc = ["collapse_selection", "keep_primary_selection"]
+v = ["collapse_selection", "select_mode"]
+
+[keys.normal.g]
+x = ["expand_selection", "yank_to_clipboard", ':sh sleep 0.2; xdg-open "$(xclip -o -sel clip)"']
+
+[keys.select]
+A-j = ["extend_to_line_bounds", "delete_selection", "paste_after"]
+A-k = ["extend_to_line_bounds", "delete_selection", "move_line_up", "paste_before"]
+
+[keys.normal."space"]
+i = [':sh mkdir -p img; name=$(date +"%H_%M_%S_%m_%d_%Y").png; xclip -sel clip -t image/png -o > img/$name; echo "![](img/$name)" | xclip -sel clip', ':sh echo "Stored image, insert with Space-p"']
+

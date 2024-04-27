@@ -450,8 +450,8 @@ awful.keyboard.append_global_keybindings({
     { description = "open code editor", group = "launcher" }),
   awful.key({ modkey }, "z", function() awful.util.spawn('alacritty -e sh -c "btop"') end,
     { description = "run btop", group = "launcher" }),
-  awful.key({ modkey }, "i", function() awful.util.spawn('alacritty -e sh -c "/home/zeph/.config/dotfiles_private/scripts/todo/todo"') end,
-    { description = "open todo", group = "launcher" }),
+  -- awful.key({ modkey }, "i", function() awful.util.spawn('alacritty -e sh -c "/home/zeph/.config/dotfiles_private/scripts/todo/todo"') end,
+  --   { description = "open todo", group = "launcher" }),
   awful.key({ modkey }, "x", function() awful.util.spawn("rofi -show file-browser-extended -file-browser-depth 7")end,
     { description = "directory finder", group = "launcher" }),
   awful.key({ modkey }, "g", function() awful.util.spawn("github-desktop") end,
@@ -712,7 +712,7 @@ awful.keyboard.append_global_keybindings({
   --   awful.spawn.with_shell("rfkill unblock bluetooth; blueman-manager")
   -- end),
   awful.key({}, "XF86Tools", function()
-    awful.util.spawn('alacritty -e sh -c "cd .config/awesome; /home/zeph/.local/bin/lvim rc.lua; zsh"')
+    awful.util.spawn('alacritty -e sh -c "cd .config/awesome; helix rc.lua; zsh"')
   end),
 })
 
@@ -749,6 +749,8 @@ client.connect_signal("request::default_keybindings", function()
       { description = "move to screen", group = "client" }),
     awful.key({ modkey, }, "t", function(c) c.ontop = not c.ontop end,
       { description = "toggle keep on top", group = "client" }),
+    awful.key({ modkey, }, "i", function (c) c.sticky = not c.sticky end,
+      {description = "Toggle Sticky", group = "client"}), 
     awful.key({ modkey, }, "n",
       function(c)
         -- The client currently has the input focus, so it cannot be
