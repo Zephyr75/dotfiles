@@ -13,7 +13,6 @@ enable = true
 
 [editor.file-picker]
 hidden = false
-# git-ignore = false
 
 [editor.statusline]
 mode.normal = "NORMAL"
@@ -21,14 +20,13 @@ mode.insert = "INSERT"
 mode.select = "SELECT"
 
 [keys.insert.k]
-j = ["normal_mode", ":write"]
+j = ["normal_mode"]
 
 [keys.insert]
 A-h = ["move_char_left"]
 A-j = ["move_visual_line_down"]
 A-k = ["move_visual_line_up"]
 A-l = ["move_char_right"]
-esc = ["normal_mode", ":write"]
 
 [keys.normal]
 A-s = "goto_word"
@@ -46,7 +44,7 @@ A-k = ["extend_to_line_bounds", "delete_selection", "move_line_up", "paste_befor
 A-l = "jump_view_right"
 A-c = "copy_selection_on_next_line"
 A-f = "search"
-A-t = ["select_mode", "goto_file_start", "yank_to_clipboard", "flip_selections", ':append-output tgpt -c "what is the next logical code block $(xclip -o -sel clip)"  | tail -n +2 | head -n -1']
+A-t = ["select_mode", "goto_file_start", "yank_to_clipboard", "flip_selections", ':append-output tgpt -c "what is the next logical code block $(xclip -o -sel clip)" | tail -n +2 | head -n -1']
 D = ["ensure_selections_forward", "extend_to_line_end", "delete_selection"]
 C = ["ensure_selections_forward", "extend_to_line_end", "delete_selection", "insert_at_line_end"]
 Y = ["ensure_selections_forward", "extend_to_line_end", "yank", "flip_selections"]
@@ -57,7 +55,6 @@ r = ["collapse_selection", "replace"]
 
 [keys.normal.g]
 x = ["expand_selection", "yank_to_clipboard", ':sh sleep 0.1; xdg-open "$(xclip -o -sel clip)"']
-# TODO: replace with :pipe
 
 [keys.normal."space"]
 q = ":quit"
