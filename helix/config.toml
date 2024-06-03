@@ -2,6 +2,7 @@ theme = "catppuccin_macchiato"
 
 [editor]
 line-number = "relative"
+color-modes = true
 auto-save = true
 
 [editor.cursor-shape]
@@ -10,14 +11,24 @@ insert = "bar"
 [editor.soft-wrap]
 enable = true
 
+[editor.file-picker]
+hidden = false
+# git-ignore = false
+
+[editor.statusline]
+mode.normal = "NORMAL"
+mode.insert = "INSERT"
+mode.select = "SELECT"
+
 [keys.insert.k]
-j = "normal_mode" # Maps `kj` to exit insert mode
+j = ["normal_mode", ":write"]
 
 [keys.insert]
-A-h = ["normal_mode", "move_char_left"]
-A-j = ["normal_mode", "move_visual_line_down"]
-A-k = ["normal_mode", "move_visual_line_up"]
-A-l = ["normal_mode", "move_char_right"]
+A-h = ["move_char_left"]
+A-j = ["move_visual_line_down"]
+A-k = ["move_visual_line_up"]
+A-l = ["move_char_right"]
+esc = ["normal_mode", ":write"]
 
 [keys.normal]
 A-s = "goto_word"
@@ -25,27 +36,34 @@ A-u = "page_cursor_half_up"
 A-d = "page_cursor_half_down"
 A-1 = ":sh alacritty"
 A-2 = ":sh thunar"
-A-3 = ":sh alacritty -e octodown"
-A-4 = ":sh alacritty -e live-server"
+A-3 = ":sh /home/zeph/.config/dotfiles_private/scripts/oil/oil_init.sh ."
+A-4 = ":sh alacritty -e octodown"
+A-5 = ":sh alacritty -e live-server"
+A-6 = ":config-open"
 A-h = "jump_view_left"
 A-j = ["extend_to_line_bounds", "delete_selection", "paste_after"]
 A-k = ["extend_to_line_bounds", "delete_selection", "move_line_up", "paste_before"]
 A-l = "jump_view_right"
 A-c = "copy_selection_on_next_line"
+A-f = "search"
+A-t = ["select_mode", "goto_file_start", "yank_to_clipboard", "flip_selections", ':append-output tgpt -c "what is the next logical code block $(xclip -o -sel clip)"  | tail -n +2 | head -n -1']
 D = ["ensure_selections_forward", "extend_to_line_end", "delete_selection"]
 C = ["ensure_selections_forward", "extend_to_line_end", "delete_selection", "insert_at_line_end"]
 Y = ["ensure_selections_forward", "extend_to_line_end", "yank", "flip_selections"]
 "*" = ["move_char_right", "move_prev_word_start", "move_next_word_end", "search_selection", "search_next"]
 esc = ["collapse_selection", "keep_primary_selection"]
 v = ["collapse_selection", "select_mode"]
+r = ["collapse_selection", "replace"]
 
 [keys.normal.g]
-x = ["expand_selection", "yank_to_clipboard", ':sh sleep 0.2; xdg-open "$(xclip -o -sel clip)"']
+x = ["expand_selection", "yank_to_clipboard", ':sh sleep 0.1; xdg-open "$(xclip -o -sel clip)"']
+# TODO: replace with :pipe
+
+[keys.normal."space"]
+q = ":quit"
+i = [':append-output mkdir -p img; name=$(date +"%H_%M_%S_%d_%m_%Y").png; xclip -sel clip -t image/png -o > img/$name; echo "![](img/$name)"']
 
 [keys.select]
 A-j = ["extend_to_line_bounds", "delete_selection", "paste_after"]
 A-k = ["extend_to_line_bounds", "delete_selection", "move_line_up", "paste_before"]
-
-[keys.normal."space"]
-i = [':sh mkdir -p img; name=$(date +"%H_%M_%S_%m_%d_%Y").png; xclip -sel clip -t image/png -o > img/$name; echo "![](img/$name)" | xclip -sel clip', ':sh echo "Stored image, insert with Space-p"']
 
