@@ -112,10 +112,10 @@ theme.titlebar_maximized_button_focus_active  = themes_path.."default/titlebar/m
 -- theme.wallpaper = "/home/zeph/.config/awesome/wallpapers/firewatch.png"
 -- theme.wallpaper = "/home/zeph/.config/awesome/wallpapers/wall.png"
 -- theme.wallpaper = "/home/zeph/.config/awesome/wallpapers/coffee.jpg"
-theme.wallpaper = "/home/zeph/.config/awesome/wallpapers/coffee.jpg"
+-- theme.wallpaper = "/home/zeph/.config/awesome/wallpapers/coffee.jpg"
 -- theme.wallpaper = "/home/zeph/.config/awesome/wallpapers/moscow.jpg"
--- theme.wallpaper = "/home/zeph/.config/awesome/wallpapers/nasa.png"
--- theme.wallpaper = "/home/zeph/.config/awesome/wallpapers/black.png"
+-- theme.wallpaper = "/home/zeph/.config/awesome/wallpapers/nasa2.png"
+theme.wallpaper = "/home/zeph/.config/awesome/wallpapers/sky.png"
 
 
 -- You can use your own layout icons like this:

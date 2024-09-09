@@ -27,7 +27,7 @@ require("awful.hotkeys_popup.keys")
 local battery_widget = require("awesome-wm-widgets.battery-widget.battery")
 local cpu_widget = require("awesome-wm-widgets.cpu-widget.cpu-widget")
 local ram_widget = require("awesome-wm-widgets.ram-widget.ram-widget")
-local volume_widget = require("awesome-wm-widgets.volume-widget.volume")
+local volume_widget = require("awesome-wm-widgets.pactl-widget.volume")
 local logout_popup = require("awesome-wm-widgets.logout-popup-widget.logout-popup")
 -- local docker_widget = require("awesome-wm-widgets.docker-widget.docker")
 
@@ -239,6 +239,7 @@ local battery_container = wibox.container.background(padded_battery)
 
 -- Set the background color and shape
 battery_container.bg = "#1e1e2e"
+-- battery_container.bg = "#1e2021"
 battery_container.shape = function(cr, width, height)
   local radius = 10
   gears.shape.rounded_rect(cr, width, height, radius)
@@ -452,7 +453,7 @@ awful.keyboard.append_global_keybindings({
     { description = "run btop", group = "launcher" }),
   -- awful.key({ modkey }, "i", function() awful.util.spawn('alacritty -e sh -c "/home/zeph/.config/dotfiles_private/scripts/todo/todo"') end,
   --   { description = "open todo", group = "launcher" }),
-  awful.key({ modkey }, "x", function() awful.util.spawn("rofi -show file-browser-extended -file-browser-depth 7")end,
+  awful.key({ modkey }, "x", function() awful.util.spawn("rofi -show file-browser-extended -file-browser-depth 5")end,
     { description = "directory finder", group = "launcher" }),
   awful.key({ modkey }, "g", function() awful.util.spawn("github-desktop") end,
     { description = "run github desktop", group = "launcher" }),
@@ -460,7 +461,7 @@ awful.keyboard.append_global_keybindings({
     { description = "translate text", group = "launcher" }),
   awful.key({ modkey }, "a", function() awful.util.spawn("google-chrome-stable --new-window --app=https://excalidraw.com") end,
     { description = "run excalidraw", group = "launcher" }),
-  awful.key({ modkey }, "y", function() awful.util.spawn('alacritty -e sh -c "tgpt -i"') end,
+  awful.key({ modkey }, "y", function() awful.util.spawn('alacritty -e sh -c "tgpt -m"') end,
     { description = "run yarvis", group = "launcher" }),
   awful.key({ modkey }, "p", function() menubar.show() end,
     { description = "show the menubar", group = "launcher" }),
@@ -700,10 +701,52 @@ awful.keyboard.append_global_keybindings({
     awful.spawn("pamixer -t")
   end),
   awful.key({}, "XF86MonBrightnessUp", function()
-    awful.spawn("brightnessctl set +5%")
+    awful.spawn("brightnessctl set 1212+")
+    awful.spawn.easy_async("brightnessctl get", function(stdout)
+      local brightness = math.floor((tonumber(stdout) * 100 / 24242) + 0.5)
+      if brightness >= 100 then
+        brightness = 99
+      end
+      local notification = naughty.notify({
+        title = "Lum " .. brightness,
+        -- text = "   " .. volume,
+        timeout = 1,
+        position = "top_middle",
+        bg = "#1e1e2e",
+        fg = "#FFFFFF",
+        align = "center",
+        border_width = 0,
+        width = 80,
+        height = 40,
+        replaces_id = last_notification_id,
+        font = "JetBrainsMono Nerd Font SemiBold 10",
+      })
+      last_notification_id = notification.id
+    end)
   end),
   awful.key({}, "XF86MonBrightnessDown", function()
-    awful.spawn("brightnessctl set 5%-")
+    awful.spawn("brightnessctl set 1212-")
+    awful.spawn.easy_async("brightnessctl get", function(stdout)
+      local brightness = math.floor((tonumber(stdout) * 100 / 24242) + 0.5)
+      if brightness >= 100 then
+        brightness = 99
+      end
+      local notification = naughty.notify({
+        title = "Lum " .. brightness,
+        -- text = "   " .. volume,
+        timeout = 1,
+        position = "top_middle",
+        bg = "#1e1e2e",
+        fg = "#FFFFFF",
+        align = "center",
+        border_width = 0,
+        width = 80,
+        height = 40,
+        replaces_id = last_notification_id,
+        font = "JetBrainsMono Nerd Font SemiBold 10",
+      })
+      last_notification_id = notification.id
+    end)
   end),
   awful.key({}, "XF86Display", function()
     awful.spawn.with_shell("arandr")
@@ -943,7 +986,6 @@ end)
 --Autostart applications
 --awful.spawn.with_shell("nitrogen --restore")
 -- awful.spawn.with_shell("$HOME/.config/awesome/scripts/wallpaper.sh")
-awful.spawn.with_shell("feh --bg-fill '/home/zeph/.config/awesome/wallpapers/sky.png'")
 awful.spawn.with_shell("picom --experimental-backend")
 awful.spawn.with_shell("nm-applet")
 awful.spawn.with_shell("setxkbmap intl")
@@ -951,3 +993,5 @@ awful.spawn.with_shell("fzf")
 awful.spawn.with_shell("find . -type d")
 awful.spawn.with_shell("libinput-gestures-setup start")
 awful.spawn.with_shell('export BAT_THEME="Catppuccin-macchiato"')
+awful.spawn.with_shell("feh --bg-fill '/home/zeph/.config/awesome/wallpapers/sky.png'")
+-- awful.spawn.with_shell("/home/zeph/.config/dotfiles_private/scripts/nasa.sh")

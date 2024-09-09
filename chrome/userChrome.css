@@ -46,3 +46,7 @@
 #identity-box.extensionPage > #identity-icon-box{ 
     display: none;
 }
+
+
+tabbrowser tabpanels { background-color: rgb(19,19,20) !important; }
+browser { background-color: #131314 !important; }

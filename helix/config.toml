@@ -19,6 +19,10 @@ mode.normal = "NORMAL"
 mode.insert = "INSERT"
 mode.select = "SELECT"
 
+# [editor.inline-diagnostics]
+# cursor-line = "hint"
+# other-lines = "error"
+
 [keys.insert.k]
 j = ["normal_mode"]
 
@@ -30,27 +34,23 @@ A-l = ["move_char_right"]
 
 [keys.normal]
 A-s = "goto_word"
-A-u = "page_cursor_half_up"
-A-d = "page_cursor_half_down"
 A-1 = ":sh alacritty"
 A-2 = ":sh thunar"
-A-3 = ":sh /home/zeph/.config/dotfiles_private/scripts/oil/oil_init.sh ."
-A-4 = ":sh alacritty -e octodown"
-A-5 = ":sh alacritty -e live-server"
-A-6 = ":config-open"
+A-3 = ":sh alacritty -e octodown"
+A-4 = ":sh alacritty -e live-server"
+A-5 = ":theme base16_default_light"
 A-h = "jump_view_left"
 A-j = ["extend_to_line_bounds", "delete_selection", "paste_after"]
 A-k = ["extend_to_line_bounds", "delete_selection", "move_line_up", "paste_before"]
 A-l = "jump_view_right"
 A-c = "copy_selection_on_next_line"
-A-f = "search"
-A-t = ["select_mode", "goto_file_start", "yank_to_clipboard", "flip_selections", ':append-output tgpt -c "what is the next logical code block $(xclip -o -sel clip)" | tail -n +2 | head -n -1']
+A-t = ["yank_to_clipboard", "flip_selections", ':append-output tgpt -c "what is the next code block $(xclip -o -sel clip)" | tail -n +2 | head -n -1']
 D = ["ensure_selections_forward", "extend_to_line_end", "delete_selection"]
 C = ["ensure_selections_forward", "extend_to_line_end", "delete_selection", "insert_at_line_end"]
 Y = ["ensure_selections_forward", "extend_to_line_end", "yank", "flip_selections"]
 "*" = ["move_char_right", "move_prev_word_start", "move_next_word_end", "search_selection", "search_next"]
-esc = ["collapse_selection", "keep_primary_selection"]
-v = ["collapse_selection", "select_mode"]
+esc = ["collapse_selection"]
+# esc = ["collapse_selection", "keep_primary_selection"]
 r = ["collapse_selection", "replace"]
 
 [keys.normal.g]

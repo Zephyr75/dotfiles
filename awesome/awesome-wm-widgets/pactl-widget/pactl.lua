@@ -32,7 +32,7 @@ function pactl.get_volume(device)
         return nil
     end
 
-    return volsum / volcnt
+    return math.floor(volsum / volcnt)
 end
 
 function pactl.get_mute(device)

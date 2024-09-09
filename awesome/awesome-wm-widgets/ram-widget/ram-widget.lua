@@ -20,8 +20,9 @@ local function worker(user_args)
     --- Text widget to display RAM used as a number
     local ram_text_widget = wibox.widget {
         font = 'JetBrains Mono Nerd Font SemiBold 12', -- beautiful.font,
-        align = "right",
+        align = "left",
         valign = "center",
+        forced_width = 24,
         widget = wibox.widget.textbox,
     }
 
@@ -71,7 +72,7 @@ local function worker(user_args)
     end
 
     local function getPercentageWithoutPercent(value)
-        return math.floor(value / (total + total_swap) * 100 + 0.5) .. ' '
+        return math.floor(value / (total + total_swap) * 100 + 0.5)
     end
 
 
