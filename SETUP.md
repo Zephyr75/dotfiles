@@ -86,6 +86,8 @@ yay lxappearance
 - rofi
 - network-manager-applet
 - helix
+- arandr
+- brightnessctl
 
 ```sh
 ```sh

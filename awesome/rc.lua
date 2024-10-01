@@ -119,6 +119,11 @@ mykeyboardlayout = awful.widget.keyboardlayout()
 -- {{{ Wibar
 -- Create a textclock widget
 mytextclock = wibox.widget.textclock()
+mytextclock:buttons(awful.util.table.join(
+    awful.button({}, 1, function()
+        awful.spawn("/home/zeph/Downloads/zen-specific.AppImage --new window https://calendar.google.com/calendar/u/0/r/week")  -- Replace with your command
+    end)
+))
 
 -- Create a wibox for each screen and add it
 local taglist_buttons = gears.table.join(
@@ -270,6 +275,8 @@ root.buttons(gears.table.join(
 ))
 -- }}}
 
+local last_notification_id = nil
+
 -- {{{ Key bindings
 globalkeys = gears.table.join(
     awful.key({ modkey,           }, "s",      hotkeys_popup.show_help,
@@ -327,6 +334,62 @@ globalkeys = gears.table.join(
               {description = "reload awesome", group = "awesome"}),
     awful.key({ modkey, "Shift"   }, "q", awesome.quit,
               {description = "quit awesome", group = "awesome"}),
+    awful.key({}, "XF86AudioLowerVolume", function()
+        awful.spawn("pactl set-sink-volume @DEFAULT_SINK@ -5%")
+        awful.spawn.easy_async("pactl get-sink-volume @DEFAULT_SINK@", function(stdout)
+          local volume = tonumber(stdout:match("(%d+)%s*%%"))
+          if volume > 100 then
+            volume = 100
+          end
+          local notification = naughty.notify({
+            title = volume,
+            timeout = 1,
+            position = "top_middle",
+            border_width = 0,
+            height = 30,
+            replaces_id = last_notification_id,
+            font = "Inter SemiBold 14",
+            shape = function(cr, width, height)
+                gears.shape.rounded_rect(cr, width, height, 5)
+            end,          
+          })
+          last_notification_id = notification.id
+        end)
+      end),
+    awful.key({}, "XF86AudioRaiseVolume", function()
+        awful.spawn("pactl set-sink-volume @DEFAULT_SINK@ +5%")
+        awful.spawn.easy_async("pactl get-sink-volume @DEFAULT_SINK@", function(stdout)
+          local volume = tonumber(stdout:match("(%d+)%s*%%"))
+          if volume > 100 then
+            volume = 100
+          end
+          local notification = naughty.notify({
+            title = volume,
+            timeout = 1,
+            position = "top_middle",
+            border_width = 0,
+            height = 30,
+            replaces_id = last_notification_id,
+            font = "Inter SemiBold 14",
+            shape = function(cr, width, height)
+                gears.shape.rounded_rect(cr, width, height, 5)
+            end,          
+          })
+          last_notification_id = notification.id
+        end)
+      end),
+    awful.key({}, "XF86AudioMute", function()
+        awful.spawn("pactl set-sink-mute @DEFAULT_SINK@ toggle")
+    end),
+    awful.key({}, "XF86MonBrightnessUp", function()
+        awful.spawn("brightnessctl set +5%")
+    end),
+    awful.key({}, "XF86MonBrightnessDown", function()
+        awful.spawn("brightnessctl set 5%-")
+    end),
+    awful.key({}, "XF86Display", function()
+        awful.spawn.with_shell("arandr")
+    end),
 
     awful.key({ modkey,           }, "l",     function () awful.tag.incmwfact( 0.05)          end,
               {description = "increase master width factor", group = "layout"}),
