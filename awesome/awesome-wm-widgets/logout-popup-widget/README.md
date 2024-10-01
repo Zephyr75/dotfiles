@@ -53,18 +53,25 @@ Then
 | Name | Default | Description |
 |---|---|---|
 | `icon` | `power.svg` | If used as widget - the path to the widget's icon |
-| `icon_size` | `40` | Size of the icon |
-| `icon_margin` | `16` | Margin around the icon |
+| `icon_size` | 40 | Size of the icon |
+| `icon_margin` | 16 | Margin around the icon |
 | `bg_color` |  `beautiful.bg_normal` | The color the background of the |
 | `accent_color` | `beautiful.bg_focus` | The color of the buttons |
 | `text_color` | `beautiful.fg_normal` | The color of text |
 | `label_color` | `beautiful.fg_normal` | The color of the button's label |
-| `phrases` | `{'Goodbye!'}` | The table with phrase(s) to show, if more than one provided, the phrase is chosen randomly. Leave empty (`{}`) to hide the phrase |
+| `phrases` | `{ 'Goodbye!' }` | The table with phrase(s) to show, if more than one provided, the phrase is chosen randomly. Leave empty (`{}`) to hide the phrase |
+| `hide_on_leave` | `false` | If the popup should be hidden when the mouse leaves it |
 | `onlogout` | `function() awesome.quit() end` | Function which is called when the logout button is pressed |
 | `onlock` | `function() awful.spawn.with_shell("systemctl suspend") end` | Function which is called when the lock button is pressed |
 | `onreboot` | `function() awful.spawn.with_shell("reboot") end` | Function which is called when the reboot button is pressed |
 | `onsuspend` | `function() awful.spawn.with_shell("systemctl suspend") end` | Function which is called when the suspend button is pressed |
 | `onpoweroff` | `function() awful.spawn.with_shell("shutdown now") end` | Function which is called when the poweroff button is pressed |
+| `onlogout_key` | <kbd>l</kbd> | Keybinding to execute the logout function |
+| `onlock_key` | <kbd>k</kbd> | Keybinding to execute the lock function |
+| `onreboot_key` | <kbd>r</kbd> | Keybinding to execute the reboot function |
+| `onsuspend_key` | <kbd>u</kbd> | Keybinding to execute the suspend function |
+| `onpoweroff_key` | <kbd>s</kbd> | Keybinding to execute the poweroff function |
+| `ignore_case` | true | Ignore if CAPS LOCK is enabled |
 
 Some color themes for inspiration:
 

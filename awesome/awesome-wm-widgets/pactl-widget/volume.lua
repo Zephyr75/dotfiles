@@ -33,7 +33,7 @@ local popup = awful.popup{
     ontop = true,
     visible = false,
     shape = gears.shape.rounded_rect,
-    border_width = 1,
+    border_width = 0,
     border_color = beautiful.bg_focus,
     maximum_width = 400,
     offset = { y = 5 },
@@ -79,6 +79,7 @@ local function build_rows(devices, on_checkbox_click, device_type)
                     {
                         {
                             text = build_main_line(device),
+                            font = "Inter SemiBold 9",
                             align = 'left',
                             widget = wibox.widget.textbox
                         },
@@ -126,6 +127,21 @@ local function build_header_row(text)
     return wibox.widget{
         {
             markup = "<b>" .. text .. "</b>",
+            font = "Inter SemiBold 10",
+            align = 'center',
+            widget = wibox.widget.textbox
+        },
+        bg = beautiful.bg_normal,
+        widget = wibox.container.background
+    }
+end
+
+
+local function build_spacer_row(size)
+    return wibox.widget{
+        {
+            markup = "<b>" .. " " .. "</b>",
+            font = "Inter SemiBold " .. size,
             align = 'center',
             widget = wibox.widget.textbox
         },
@@ -140,10 +156,13 @@ local function rebuild_popup()
     end
 
     local sinks, sources = pactl.get_sinks_and_sources()
+    table.insert(rows, build_spacer_row(8))
     table.insert(rows, build_header_row("SINKS"))
     table.insert(rows, build_rows(sinks, function() rebuild_popup() end, "sink"))
+    table.insert(rows, build_spacer_row(4))
     table.insert(rows, build_header_row("SOURCES"))
     table.insert(rows, build_rows(sources, function() rebuild_popup() end, "source"))
+    table.insert(rows, build_spacer_row(8))
 
     popup:setup(rows)
 end
@@ -210,9 +229,9 @@ local function worker(user_args)
 
     volume.widget:buttons(
             awful.util.table.join(
-                    awful.button({}, 1, function() volume:toggle() end),
+                    awful.button({}, 3, function() volume:toggle() end),
                     awful.button({}, 2, function() volume:mixer() end),
-                    awful.button({}, 3, function() volume:popup() end),
+                    awful.button({}, 1, function() volume:popup() end),
                     awful.button({}, 4, function() volume:inc() end),
                     awful.button({}, 5, function() volume:dec() end)
             )

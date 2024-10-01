@@ -1,4 +1,4 @@
 configuration {
-  terminal: "alacritty";
+	terminal: "alacritty";
 }
-@theme "/home/zeph/.config/rofi/themes/spotlight-dark.rasi"
+@theme "/home/zeph/.config/rofi/spotlight-dark.rasi"
