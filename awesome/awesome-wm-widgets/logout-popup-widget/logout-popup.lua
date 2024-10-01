@@ -69,7 +69,8 @@ local function launch(args)
     local bg_color = args.bg_color or beautiful.bg_normal
     local accent_color = args.accent_color or beautiful.bg_focus
     local text_color = args.text_color or beautiful.fg_normal
-    local label_color = args.label_color or beautiful.fg_focus
+    -- local label_color = args.label_color or beautiful.fg_focus
+    local label_color = args.label_color or beautiful.fg_normal
     local phrases = args.phrases or {'Goodbye!'}
     local icon_size = args.icon_size or 40
     local icon_margin = args.icon_margin or 16
@@ -112,7 +113,7 @@ local function launch(args)
                     create_button('power', 'Power Off (' .. onpoweroff_key .. ')',
                         accent_color, label_color, onpoweroff, icon_size, icon_margin),
                     id = 'buttons',
-                    spacing = 8,
+                    spacing = 2,
                     layout = wibox.layout.fixed.horizontal
                 },
                 valign = 'center',
@@ -123,7 +124,7 @@ local function launch(args)
                 halign = 'center',
                 layout = wibox.container.place
             },
-            spacing = 32,
+            spacing = 24,
             layout = wibox.layout.fixed.vertical
         },
         id = 'a',

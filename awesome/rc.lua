@@ -204,6 +204,7 @@ awful.screen.connect_for_each_screen(function(s)
         buttons = taglist_buttons, 
         style = {
             fg_empty = "#444444",
+            bg_focus = "#e6e6e6",
             font = "Inter SemiBold 12",        
         },
         widget_template = {
@@ -285,8 +286,8 @@ globalkeys = gears.table.join(
               {description = "view previous", group = "tag"}),
     awful.key({ modkey,           }, "Right",  awful.tag.viewnext,
               {description = "view next", group = "tag"}),
-    awful.key({ modkey,           }, "Escape", awful.tag.history.restore,
-              {description = "go back", group = "tag"}),
+    -- awful.key({ modkey,           }, "Escape", awful.tag.history.restore,
+              -- {description = "go back", group = "tag"}),
 
     awful.key({ modkey,           }, "j",
         function ()
@@ -575,8 +576,8 @@ awful.rules.rules = {
           "pinentry",
         },
         class = {
-          "Arandr",
-          "Blueman-manager",
+          -- "Arandr",
+          -- "Blueman-manager",
           "Gpick",
           "Kruler",
           "MessageWin",  -- kalarm.
