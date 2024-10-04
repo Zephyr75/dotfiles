@@ -20,3 +20,6 @@ style = "Regular"
 [shell]
 args = ["--login"]
 program = "/bin/zsh"
+
+[env]
+term = "xterm-256color"

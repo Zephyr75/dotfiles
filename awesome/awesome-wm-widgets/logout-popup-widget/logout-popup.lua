@@ -82,8 +82,8 @@ local function launch(args)
     local onsuspend = args.onsuspend or function() awful.spawn.with_shell("systemctl suspend") end
     local onpoweroff = args.onpoweroff or function() awful.spawn.with_shell("shutdown now") end
 
-    local onlogout_key = args.onlogout_key or 'l'
-    local onlock_key = args.onlock_key or 'k'
+    local onlogout_key = args.onlogout_key or 'o'
+    local onlock_key = args.onlock_key or 'l'
     local onreboot_key = args.onreboot_key or 'r'
     local onsuspend_key = args.onsuspend_key or 'u'
     local onpoweroff_key = args.onpoweroff_key or 's'
