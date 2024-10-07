@@ -51,8 +51,12 @@ beautiful.init("/home/zeph/.config/awesome/theme.lua")
 -- Custom widgets
 
 local volume_widget = require("awesome-wm-widgets.pactl-widget.volume")
-local padded_volume = wibox.container.margin(volume_widget(), 5, 5)
+local padded_volume = wibox.container.margin(volume_widget(), 5, 2)
 local volume_container = wibox.container.background(padded_volume)
+
+local battery_widget = require("awesome-wm-widgets.battery-widget.battery")
+local padded_battery = wibox.container.margin(battery_widget(), 0, 0)
+local battery_container = wibox.container.background(padded_battery)
 
 local logout_popup = require("awesome-wm-widgets.logout-popup-widget.logout-popup")
 
@@ -121,7 +125,7 @@ mykeyboardlayout = awful.widget.keyboardlayout()
 mytextclock = wibox.widget.textclock()
 mytextclock:buttons(awful.util.table.join(
     awful.button({}, 1, function()
-        awful.spawn("/home/zeph/Downloads/zen-specific.AppImage --new window https://calendar.google.com/calendar/u/0/r/week")  -- Replace with your command
+        awful.spawn("zen-browser --new-window https://calendar.google.com/calendar/u/0/r/week")
     end)
 ))
 
@@ -260,6 +264,7 @@ awful.screen.connect_for_each_screen(function(s)
                 layout = wibox.layout.fixed.horizontal,
                 wibox.widget.systray(),
                 volume_container,
+                battery_container,
                 -- mykeyboardlayout,
                 s.mylayoutbox,
             },
@@ -333,15 +338,18 @@ globalkeys = gears.table.join(
               {description = "open calculator", group = "launcher"}),
     awful.key({ modkey }, "d", function() awful.util.spawn('alacritty -e sh -c "trans :fr -brief -shell"') end,
               {description = "translate text", group = "launcher"}),
-    awful.key({ modkey }, "a", function() awful.util.spawn("/home/zeph/Downloads/zen-specific.AppImage --new-window --app=https://excalidraw.com") end,
+  awful.key({ modkey }, "e", function() awful.util.spawn('alacritty -e sh -c "xdg-open $(find ~ -maxdepth 5 | fzf --color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8,fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc,marker:#f5e0dc,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8); exit; zsh"') end,
+              {description = "open file", group = "launcher"}),
+  awful.key({ modkey }, "z", function() awful.util.spawn('alacritty -e sh -c "cd $(find ~ -maxdepth 5 -type d | fzf --color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8,fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc,marker:#f5e0dc,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8); zsh"') end,
+              {description = "open directory", group = "launcher"}),
+    awful.key({ modkey }, "a", function() awful.util.spawn("zen-browser --new-window --app=https://excalidraw.com") end,
               {description = "run excalidraw", group = "launcher"}),
     awful.key({ }, "Print", function () awful.spawn("flameshot gui") end,
               {description = "Take screenshot with Flameshot", group = "screenshot"}),
-    awful.key({ modkey }, "z", function() awful.util.spawn('alacritty -e sh -c "btop"') end,
+    awful.key({ modkey }, "i", function() awful.util.spawn('alacritty -e sh -c "btop"') end,
               {description = "run btop", group = "launcher"}),
-          
     awful.key({ modkey }, "Escape", function() logout_popup.launch() end,
-              {description = "Show logout screen", group = "custom" }),
+              {description = "Show logout screen", group = "launcher" }),
     awful.key({ modkey, "Control" }, "r", awesome.restart,
               {description = "reload awesome", group = "awesome"}),
     awful.key({ modkey, "Shift"   }, "q", awesome.quit,
@@ -688,3 +696,4 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 -- Autostart
 awful.spawn.with_shell("nm-applet")
 awful.spawn.with_shell("picom --experimental-backend")
+awful.spawn.with_shell("libinput-gestures-setup start")
