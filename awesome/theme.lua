@@ -22,6 +22,7 @@ theme.bg_focus      = "#444444"
 theme.bg_urgent     = "#990000"
 theme.bg_minimize   = "#444444"
 theme.bg_systray    = theme.bg_normal
+theme.systray_icon_spacing = 5
 
 -- theme.fg_normal     = "#aaaaaa"
 -- theme.fg_focus      = "#ffffff"
@@ -34,7 +35,7 @@ theme.fg_minimize   = "#ffffff"
 theme.useless_gap   = dpi(3)
 theme.border_width  = dpi(0)
 theme.border_normal = "#000000"
-theme.border_focus  = "#535d6c"
+theme.border_focus  = "#f5c2e7"
 theme.border_marked = "#91231c"
 
 -- There are other variable sets
@@ -105,7 +106,8 @@ theme.titlebar_maximized_button_normal_active = themes_path.."default/titlebar/m
 theme.titlebar_maximized_button_focus_active  = themes_path.."default/titlebar/maximized_focus_active.png"
 
 -- theme.wallpaper = themes_path.."default/background.png"
-theme.wallpaper = "/home/zeph/.config/awesome/wallpapers/sky.png"
+-- theme.wallpaper = "/home/zeph/.config/awesome/wallpapers/sky.png"
+theme.wallpaper = "/home/zeph/.config/awesome/wallpapers/fishing.png"
 
 -- You can use your own layout icons like this:
 theme.layout_fairh = themes_path.."default/layouts/fairhw.png"

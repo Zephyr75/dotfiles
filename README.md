@@ -33,16 +33,6 @@ ILoveCandy
 ParallelDownloads = 5
 ```
 
-# Install Picom
-
-```sh
-git clone https://github.com/jonaburg/picom
-cd picom
-meson --buildtype=release . build
-ninja -C build
-sudo ninja -C build install
-```
-
 # Install Zsh
 
 ```sh
@@ -106,6 +96,7 @@ cat ~/.ssh/id_ed25519.pub
 
 # Other packages to install
 
+- picom
 - rofi
 - bluez
 - network-manager-applet

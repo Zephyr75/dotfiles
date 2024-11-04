@@ -51,11 +51,11 @@ beautiful.init("/home/zeph/.config/awesome/theme.lua")
 -- Custom widgets
 
 local volume_widget = require("awesome-wm-widgets.pactl-widget.volume")
-local padded_volume = wibox.container.margin(volume_widget(), 5, 2)
+local padded_volume = wibox.container.margin(volume_widget(), 5, 0)
 local volume_container = wibox.container.background(padded_volume)
 
 local battery_widget = require("awesome-wm-widgets.battery-widget.battery")
-local padded_battery = wibox.container.margin(battery_widget(), 0, 0)
+local padded_battery = wibox.container.margin(battery_widget(), 5, 5)
 local battery_container = wibox.container.background(padded_battery)
 
 local logout_popup = require("awesome-wm-widgets.logout-popup-widget.logout-popup")
@@ -201,6 +201,12 @@ awful.screen.connect_for_each_screen(function(s)
                            awful.button({ }, 3, function () awful.layout.inc(-1) end),
                            awful.button({ }, 4, function () awful.layout.inc( 1) end),
                            awful.button({ }, 5, function () awful.layout.inc(-1) end)))
+
+    local spacer = wibox.widget {
+        forced_width = 5,
+        widget = wibox.widget.textbox
+    }
+
     -- Create a taglist widget
     s.mytaglist = awful.widget.taglist {
         screen  = s,
@@ -267,6 +273,7 @@ awful.screen.connect_for_each_screen(function(s)
                 battery_container,
                 -- mykeyboardlayout,
                 s.mylayoutbox,
+                spacer,
             },
         },
     }
@@ -336,17 +343,19 @@ globalkeys = gears.table.join(
               {description = "run rofi", group = "launcher"}),
     awful.key({ modkey }, "c", function() awful.util.spawn('alacritty -e sh -c "bold=$(tput bold); normal=$(tput sgr0); echo "${bold}Qalc${normal}"; qalc"') end,
               {description = "open calculator", group = "launcher"}),
-    awful.key({ modkey }, "d", function() awful.util.spawn('alacritty -e sh -c "trans :fr -brief -shell"') end,
+    awful.key({ modkey }, "t", function() awful.util.spawn('alacritty -e sh -c "trans :fr -brief -shell"') end,
               {description = "translate text", group = "launcher"}),
   awful.key({ modkey }, "e", function() awful.util.spawn('alacritty -e sh -c "xdg-open $(find ~ -maxdepth 5 | fzf --color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8,fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc,marker:#f5e0dc,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8); exit; zsh"') end,
               {description = "open file", group = "launcher"}),
-  awful.key({ modkey }, "z", function() awful.util.spawn('alacritty -e sh -c "cd $(find ~ -maxdepth 5 -type d | fzf --color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8,fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc,marker:#f5e0dc,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8); zsh"') end,
+  awful.key({ modkey }, "d", function() awful.util.spawn('alacritty -e sh -c "cd $(find ~ -maxdepth 5 -type d | fzf --color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8,fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc,marker:#f5e0dc,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8); zsh"') end,
               {description = "open directory", group = "launcher"}),
     awful.key({ modkey }, "a", function() awful.util.spawn("zen-browser --new-window --app=https://excalidraw.com") end,
               {description = "run excalidraw", group = "launcher"}),
+    awful.key({ modkey }, "y", function() awful.util.spawn('alacritty -e sh -c "tgpt -i"') end,
+              {description = "run yarvis", group = "launcher"}),
     awful.key({ }, "Print", function () awful.spawn("flameshot gui") end,
               {description = "Take screenshot with Flameshot", group = "screenshot"}),
-    awful.key({ modkey }, "i", function() awful.util.spawn('alacritty -e sh -c "btop"') end,
+    awful.key({ modkey }, "z", function() awful.util.spawn('alacritty -e sh -c "btop"') end,
               {description = "run btop", group = "launcher"}),
     awful.key({ modkey }, "Escape", function() logout_popup.launch() end,
               {description = "Show logout screen", group = "launcher" }),
@@ -402,10 +411,10 @@ globalkeys = gears.table.join(
         awful.spawn("pactl set-sink-mute @DEFAULT_SINK@ toggle")
     end),
     awful.key({}, "XF86MonBrightnessUp", function()
-        awful.spawn("brightnessctl set +5%")
+        awful.spawn("brightnessctl set +2%")
     end),
     awful.key({}, "XF86MonBrightnessDown", function()
-        awful.spawn("brightnessctl set 5%-")
+        awful.spawn("brightnessctl set 2%-")
     end),
     awful.key({}, "XF86Display", function()
         awful.spawn.with_shell("arandr")
@@ -474,8 +483,10 @@ clientkeys = gears.table.join(
               {description = "move to master", group = "client"}),
     awful.key({ modkey,           }, "o",      function (c) c:move_to_screen()               end,
               {description = "move to screen", group = "client"}),
-    awful.key({ modkey,           }, "t",      function (c) c.ontop = not c.ontop            end,
-              {description = "toggle keep on top", group = "client"}),
+    -- awful.key({ modkey,           }, "t",      function (c) c.ontop = not c.ontop            end,
+    --           {description = "toggle keep on top", group = "client"}),
+    awful.key({ modkey,           }, "i",      function (c) c.sticky = not c.sticky          end,
+              {description = "Toggle Sticky", group = "client"}), 
     awful.key({ modkey,           }, "n",
         function (c)
             -- The client currently has the input focus, so it cannot be
@@ -695,5 +706,5 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 
 -- Autostart
 awful.spawn.with_shell("nm-applet")
-awful.spawn.with_shell("picom --experimental-backend")
+awful.spawn.with_shell("picom")
 awful.spawn.with_shell("libinput-gestures-setup start")
