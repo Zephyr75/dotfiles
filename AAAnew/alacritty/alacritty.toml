@@ -1,0 +1,29 @@
+
+[font]
+size = 8
+
+[font.bold]
+family = "JetBrains Mono Nerd Font"
+style = "Bold"
+
+[font.italic]
+family = "JetBrains Mono Nerd Font"
+style = "Italic"
+
+[font.normal]
+family = "JetBrains Mono Nerd Font"
+style = "Regular"
+
+[terminal.shell]
+args = ["--login"]
+program = "/bin/zsh"
+
+[env]
+term = "xterm-256color"
+
+[general]
+import = [
+	"~/.config/alacritty/catppuccin_macchiato.toml",
+]
+
+[terminal]
